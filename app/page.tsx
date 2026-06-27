@@ -37,7 +37,10 @@ export default function HomePage() {
         .order('score_total', { ascending: false })
 
       if (lifeStageFilter) q = q.eq('life_stage', lifeStageFilter)
-      if (query.trim()) q = q.ilike('name', `%${query.trim()}%`)
+      if (query.trim()) {
+        const keyword = `%${query.trim()}%`
+        q = q.or(`name.ilike.${keyword},brand.ilike.${keyword}`)
+      }
 
       const { data } = await q
       setFoods((data as CatFood[]) ?? [])
