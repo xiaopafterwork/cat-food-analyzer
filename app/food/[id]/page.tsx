@@ -4,39 +4,32 @@ import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { supabase, CatFood } from '@/lib/supabase'
 
-const BRAND_COLOR = '#3D5A3E'
+const ACCENT = '#3D5A3E'
 
-function getScoreColor(score: number | null): string {
-  if (!score) return '#6b7280'
-  if (score >= 80) return '#22c55e'
-  if (score >= 65) return '#3b82f6'
-  if (score >= 50) return '#f97316'
-  if (score >= 35) return '#ef4444'
-  return '#991b1b'
+function getScoreBadge(score: number | null): { bg: string; color: string } {
+  if (!score) return { bg: '#f3f4f6', color: '#6b7280' }
+  if (score >= 80) return { bg: '#e8f9ee', color: '#1a7f37' }
+  if (score >= 65) return { bg: '#e6f0fb', color: '#1554a0' }
+  if (score >= 50) return { bg: '#fff3e0', color: '#b35c00' }
+  return { bg: '#ffeaea', color: '#c0392b' }
 }
 
 const LIFE_STAGE_LABEL: Record<string, string> = {
-  kitten: '幼貓',
-  adult: '成貓',
-  senior: '熟齡貓',
-  all: '全齡',
+  kitten: '幼貓', adult: '成貓', senior: '熟齡貓', all: '全齡',
 }
 
 function ScoreBar({ score, label, max = 40 }: { score: number | null; label: string; max?: number }) {
   const val = score ?? 0
   const pct = Math.round((val / max) * 100)
-  const color = getScoreColor(Math.round((val / max) * 100))
+  const badge = getScoreBadge(Math.round((val / max) * 100))
   return (
-    <div className="mb-3">
-      <div className="flex justify-between text-sm mb-1">
+    <div className="mb-4">
+      <div className="flex justify-between text-sm mb-1.5">
         <span className="text-gray-600">{label}</span>
-        <span className="font-semibold" style={{ color }}>{val} / {max}</span>
+        <span className="font-semibold" style={{ color: badge.color }}>{val} / {max}</span>
       </div>
-      <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
-        <div
-          className="h-full rounded-full transition-all"
-          style={{ width: `${pct}%`, backgroundColor: color }}
-        />
+      <div className="w-full h-2 rounded-full overflow-hidden" style={{ background: '#f3f4f6' }}>
+        <div className="h-full rounded-full transition-all" style={{ width: `${pct}%`, background: badge.color }} />
       </div>
     </div>
   )
@@ -51,11 +44,7 @@ export default function FoodDetailPage() {
 
   useEffect(() => {
     async function fetchFood() {
-      const { data } = await supabase
-        .from('cat_foods')
-        .select('*')
-        .eq('id', id)
-        .single()
+      const { data } = await supabase.from('cat_foods').select('*').eq('id', id).single()
       setFood(data as CatFood)
       setLoading(false)
     }
@@ -65,127 +54,145 @@ export default function FoodDetailPage() {
   if (loading) return <div className="min-h-screen flex items-center justify-center text-gray-400">載入中…</div>
   if (!food) return <div className="min-h-screen flex items-center justify-center text-gray-400">找不到此飼料</div>
 
-  const scoreColor = getScoreColor(food.score_total)
-  const scorePct = food.score_total ?? 0
+  const badge = getScoreBadge(food.score_total)
 
   return (
-    <main className="min-h-screen bg-white px-4 py-10 max-w-2xl mx-auto">
-      {/* Back */}
-      <button
-        onClick={() => router.back()}
-        className="text-sm mb-8 flex items-center gap-1"
-        style={{ color: BRAND_COLOR }}
-      >
-        ← 返回
-      </button>
-
-      {/* Title */}
-      <div className="mb-8">
-        <div className="flex items-center gap-2 flex-wrap mb-1">
-          <h1 className="text-2xl font-bold text-gray-800">{food.name}</h1>
-          <span
-            className="text-xs px-2 py-0.5 rounded-full"
-            style={{ backgroundColor: '#e8f0e8', color: BRAND_COLOR }}
-          >
-            {LIFE_STAGE_LABEL[food.life_stage] ?? food.life_stage}
-          </span>
-        </div>
-        <p className="text-gray-400">{food.brand}</p>
-      </div>
-
-      {/* Big Score */}
-      <div className="flex flex-col items-center mb-10">
+    <main className="min-h-screen" style={{ background: '#f5f5f7' }}>
+      {/* Nav */}
+      <nav className="sticky top-0 z-40 px-4 pt-3 pb-2">
         <div
-          className="font-bold leading-none mb-3"
-          style={{ fontSize: 72, color: scoreColor }}
+          className="max-w-2xl mx-auto flex items-center px-5 py-3 rounded-2xl"
+          style={{ background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(12px)', border: '0.5px solid #e5e7eb' }}
         >
-          {food.score_total ?? '–'}
+          <button onClick={() => router.back()} className="flex items-center gap-1.5 text-sm font-medium" style={{ color: ACCENT }}>
+            <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
+            返回
+          </button>
         </div>
-        {/* Progress bar */}
-        <div className="w-full h-3 bg-gray-100 rounded-full overflow-hidden mb-3">
-          <div
-            className="h-full rounded-full transition-all"
-            style={{ width: `${scorePct}%`, backgroundColor: scoreColor }}
-          />
-        </div>
-        {food.score_label && (
-          <p className="text-sm font-medium" style={{ color: scoreColor }}>
-            {food.score_label}
-          </p>
-        )}
-      </div>
+      </nav>
 
-      {/* AI Summary */}
-      {food.ai_summary && (
-        <div className="flex flex-col gap-3 mb-10">
-          {food.ai_summary.good && (
-            <div className="flex gap-3 p-4 rounded-xl bg-green-50">
-              <span>✅</span>
-              <p className="text-sm text-gray-700">{food.ai_summary.good}</p>
+      <div className="max-w-2xl mx-auto px-4 pb-16">
+        {/* Header card */}
+        <div className="rounded-3xl p-6 mb-4 mt-4" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
+          <div className="flex items-start gap-4">
+            {/* Score circle */}
+            <div
+              className="w-20 h-20 rounded-full flex flex-col items-center justify-center shrink-0"
+              style={{ background: badge.bg }}
+            >
+              <span className="font-bold leading-none" style={{ fontSize: 30, color: badge.color }}>{food.score_total ?? '–'}</span>
+              <span className="text-xs mt-0.5" style={{ color: badge.color }}>/ 100</span>
             </div>
-          )}
-          {food.ai_summary.warning && (
-            <div className="flex gap-3 p-4 rounded-xl bg-orange-50">
-              <span>⚠️</span>
-              <p className="text-sm text-gray-700">{food.ai_summary.warning}</p>
+            <div className="flex-1 min-w-0 pt-1">
+              <div className="flex items-center gap-2 flex-wrap mb-1">
+                <h1 className="font-bold text-gray-900" style={{ fontSize: 20 }}>{food.name}</h1>
+              </div>
+              <p className="text-sm text-gray-400 mb-2">{food.brand}</p>
+              <div className="flex gap-1.5 flex-wrap">
+                <span className="text-xs px-2 py-0.5 rounded-md" style={{ background: '#f3f4f6', color: '#6b7280' }}>
+                  {LIFE_STAGE_LABEL[food.life_stage] ?? food.life_stage}
+                </span>
+                {!food.has_grain && <span className="text-xs px-2 py-0.5 rounded-md" style={{ background: '#e8f9ee', color: '#1a7f37' }}>無穀</span>}
+                {food.has_grain && <span className="text-xs px-2 py-0.5 rounded-md" style={{ background: '#ffeaea', color: '#c0392b' }}>含穀</span>}
+                {food.score_label && (
+                  <span className="text-xs px-2 py-0.5 rounded-md font-medium" style={{ background: badge.bg, color: badge.color }}>
+                    {food.score_label}
+                  </span>
+                )}
+              </div>
             </div>
-          )}
-          {food.ai_summary.bad && (
-            <div className="flex gap-3 p-4 rounded-xl bg-red-50">
-              <span>❌</span>
-              <p className="text-sm text-gray-700">{food.ai_summary.bad}</p>
-            </div>
-          )}
+          </div>
+          {/* Score bar */}
+          <div className="mt-4 w-full h-2 rounded-full overflow-hidden" style={{ background: '#f3f4f6' }}>
+            <div className="h-full rounded-full" style={{ width: `${food.score_total ?? 0}%`, background: badge.color }} />
+          </div>
         </div>
-      )}
 
-      {/* Suitable / Not suitable */}
-      <div className="grid grid-cols-2 gap-4 mb-10">
-        <div className="p-4 rounded-xl bg-gray-50">
-          <p className="text-xs font-semibold mb-2" style={{ color: BRAND_COLOR }}>適合對象</p>
-          <p className="text-sm text-gray-700">{food.ai_suitable_for ?? '–'}</p>
-        </div>
-        <div className="p-4 rounded-xl bg-gray-50">
-          <p className="text-xs font-semibold mb-2 text-red-500">不適合對象</p>
-          <p className="text-sm text-gray-700">{food.ai_not_suitable ?? '–'}</p>
-        </div>
-      </div>
-
-      {/* Expandable detail */}
-      <div className="border border-gray-100 rounded-2xl overflow-hidden">
-        <button
-          onClick={() => setShowDetail(v => !v)}
-          className="w-full flex justify-between items-center px-5 py-4 text-sm font-semibold"
-          style={{ color: BRAND_COLOR }}
-        >
-          完整分析
-          <span>{showDetail ? '▲' : '▼'}</span>
-        </button>
-        {showDetail && (
-          <div className="px-5 pb-5 pt-1">
-            <ScoreBar score={food.score_ingredient} label="成分評分" max={40} />
-            <ScoreBar score={food.score_nutrition} label="營養評分" max={30} />
-            <ScoreBar score={food.score_transparency} label="透明度評分" max={30} />
-
-            {/* Pros / Cons */}
-            {food.ai_pros && (
-              <div className="mt-5">
-                <p className="text-xs font-semibold mb-2 text-green-600">優點</p>
-                <ul className="list-disc list-inside text-sm text-gray-700 space-y-1">
-                  {(food.ai_pros as string[]).map((p, i) => <li key={i}>{p}</li>)}
-                </ul>
+        {/* AI Summary */}
+        {food.ai_summary && (
+          <div className="flex flex-col gap-2 mb-4">
+            {food.ai_summary.good && (
+              <div className="flex gap-3 p-4 rounded-2xl" style={{ background: '#e8f9ee' }}>
+                <span className="shrink-0">✅</span>
+                <p className="text-sm" style={{ color: '#1a4731' }}>{food.ai_summary.good}</p>
               </div>
             )}
-            {food.ai_cons && (
-              <div className="mt-4">
-                <p className="text-xs font-semibold mb-2 text-red-500">缺點</p>
-                <ul className="list-disc list-inside text-sm text-gray-700 space-y-1">
-                  {(food.ai_cons as string[]).map((c, i) => <li key={i}>{c}</li>)}
-                </ul>
+            {food.ai_summary.warning && (
+              <div className="flex gap-3 p-4 rounded-2xl" style={{ background: '#fff8ed' }}>
+                <span className="shrink-0">⚠️</span>
+                <p className="text-sm" style={{ color: '#7c4a00' }}>{food.ai_summary.warning}</p>
+              </div>
+            )}
+            {food.ai_summary.bad && (
+              <div className="flex gap-3 p-4 rounded-2xl" style={{ background: '#ffeaea' }}>
+                <span className="shrink-0">❌</span>
+                <p className="text-sm" style={{ color: '#7f1d1d' }}>{food.ai_summary.bad}</p>
               </div>
             )}
           </div>
         )}
+
+        {/* Suitable */}
+        <div className="grid grid-cols-2 gap-3 mb-4">
+          <div className="p-4 rounded-2xl" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
+            <p className="text-xs font-semibold mb-2" style={{ color: ACCENT }}>適合對象</p>
+            <p className="text-sm text-gray-700 leading-relaxed">{food.ai_suitable_for ?? '–'}</p>
+          </div>
+          <div className="p-4 rounded-2xl" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
+            <p className="text-xs font-semibold mb-2 text-red-500">不適合對象</p>
+            <p className="text-sm text-gray-700 leading-relaxed">{food.ai_not_suitable ?? '–'}</p>
+          </div>
+        </div>
+
+        {/* Expandable detail */}
+        <div className="rounded-2xl overflow-hidden" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
+          <button
+            onClick={() => setShowDetail(v => !v)}
+            className="w-full flex justify-between items-center px-5 py-4 text-sm font-semibold"
+            style={{ color: ACCENT }}
+          >
+            完整分析
+            <svg
+              width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"
+              style={{ transform: showDetail ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s' }}
+            >
+              <path d="m6 9 6 6 6-6"/>
+            </svg>
+          </button>
+
+          {showDetail && (
+            <div className="px-5 pb-5 pt-1 border-t" style={{ borderColor: '#f3f4f6' }}>
+              <ScoreBar score={food.score_ingredient} label="成分評分" max={40} />
+              <ScoreBar score={food.score_nutrition} label="營養評分" max={30} />
+              <ScoreBar score={food.score_transparency} label="透明度評分" max={30} />
+
+              {food.ai_pros && food.ai_pros.length > 0 && (
+                <div className="mt-5 p-4 rounded-xl" style={{ background: '#e8f9ee' }}>
+                  <p className="text-xs font-semibold mb-2" style={{ color: '#1a7f37' }}>優點</p>
+                  <ul className="space-y-1">
+                    {(food.ai_pros as string[]).map((p, i) => (
+                      <li key={i} className="text-sm flex gap-2" style={{ color: '#1a4731' }}>
+                        <span className="shrink-0">·</span>{p}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {food.ai_cons && food.ai_cons.length > 0 && (
+                <div className="mt-3 p-4 rounded-xl" style={{ background: '#ffeaea' }}>
+                  <p className="text-xs font-semibold mb-2 text-red-500">缺點</p>
+                  <ul className="space-y-1">
+                    {(food.ai_cons as string[]).map((c, i) => (
+                      <li key={i} className="text-sm flex gap-2" style={{ color: '#7f1d1d' }}>
+                        <span className="shrink-0">·</span>{c}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </main>
   )
