@@ -62,7 +62,7 @@ function CompareContent() {
             <div className="w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg" style={{ background: b.bg, color: b.color }}>
               {f.score_total ?? '–'}
             </div>
-            <span className="text-xs" style={{ color: b.color }}>{f.score_label ?? ''}</span>
+            <span className="text-xs" style={{ color: b.color }}>{f.score_total ?? '–'} 分</span>
           </div>
         )
       }
