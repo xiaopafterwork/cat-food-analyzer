@@ -58,9 +58,9 @@ export default function HomePage() {
       {/* Header */}
       <div className="max-w-2xl mx-auto text-center mb-12">
         <h1 className="text-3xl font-bold mb-2" style={{ color: BRAND_COLOR }}>
-          🐱 貓咪飼料分析
+          🐾 喵評鑑
         </h1>
-        <p className="text-gray-500 text-sm">幫你的貓找最適合的飼料</p>
+        <p className="text-gray-500 text-sm">台灣最完整的貓咪飼料評鑑，幫你找到最適合的選擇</p>
       </div>
 
       {/* Search */}
