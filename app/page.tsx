@@ -38,8 +38,12 @@ export default function HomePage() {
 
       if (lifeStageFilter) q = q.eq('life_stage', lifeStageFilter)
       if (query.trim()) {
-        const keyword = `%${query.trim()}%`
-        q = q.or(`name.ilike.${keyword},brand.ilike.${keyword}`)
+        const words = query.trim().split(/\s+/).filter(Boolean)
+        const conditions = words.flatMap(w => [
+          `name.ilike.%${w}%`,
+          `brand.ilike.%${w}%`,
+        ])
+        q = q.or(conditions.join(','))
       }
 
       const { data } = await q
