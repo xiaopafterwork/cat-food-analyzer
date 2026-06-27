@@ -128,34 +128,82 @@ function CompareContent() {
     },
   ]
 
+  const COL_W = 148
+  const LABEL_W = 90
+
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full" style={{ minWidth: foods.length * 140 + 100 }}>
+    /* 外層容器控制橫向捲動 */
+    <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+      <table style={{
+        borderCollapse: 'collapse',
+        tableLayout: 'fixed',
+        width: LABEL_W + foods.length * COL_W,
+        minWidth: LABEL_W + foods.length * COL_W,
+      }}>
         <thead>
           <tr>
-            <th className="text-left text-xs text-gray-400 font-medium py-2 pr-4" style={{ width: 100 }}>比較項目</th>
+            {/* 固定第一欄：項目名稱 */}
+            <th style={{
+              width: LABEL_W, minWidth: LABEL_W,
+              position: 'sticky', left: 0, zIndex: 3,
+              background: '#fff',
+              borderBottom: '0.5px solid #e5e7eb',
+              textAlign: 'left',
+              padding: '10px 16px 10px 0',
+              fontSize: 11, color: '#9ca3af', fontWeight: 500,
+            }}>
+              比較項目
+            </th>
             {foods.map(f => (
-              <th key={f.id} className="py-2 px-2 text-center" style={{ width: 140 }}>
-                <Link href={`/food/${f.id}`} className="text-xs font-semibold text-gray-900 hover:underline line-clamp-2 block">
+              <th key={f.id} style={{
+                width: COL_W, minWidth: COL_W,
+                background: '#fff',
+                borderBottom: '0.5px solid #e5e7eb',
+                padding: '10px 8px 10px 8px',
+                verticalAlign: 'bottom',
+              }}>
+                <Link href={`/food/${f.id}`} style={{
+                  fontSize: 12, fontWeight: 600, color: '#111827',
+                  display: '-webkit-box', WebkitLineClamp: 2,
+                  WebkitBoxOrient: 'vertical', overflow: 'hidden',
+                  textDecoration: 'none',
+                }}>
                   {f.name}
                 </Link>
+                <p style={{ fontSize: 10, color: '#9ca3af', marginTop: 2 }}>{f.brand}</p>
               </th>
             ))}
           </tr>
         </thead>
         <tbody>
-          {rows.map((row, i) => (
-            <tr key={i} style={{ borderTop: '0.5px solid #f3f4f6' }}>
-              <td className="py-4 pr-4 text-xs text-gray-500 font-medium align-middle" style={{ whiteSpace: 'nowrap' }}>
-                {row.label}
-              </td>
-              {foods.map(f => (
-                <td key={f.id} className="py-4 px-2 text-center align-middle">
-                  <div className="flex justify-center">{row.render(f)}</div>
+          {rows.map((row, i) => {
+            const rowBg = i % 2 === 0 ? '#fff' : '#fafafa'
+            return (
+              <tr key={i}>
+                {/* 固定第一欄：項目名稱 */}
+                <td style={{
+                  position: 'sticky', left: 0, zIndex: 2,
+                  background: rowBg,
+                  borderTop: '0.5px solid #f3f4f6',
+                  padding: '14px 16px 14px 0',
+                  fontSize: 12, color: '#6b7280', fontWeight: 500,
+                  whiteSpace: 'nowrap', verticalAlign: 'middle',
+                }}>
+                  {row.label}
                 </td>
-              ))}
-            </tr>
-          ))}
+                {foods.map(f => (
+                  <td key={f.id} style={{
+                    background: rowBg,
+                    borderTop: '0.5px solid #f3f4f6',
+                    padding: '14px 8px',
+                    textAlign: 'center', verticalAlign: 'middle',
+                  }}>
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>{row.render(f)}</div>
+                  </td>
+                ))}
+              </tr>
+            )
+          })}
         </tbody>
       </table>
     </div>
