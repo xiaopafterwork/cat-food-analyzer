@@ -1,10 +1,9 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { useSearchParams, useRouter } from 'next/navigation'
+import { useEffect, useState, Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { supabase, CatFood } from '@/lib/supabase'
-import { Suspense } from 'react'
 
 const ACCENT = '#3D5A3E'
 
@@ -31,7 +30,6 @@ function NutrBar({ value, max, color }: { value: number | null; max: number; col
 
 function CompareContent() {
   const searchParams = useSearchParams()
-  const router = useRouter()
   const ids = (searchParams.get('ids') ?? '').split(',').filter(Boolean).slice(0, 5)
   const [foods, setFoods] = useState<CatFood[]>([])
   const [loading, setLoading] = useState(true)
@@ -39,11 +37,11 @@ function CompareContent() {
   useEffect(() => {
     if (!ids.length) { setLoading(false); return }
     supabase.from('cat_foods').select('*').in('id', ids).then(({ data }) => {
-      // sort by score desc
       const sorted = (data as CatFood[] ?? []).sort((a, b) => (b.score_total ?? 0) - (a.score_total ?? 0))
       setFoods(sorted)
       setLoading(false)
     })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams])
 
   if (loading) return <p className="text-center text-gray-400 py-16">載入中…</p>
@@ -165,7 +163,6 @@ function CompareContent() {
 }
 
 export default function ComparePage() {
-  const router = useRouter()
   return (
     <main className="min-h-screen" style={{ background: '#f5f5f7' }}>
       {/* Nav */}
@@ -174,10 +171,10 @@ export default function ComparePage() {
           className="max-w-4xl mx-auto flex items-center justify-between px-5 py-3 rounded-2xl"
           style={{ background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(12px)', border: '0.5px solid #e5e7eb' }}
         >
-          <button onClick={() => router.back()} className="flex items-center gap-1.5 text-sm font-medium" style={{ color: ACCENT }}>
+          <Link href="/" className="flex items-center gap-1.5 text-sm font-medium" style={{ color: ACCENT }}>
             <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
             返回
-          </button>
+          </Link>
           <span className="font-semibold text-gray-900 text-sm">飼料比較</span>
           <Link href="/" className="text-sm" style={{ color: ACCENT }}>喵評鑑</Link>
         </div>
