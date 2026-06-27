@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { supabase, CatFood } from '@/lib/supabase'
+import Nav from '@/components/Nav'
 
 const ACCENT = '#3D5A3E'
 
@@ -61,39 +62,27 @@ export default function HomePage() {
     <main className="min-h-screen" style={{ background: '#f5f5f7' }}>
 
       {/* ── Nav ── */}
-      <nav className="sticky top-0 z-40 px-4 pt-3 pb-2">
-        <div
-          className="max-w-2xl mx-auto flex justify-between items-center px-5 py-3 rounded-2xl"
-          style={{ background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(12px)', border: '0.5px solid #e5e7eb' }}
-        >
-          <span className="font-semibold text-gray-900" style={{ fontSize: 17, letterSpacing: '-0.3px' }}>喵評鑑</span>
-          <div className="flex gap-2">
-            {compareIds.length > 0 ? (
-              <Link
-                href={`/compare?ids=${compareIds.join(',')}`}
-                className="text-sm font-semibold px-4 py-1.5 rounded-full text-white"
-                style={{ background: ACCENT }}
-              >
-                比較 {compareIds.length} 款
-              </Link>
-            ) : (
-              <button
-                className="text-sm px-4 py-1.5 rounded-full"
-                style={{ border: '0.5px solid #d1d5db', color: '#374151', background: '#fff' }}
-                onClick={() => alert('請先勾選飼料加入比較')}
-              >
-                比較
-              </button>
-            )}
+      <Nav
+        rightSlot={
+          compareIds.length > 0 ? (
+            <Link
+              href={`/compare?ids=${compareIds.join(',')}`}
+              className="text-sm font-semibold px-4 py-1.5 rounded-full text-white"
+              style={{ background: ACCENT }}
+            >
+              比較 {compareIds.length} 款
+            </Link>
+          ) : (
             <button
               className="text-sm px-4 py-1.5 rounded-full"
               style={{ border: '0.5px solid #d1d5db', color: '#374151', background: '#fff' }}
+              onClick={() => alert('請先勾選飼料加入比較')}
             >
-              支持我們
+              比較
             </button>
-          </div>
-        </div>
-      </nav>
+          )
+        }
+      />
 
       <div className="max-w-2xl mx-auto px-4 pb-16">
 

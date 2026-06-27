@@ -1,8 +1,9 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import { supabase, CatFood } from '@/lib/supabase'
+import Nav from '@/components/Nav'
 
 const ACCENT = '#3D5A3E'
 
@@ -75,7 +76,6 @@ function ScoreBar({ score, label, max = 40 }: { score: number | null; label: str
 
 export default function FoodDetailPage() {
   const { id } = useParams()
-  const router = useRouter()
   const [food, setFood] = useState<CatFood | null>(null)
   const [loading, setLoading] = useState(true)
   const [showDetail, setShowDetail] = useState(false)
@@ -97,17 +97,7 @@ export default function FoodDetailPage() {
   return (
     <main className="min-h-screen" style={{ background: '#f5f5f7' }}>
       {/* Nav */}
-      <nav className="sticky top-0 z-40 px-4 pt-3 pb-2">
-        <div
-          className="max-w-2xl mx-auto flex items-center px-5 py-3 rounded-2xl"
-          style={{ background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(12px)', border: '0.5px solid #e5e7eb' }}
-        >
-          <button onClick={() => router.back()} className="flex items-center gap-1.5 text-sm font-medium" style={{ color: ACCENT }}>
-            <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
-            返回
-          </button>
-        </div>
-      </nav>
+      <Nav backHref="/" />
 
       <div className="max-w-2xl mx-auto px-4 pb-16">
         {/* Header card */}

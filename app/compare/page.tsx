@@ -4,6 +4,7 @@ import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { supabase, CatFood } from '@/lib/supabase'
+import Nav from '@/components/Nav'
 
 const ACCENT = '#3D5A3E'
 
@@ -214,19 +215,7 @@ export default function ComparePage() {
   return (
     <main className="min-h-screen" style={{ background: '#f5f5f7' }}>
       {/* Nav */}
-      <nav className="sticky top-0 z-40 px-4 pt-3 pb-2">
-        <div
-          className="max-w-4xl mx-auto flex items-center justify-between px-5 py-3 rounded-2xl"
-          style={{ background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(12px)', border: '0.5px solid #e5e7eb' }}
-        >
-          <Link href="/" className="flex items-center gap-1.5 text-sm font-medium" style={{ color: ACCENT }}>
-            <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
-            返回
-          </Link>
-          <span className="font-semibold text-gray-900 text-sm">飼料比較</span>
-          <Link href="/" className="text-sm" style={{ color: ACCENT }}>喵評鑑</Link>
-        </div>
-      </nav>
+      <Nav backHref="/" title="飼料比較" />
 
       <div className="max-w-4xl mx-auto px-4 pb-16 mt-6">
         <div className="rounded-3xl p-6" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
