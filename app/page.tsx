@@ -184,7 +184,11 @@ export default function HomePage() {
                   {/* Info */}
                   <Link href={`/food/${food.id}`} className="flex-1 min-w-0">
                     <p className="font-semibold text-gray-900 truncate mb-0.5" style={{ fontSize: 15 }}>{food.name}</p>
-                    <p className="text-xs text-gray-400 mb-1.5">{food.brand}</p>
+                    <Link
+                      href={`/brand/${encodeURIComponent(food.brand)}`}
+                      onClick={e => e.stopPropagation()}
+                      className="text-xs text-gray-400 mb-1.5 hover:underline inline-block"
+                    >{food.brand}</Link>
                     {summary && (
                       <p className="text-xs text-gray-500 mb-2 leading-relaxed line-clamp-2">{summary}</p>
                     )}

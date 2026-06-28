@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import Nav from '@/components/Nav'
 import { CatFood } from '@/lib/supabase'
 
@@ -118,7 +119,7 @@ export default function FoodDetailClient({ food }: { food: CatFood }) {
               <div className="flex items-center gap-2 flex-wrap mb-1">
                 <h1 className="font-bold text-gray-900" style={{ fontSize: 20 }}>{food.name}</h1>
               </div>
-              <p className="text-sm text-gray-400 mb-2">{food.brand}</p>
+              <Link href={`/brand/${encodeURIComponent(food.brand)}`} className="text-sm text-gray-400 mb-2 hover:underline inline-block">{food.brand}</Link>
               <div className="flex gap-1.5 flex-wrap">
                 <span className="text-xs px-2 py-0.5 rounded-md" style={{ background: '#f3f4f6', color: '#6b7280' }}>
                   {LIFE_STAGE_LABEL[food.life_stage] ?? food.life_stage}
