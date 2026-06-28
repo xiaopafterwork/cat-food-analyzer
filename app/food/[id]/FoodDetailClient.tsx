@@ -1,10 +1,8 @@
 'use client'
 
-import { useState } from 'react'
 import Nav from '@/components/Nav'
 import { CatFood } from '@/lib/supabase'
 
-const ACCENT = '#3D5A3E'
 
 function getScoreBadge(score: number | null): { bg: string; color: string } {
   if (!score) return { bg: '#f3f4f6', color: '#6b7280' }
@@ -89,9 +87,7 @@ function parseList(val: unknown): string[] {
 }
 
 export default function FoodDetailClient({ food }: { food: CatFood }) {
-  const [showDetail, setShowDetail] = useState(false)
   const badge = getScoreBadge(food.score_total)
-  const summaryText = parseSummary(food.ai_summary)
   const pros = parseList(food.ai_pros)
   const cons = parseList(food.ai_cons)
 
@@ -145,23 +141,46 @@ export default function FoodDetailClient({ food }: { food: CatFood }) {
           </div>
         </div>
 
-        {/* AI Summary */}
-        {summaryText && (
-          <div className="flex gap-3 p-4 rounded-2xl mb-4" style={{ background: '#e8f9ee' }}>
-            <span className="shrink-0">📋</span>
-            <p className="text-sm leading-relaxed" style={{ color: '#1a4731' }}>{summaryText}</p>
-          </div>
-        )}
-
-        {/* Suitable */}
-        <div className="grid grid-cols-2 gap-3 mb-4">
-          <div className="p-4 rounded-2xl" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
-            <p className="text-xs font-semibold mb-2" style={{ color: ACCENT }}>適合對象</p>
-            <p className="text-sm text-gray-700 leading-relaxed">{food.ai_suitable_for ?? '–'}</p>
-          </div>
-          <div className="p-4 rounded-2xl" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
-            <p className="text-xs font-semibold mb-2 text-red-500">不適合對象</p>
-            <p className="text-sm text-gray-700 leading-relaxed">{food.ai_not_suitable ?? '–'}</p>
+        {/* 成分亮點 */}
+        <div className="p-4 rounded-2xl mb-4" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
+          <p className="text-xs font-semibold mb-3" style={{ color: '#6b7280', letterSpacing: '0.06em' }}>成分亮點</p>
+          <div className="flex flex-wrap gap-2">
+            {(food.protein_dm_pct ?? 0) >= 50 && (
+              <span className="text-xs px-3 py-1.5 rounded-full" style={{ background: '#e8f9ee', color: '#1a7f37' }}>✓ 蛋白質（乾重）{food.protein_dm_pct?.toFixed(1)}%，極高</span>
+            )}
+            {(food.protein_dm_pct ?? 0) >= 40 && (food.protein_dm_pct ?? 0) < 50 && (
+              <span className="text-xs px-3 py-1.5 rounded-full" style={{ background: '#e8f9ee', color: '#1a7f37' }}>✓ 蛋白質（乾重）{food.protein_dm_pct?.toFixed(1)}%，優秀</span>
+            )}
+            {(food.protein_dm_pct ?? 0) < 30 && (
+              <span className="text-xs px-3 py-1.5 rounded-full" style={{ background: '#ffeaea', color: '#c0392b' }}>! 蛋白質（乾重）{food.protein_dm_pct?.toFixed(1)}%，偏低</span>
+            )}
+            {(food.carb_dm_pct ?? 100) <= 10 && (
+              <span className="text-xs px-3 py-1.5 rounded-full" style={{ background: '#e8f9ee', color: '#1a7f37' }}>✓ 碳水（乾重）{food.carb_dm_pct?.toFixed(1)}%，極低</span>
+            )}
+            {(food.carb_dm_pct ?? 0) > 30 && (
+              <span className="text-xs px-3 py-1.5 rounded-full" style={{ background: '#ffeaea', color: '#c0392b' }}>! 碳水（乾重）{food.carb_dm_pct?.toFixed(1)}%，偏高</span>
+            )}
+            {!food.has_grain && (
+              <span className="text-xs px-3 py-1.5 rounded-full" style={{ background: '#e8f9ee', color: '#1a7f37' }}>✓ 無穀配方</span>
+            )}
+            {food.has_grain && (
+              <span className="text-xs px-3 py-1.5 rounded-full" style={{ background: '#ffeaea', color: '#c0392b' }}>! 含穀物成分</span>
+            )}
+            {food.is_aafco_certified && (
+              <span className="text-xs px-3 py-1.5 rounded-full" style={{ background: '#e6f0fb', color: '#1554a0' }}>✓ AAFCO 認證</span>
+            )}
+            {!food.is_aafco_certified && (
+              <span className="text-xs px-3 py-1.5 rounded-full" style={{ background: '#f3f4f6', color: '#6b7280' }}>— 未標示 AAFCO 認證</span>
+            )}
+            {food.ash_pct != null && food.ash_pct <= 8 && (
+              <span className="text-xs px-3 py-1.5 rounded-full" style={{ background: '#e8f9ee', color: '#1a7f37' }}>✓ 灰分 {food.ash_pct}%，低</span>
+            )}
+            {food.ash_pct != null && food.ash_pct > 10 && (
+              <span className="text-xs px-3 py-1.5 rounded-full" style={{ background: '#ffeaea', color: '#c0392b' }}>! 灰分 {food.ash_pct}%，偏高</span>
+            )}
+            {food.ash_pct == null && (
+              <span className="text-xs px-3 py-1.5 rounded-full" style={{ background: '#f3f4f6', color: '#6b7280' }}>— 灰分未公開</span>
+            )}
           </div>
         </div>
 
@@ -234,51 +253,41 @@ export default function FoodDetailClient({ food }: { food: CatFood }) {
           )
         })()}
 
-        {/* Expandable detail */}
-        <div className="rounded-2xl overflow-hidden" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
-          <button
-            onClick={() => setShowDetail(v => !v)}
-            className="w-full flex justify-between items-center px-5 py-4 text-sm font-semibold"
-            style={{ color: ACCENT }}
-          >
-            完整分析
-            <svg
-              width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"
-              style={{ transform: showDetail ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s' }}
-            >
-              <path d="m6 9 6 6 6-6"/>
-            </svg>
-          </button>
+        {/* 成分分析 */}
+        {(pros.length > 0 || cons.length > 0) && (
+          <div className="flex flex-col gap-3 mb-4">
+            {pros.length > 0 && (
+              <div className="p-4 rounded-2xl" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
+                <p className="text-xs font-semibold mb-2" style={{ color: '#1a7f37' }}>成分優勢</p>
+                <ul className="space-y-1.5">
+                  {pros.map((p, i) => (
+                    <li key={i} className="text-sm flex gap-2" style={{ color: '#1a4731' }}>
+                      <span className="shrink-0">·</span>{p}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {cons.length > 0 && (
+              <div className="p-4 rounded-2xl" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
+                <p className="text-xs font-semibold mb-2 text-red-400">成分注意</p>
+                <ul className="space-y-1.5">
+                  {cons.map((c, i) => (
+                    <li key={i} className="text-sm flex gap-2" style={{ color: '#7f1d1d' }}>
+                      <span className="shrink-0">·</span>{c}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        )}
 
-          {showDetail && (
-            <div className="px-5 pb-5 pt-1 border-t" style={{ borderColor: '#f3f4f6' }}>
-              {pros.length > 0 && (
-                <div className="mt-5 p-4 rounded-xl" style={{ background: '#e8f9ee' }}>
-                  <p className="text-xs font-semibold mb-2" style={{ color: '#1a7f37' }}>優點</p>
-                  <ul className="space-y-1">
-                    {pros.map((p, i) => (
-                      <li key={i} className="text-sm flex gap-2" style={{ color: '#1a4731' }}>
-                        <span className="shrink-0">·</span>{p}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {cons.length > 0 && (
-                <div className="mt-3 p-4 rounded-xl" style={{ background: '#ffeaea' }}>
-                  <p className="text-xs font-semibold mb-2 text-red-500">缺點</p>
-                  <ul className="space-y-1">
-                    {cons.map((c, i) => (
-                      <li key={i} className="text-sm flex gap-2" style={{ color: '#7f1d1d' }}>
-                        <span className="shrink-0">·</span>{c}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
+        {/* 免責聲明 */}
+        <p className="text-xs text-center leading-relaxed mb-6" style={{ color: '#9ca3af' }}>
+          ⚠️ 本站評分依據成分數據計算，不構成獸醫建議。<br />
+          有特殊疾病或健康需求的貓咪，請諮詢獸醫後再做選擇。
+        </p>
       </div>
     </main>
   )
