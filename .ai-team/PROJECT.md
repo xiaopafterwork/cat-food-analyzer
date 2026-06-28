@@ -4,61 +4,87 @@
 - 網址：https://cat-food-analyzer.vercel.app/
 - 技術：Next.js 14 + Tailwind + Supabase + Vercel
 - 目標：台灣最完整的貓飼料＋罐頭分析平台，以此為主業收入來源
+- 最後更新：2026-06-28
 
 ## 現在做到哪
-- [x] 網站上線（Vercel）
-- [x] 首頁（搜尋框 + 篩選 + 熱門飼料卡片）
-- [x] 飼料詳細頁（分數 + 三行結論 + 折疊分析）
-- [x] Supabase 資料庫 schema
-- [x] 11 筆真實飼料資料（乾糧）
-- [x] 評分邏輯（Python Pipeline）
-- [x] 規則式文案邏輯
-- [x] 每款飼料填入 ai_pros / ai_cons / ai_suitable_for / ai_not_suitable
-- [x] 評分標準對齊 AAFCO + CatInfo.org 國際標準（蛋白質門檻、灰分扣分）
-- [ ] Apple 風格 UI 改版（設計稿已完成，待實作）
-- [ ] 比較模式（最多同時比較 5 款飼料）
-- [ ] 進階篩選（無穀、低碳水、蛋白質範圍）
-- [ ] 收藏功能（localStorage，不需資料庫）
-- [ ] Donate 按鈕（Ko-fi，$0 成本）
-- [ ] 罐頭資料與評分邏輯（濕食水分修正）
-- [ ] 爬蟲自動化（目前手動收集）
-- [ ] 真實飼料資料（目標：30 款乾糧 + 20 款罐頭）
-- [ ] 請求新增飼料表單
-- [ ] SEO 優化
-- [ ] 聯盟行銷連結
+
+### ✅ 已完成
+- 網站上線（Vercel auto-deploy，push to master 即上線）
+- 首頁（搜尋框 + 篩選 + 飼料卡片 + 浮動比較條）
+- 飼料詳細頁（分數 + 三行結論 + 折疊分析 + hover tooltip）
+- 比較頁（最多 3 款飼料並排）
+- 評分標準頁（/how-we-score，80分以上標籤為「優質主食」，無 FAQ）
+- 新增飼料需求頁（/request）
+- 漢堡選單 Nav（全頁面共用，mobile 優先）
+- Supabase 資料庫 67 筆乾糧（品牌格式：中文 English）
+- 評分邏輯（成分 40 + 營養 30 + 透明度 30 = 100）
+- Python Pipeline：phase1_export.py → Excel 審核 → phase2_crawl.py → run_pipeline.py
+- 去重工具：scripts/dedup.py
+- 每款飼料 ai_pros / ai_cons / ai_summary（67 筆中 6 筆缺 ai_cons）
+- 乾物比 tooltip（DM → 乾物比，全資料庫已替換）
+- 包裝保證值 / 熱量來源比 tooltip（down 方向避免被遮）
+- 標籤：無穀 / 含穀 / AAFCO / 低碳水 / 高肉含量 / 優質主食
+- .claude/settings.json：git/npm/npx/python 免詢問權限
+
+### ❌ 尚未實作
+- GA4 Measurement ID 填入 Vercel 環境變數（NEXT_PUBLIC_GA_ID）
+- 評論區（星等 + 文字，匿名，需老闆核准 → Supabase reviews table）
+- 關於我們頁（/about）
+- Donate 按鈕（Ko-fi，第一階段收益）
+- 聯盟行銷連結（PChome / momo，流量 1000 UV 後啟動）
+- 收藏功能（localStorage）
+- 鈣磷比（資料缺失，未來路線圖）
+- 罐頭資料與評分邏輯
+
+## Git 工作流
+- 主分支：master
+- 推送：`git push origin HEAD:master`（新 session 在 worktree 分支時也適用）
+- 設定檔：`.claude/settings.json` 已設定免詢問權限
+
+## Python Pipeline 流程
+```
+phase1_export.py → 輸出 Excel（含自動找 URL）
+→ 人工審核 Excel（批准欄填 Y）
+→ phase2_crawl.py → 爬官網 + PChome → 輸出 JSON
+→ run_pipeline.py → 清洗 → 評分 → 文案 → 上傳 Supabase
+```
+
+## 評論區規劃（待實作）
+- Supabase 新增 `reviews` table：food_id, rating(1-5), comment, status(pending/approved), created_at
+- RLS：anon 可 INSERT，SELECT 只看 approved
+- 飼料詳情頁底部顯示已核准評論 + 留言表單
+- 老闆在 Supabase Dashboard 手動改 status = approved
+
+## 數據追蹤
+- 資料庫筆數：67（乾糧）
+- 月收入：NT$0（尚未啟動收益化）
+- 月流量：待 GA4 設定後追蹤
 
 ## 產品路線圖
 
 ### 第一階段：乾糧站穩（現在）
-- 目標：50 款乾糧資料
-- 完成評分、文案、上線
+- [x] 67 款乾糧上線
+- [ ] GA4 追蹤開啟
+- [ ] Donate 按鈕上線
+- [ ] 補齊 6 筆缺漏 ai_cons
 
-### 第二階段：加入罐頭（1–2 個月後）
-- 新增 food_type = wet 的評分邏輯（乾物質換算不同）
-- 新增罐頭篩選器
-- 目標：20 款主流罐頭
-- 品牌：汪喵星球、K9 Natural、Addiction 自然癮食、Ziwi Peak、主食罐系列
+### 第二階段：流量變現（月流量 1,000 UV 後）
+- [ ] PChome 聯盟行銷連結
+- [ ] 評論區功能上線
+- [ ] SEO 優化
 
-### 第三階段：完整平台（3–6 個月）
-- 乾糧 + 罐頭合併排行榜
-- 依蛋白質來源篩選（雞／魚／羊）
-- 用戶可提交飼料請求
+### 第三階段：加入罐頭（1–2 個月後）
+- [ ] 新增濕食評分邏輯
+- [ ] 目標：20 款主流罐頭
 
-## 設計方向
-- 風格：Apple 風格（白底、大圓角、毛玻璃 Nav、細邊線、大量留白）
-- 分數顯示：圓形色塊，顏色依分數變化（綠/藍/橘/紅）
-- 篩選標籤：無穀、幼貓、成貓、全齡
-- 功能優先順序：比較模式 → 進階篩選 → 收藏 → Donate → 罐頭
+### 第四階段：完整平台（3–6 個月）
+- [ ] 月收入目標 NT$30,000+
+- [ ] 廠商合作
 
-## 營運成本
-- 所有計畫功能均為前端邏輯，無需額外後端
-- 月費用：$0（Vercel 免費方案 + Supabase 免費方案）
-- 升級門檻：月流量 > 10 萬 UV 才需考慮
-
-## 數據追蹤
-- 月流量：待追蹤
-- 資料庫筆數：11（乾糧）
-- 月收入：NT$0
+## 收益路線圖
+1. Donate（現在）→ 月收 NT$1,000–3,000
+2. 聯盟行銷 PChome（流量 1,000+ UV）→ NT$1,000–3,000/月
+3. 廠商合作（流量 5,000+ UV）→ NT$30,000+/月
 
 ## 本週目標
 （每週由 CEO 更新）
