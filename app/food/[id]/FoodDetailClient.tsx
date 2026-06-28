@@ -1,7 +1,95 @@
 'use client'
 
+import { useState } from 'react'
 import Nav from '@/components/Nav'
 import { CatFood } from '@/lib/supabase'
+
+const ACCENT = '#3D5A3E'
+
+type Review = { id: string; nickname: string; rating: number; body: string; created_at: string }
+
+function StarDisplay({ rating }: { rating: number }) {
+  return (
+    <span>
+      {[1,2,3,4,5].map(i => (
+        <span key={i} style={{ color: i <= rating ? '#f59e0b' : '#d1d5db', fontSize: 14 }}>★</span>
+      ))}
+    </span>
+  )
+}
+
+function ReviewForm({ foodId }: { foodId: string }) {
+  const [nickname, setNickname] = useState('')
+  const [rating, setRating] = useState(0)
+  const [body, setBody] = useState('')
+  const [hover, setHover] = useState(0)
+  const [status, setStatus] = useState<'idle' | 'loading' | 'done' | 'error'>('idle')
+
+  async function submit() {
+    if (!nickname.trim() || !rating || !body.trim()) return
+    setStatus('loading')
+    const res = await fetch('/api/reviews', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ food_id: foodId, nickname, rating, body }),
+    })
+    setStatus(res.ok ? 'done' : 'error')
+  }
+
+  if (status === 'done') {
+    return (
+      <div className="text-center py-6">
+        <p className="text-sm font-semibold text-gray-700 mb-1">感謝你的留言！</p>
+        <p className="text-xs text-gray-400">審核通過後就會顯示在這裡 🐾</p>
+      </div>
+    )
+  }
+
+  return (
+    <div className="flex flex-col gap-3">
+      <input
+        type="text"
+        placeholder="你的暱稱"
+        value={nickname}
+        onChange={e => setNickname(e.target.value)}
+        maxLength={20}
+        className="w-full px-4 py-2.5 rounded-xl text-sm outline-none"
+        style={{ border: '0.5px solid #d1d5db', background: '#fafafa' }}
+      />
+      {/* 星等選擇 */}
+      <div className="flex items-center gap-1">
+        <span className="text-xs text-gray-500 mr-1">評分</span>
+        {[1,2,3,4,5].map(i => (
+          <button
+            key={i}
+            type="button"
+            onClick={() => setRating(i)}
+            onMouseEnter={() => setHover(i)}
+            onMouseLeave={() => setHover(0)}
+            style={{ fontSize: 24, color: i <= (hover || rating) ? '#f59e0b' : '#d1d5db', lineHeight: 1 }}
+          >★</button>
+        ))}
+      </div>
+      <textarea
+        placeholder="分享你的使用心得…"
+        value={body}
+        onChange={e => setBody(e.target.value)}
+        rows={3}
+        className="w-full px-4 py-2.5 rounded-xl text-sm outline-none resize-none"
+        style={{ border: '0.5px solid #d1d5db', background: '#fafafa' }}
+      />
+      {status === 'error' && <p className="text-xs text-red-400">送出失敗，請稍後再試</p>}
+      <button
+        onClick={submit}
+        disabled={!nickname.trim() || !rating || !body.trim() || status === 'loading'}
+        className="w-full py-2.5 rounded-full text-sm font-semibold text-white disabled:opacity-40"
+        style={{ background: ACCENT }}
+      >
+        {status === 'loading' ? '送出中…' : '送出留言'}
+      </button>
+    </div>
+  )
+}
 
 
 function getScoreBadge(score: number | null): { bg: string; color: string } {
@@ -75,7 +163,7 @@ function parseList(val: unknown): string[] {
   return String(val).split(/[、，,]/).map(s => s.trim()).filter(Boolean)
 }
 
-export default function FoodDetailClient({ food }: { food: CatFood }) {
+export default function FoodDetailClient({ food, reviews }: { food: CatFood; reviews: Review[] }) {
   const badge = getScoreBadge(food.score_total)
   const pros = parseList(food.ai_pros)
   const cons = parseList(food.ai_cons)
@@ -271,6 +359,37 @@ export default function FoodDetailClient({ food }: { food: CatFood }) {
             )}
           </div>
         )}
+
+        {/* 留言區 */}
+        <div className="mb-6">
+          <p className="text-xs font-semibold uppercase text-gray-400 mb-4" style={{ letterSpacing: '0.08em' }}>
+            貓奴留言 {reviews.length > 0 && <span className="font-normal normal-case">· {reviews.length} 則</span>}
+          </p>
+
+          {/* 已核准留言 */}
+          {reviews.length > 0 ? (
+            <div className="flex flex-col gap-3 mb-6">
+              {reviews.map(r => (
+                <div key={r.id} className="p-4 rounded-2xl" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-sm font-semibold text-gray-800">{r.nickname}</span>
+                    <StarDisplay rating={r.rating} />
+                  </div>
+                  <p className="text-sm text-gray-600 leading-relaxed">{r.body}</p>
+                  <p className="text-xs text-gray-300 mt-2">{new Date(r.created_at).toLocaleDateString('zh-TW')}</p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-sm text-gray-400 mb-6">還沒有留言，來第一個分享使用心得吧！</p>
+          )}
+
+          {/* 留言表單 */}
+          <div className="p-4 rounded-2xl" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
+            <p className="text-sm font-semibold text-gray-700 mb-3">留下你的評價</p>
+            <ReviewForm foodId={food.id} />
+          </div>
+        </div>
 
         {/* 支持喵評鑑 */}
         <div

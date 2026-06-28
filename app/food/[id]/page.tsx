@@ -43,15 +43,16 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
 
 export default async function FoodDetailPage({ params }: { params: { id: string } }) {
   const supabase = getSupabase()
-  const { data: food } = await supabase
-    .from('cat_foods')
-    .select('*')
-    .eq('id', params.id)
-    .single()
+  const [{ data: food }, { data: reviews }] = await Promise.all([
+    supabase.from('cat_foods').select('*').eq('id', params.id).single(),
+    supabase.from('reviews').select('id, nickname, rating, body, created_at')
+      .eq('food_id', params.id).eq('status', 'approved')
+      .order('created_at', { ascending: false }),
+  ])
 
   if (!food) {
     return <div className="min-h-screen flex items-center justify-center text-gray-400">找不到此飼料</div>
   }
 
-  return <FoodDetailClient food={food} />
+  return <FoodDetailClient food={food} reviews={reviews ?? []} />
 }
