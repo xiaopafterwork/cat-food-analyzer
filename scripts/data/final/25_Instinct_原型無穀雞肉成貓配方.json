@@ -1,0 +1,31 @@
+{
+  "name": "原型無穀雞肉成貓配方",
+  "brand": "Instinct",
+  "life_stage": "adult",
+  "food_type": "dry",
+  "country": "美國",
+  "source_url": "https://www.instinctpetfood.com",
+  "ingredients_raw": "去骨雞肉、火雞粉、雞粉、雞脂肪、豌豆蛋白、南瓜籽",
+  "protein_pct": 43.0,
+  "fat_pct": 20.0,
+  "fiber_pct": 4.0,
+  "moisture_pct": 10.0,
+  "ash_pct": 9.0,
+  "has_grain": false,
+  "has_allergen": false,
+  "has_4d_meat": false,
+  "is_aafco_certified": true,
+  "protein_dm_pct": 47.8,
+  "fat_dm_pct": 22.2,
+  "carb_dm_pct": 15.6,
+  "score_ingredient": 40,
+  "score_nutrition": 25,
+  "score_transparency": 30,
+  "score_total": 95,
+  "score_label": "強烈推薦",
+  "ai_summary": {
+    "good": "蛋白質含量極高，非常適合肉食性的貓咪需求",
+    "warning": "碳水化合物控制良好，適合需要低碳飲食的貓咪",
+    "bad": "無明顯成分疑慮"
+  }
+}

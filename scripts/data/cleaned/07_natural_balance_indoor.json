@@ -1,0 +1,21 @@
+{
+  "name": "室內無穀雞肉鮭魚配方",
+  "brand": "Natural Balance",
+  "life_stage": "adult",
+  "food_type": "dry",
+  "country": "美國",
+  "source_url": "https://www.naturalbalanceinc.com/cat-recipes/dry/original-ultra/indoor-grain-free-chicken-salmon-meal-recipe",
+  "ingredients_raw": "Chicken, Chicken Meal, Tapioca Starch, Peas, Brewers Dried Yeast, Chicken Fat, Salmon Meal, Pea Fiber, Natural Flavor, Flaxseed, Dried Plain Beet Pulp, Dehydrated Alfalfa Meal, Sweet Potatoes, Potassium Chloride, Choline Chloride, Taurine, vitamins, minerals",
+  "protein_pct": 33.0,
+  "fat_pct": 15.0,
+  "fiber_pct": 6.5,
+  "moisture_pct": 10.0,
+  "ash_pct": 7.0,
+  "has_grain": false,
+  "has_allergen": false,
+  "has_4d_meat": false,
+  "is_aafco_certified": true,
+  "protein_dm_pct": 36.7,
+  "fat_dm_pct": 16.7,
+  "carb_dm_pct": 31.7
+}

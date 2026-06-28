@@ -1,0 +1,21 @@
+{
+  "name": "無穀雞肉幼貓配方",
+  "brand": "Brit Care",
+  "life_stage": "kitten",
+  "food_type": "dry",
+  "country": "捷克",
+  "source_url": "https://www.brit-petfood.com",
+  "ingredients_raw": "雞肉、雞肉粉、豌豆、馬鈴薯、雞脂肪、亞麻仁、DHA",
+  "protein_pct": 38.0,
+  "fat_pct": 20.0,
+  "fiber_pct": 3.0,
+  "moisture_pct": 10.0,
+  "ash_pct": 7.5,
+  "has_grain": false,
+  "has_allergen": false,
+  "has_4d_meat": false,
+  "is_aafco_certified": false,
+  "protein_dm_pct": 42.2,
+  "fat_dm_pct": 22.2,
+  "carb_dm_pct": 23.9
+}

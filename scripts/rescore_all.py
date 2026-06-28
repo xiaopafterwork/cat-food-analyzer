@@ -13,8 +13,8 @@ SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJ
 
 
 def get_label(total: int) -> str:
-    if total >= 85: return "優質主食"
-    if total >= 70: return "不錯的選擇"
+    if total >= 80: return "優質主食"
+    if total >= 65: return "不錯的選擇"
     if total >= 50: return "可以接受"
     return "需謹慎"
 
@@ -32,21 +32,21 @@ def score(food: dict) -> tuple[int, str]:
 
     total = 0
 
-    # 蛋白質 (40分)
-    if   p >= 50: total += 40
-    elif p >= 45: total += 35
-    elif p >= 40: total += 30
-    elif p >= 35: total += 26
-    elif p >= 30: total += 18
-    elif p >= 26: total += 9
-    else:         total += 3
+    # 蛋白質 (30分)
+    if   p >= 50: total += 30
+    elif p >= 45: total += 26
+    elif p >= 40: total += 22
+    elif p >= 35: total += 20
+    elif p >= 30: total += 13
+    elif p >= 26: total += 7
+    else:         total += 2
 
-    # 碳水 (25分)
-    if   c <= 10: total += 25
-    elif c <= 20: total += 20
-    elif c <= 30: total += 15
-    elif c <= 40: total += 12
-    else:         total += 3
+    # 碳水 (15分)
+    if   c <= 10: total += 15
+    elif c <= 20: total += 12
+    elif c <= 30: total += 9
+    elif c <= 40: total += 8
+    else:         total += 2
 
     # 脂肪 (10分)
     if has_fat_data and f > 0:
@@ -55,18 +55,18 @@ def score(food: dict) -> tuple[int, str]:
         elif  9 <= f < 15: total += 4
         else: total += 1
 
-    # 透明度 (20分)
-    if is_aafco:        total += 8
+    # 透明度 (30分：AAFCO 18 + 成分 7 + 灰分 5)
+    if is_aafco:        total += 18
     if has_ingredients: total += 7
     if has_ash_data:    total += 5
 
-    # 無穀 (5分)
-    if not has_grain: total += 5
+    # 無穀 (8分)
+    if not has_grain: total += 8
 
-    # 灰分品質 (5分)
+    # 灰分品質 (7分)
     if has_ash_data:
-        if   a <= 8:  total += 5
-        elif a <= 10: total += 2
+        if   a <= 8:  total += 7
+        elif a <= 10: total += 3
 
     total = max(0, min(100, total))
     return total, get_label(total)

@@ -1,0 +1,18 @@
+{
+  "name": "成貓雞肉全穀物配方",
+  "brand": "Purina ONE",
+  "life_stage": "adult",
+  "food_type": "dry",
+  "country": "美國",
+  "source_url": "https://www.purinaone.com",
+  "ingredients_raw": "雞肉、玉米麩質粉、釀酒酵母、全粒玉米、雞脂肪、米",
+  "protein_pct": 34.0,
+  "fat_pct": 14.0,
+  "fiber_pct": 3.0,
+  "moisture_pct": 12.0,
+  "ash_pct": 7.0,
+  "has_grain": true,
+  "has_allergen": false,
+  "has_4d_meat": false,
+  "is_aafco_certified": true
+}

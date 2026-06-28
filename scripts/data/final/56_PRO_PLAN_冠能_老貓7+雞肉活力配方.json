@@ -1,0 +1,31 @@
+{
+  "name": "老貓7+雞肉活力配方",
+  "brand": "PRO PLAN 冠能",
+  "life_stage": "senior",
+  "food_type": "dry",
+  "country": "澳洲",
+  "source_url": "https://www.purina-proplan.com",
+  "ingredients_raw": "雞肉、全粒小麥、玉米麩質粉、動物脂肪、米、魚油",
+  "protein_pct": 36.0,
+  "fat_pct": 13.0,
+  "fiber_pct": 4.0,
+  "moisture_pct": 12.0,
+  "ash_pct": 7.0,
+  "has_grain": true,
+  "has_allergen": false,
+  "has_4d_meat": false,
+  "is_aafco_certified": true,
+  "protein_dm_pct": 40.9,
+  "fat_dm_pct": 14.8,
+  "carb_dm_pct": 31.8,
+  "score_ingredient": 34,
+  "score_nutrition": 17,
+  "score_transparency": 30,
+  "score_total": 81,
+  "score_label": "強烈推薦",
+  "ai_summary": {
+    "good": "蛋白質含量優秀，符合貓咪日常營養需求",
+    "warning": "碳水化合物中等（31.8%），在可接受範圍內",
+    "bad": "含穀類成分，有穀物過敏的貓咪需避免"
+  }
+}

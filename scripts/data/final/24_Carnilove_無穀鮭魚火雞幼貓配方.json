@@ -1,0 +1,31 @@
+{
+  "name": "無穀鮭魚火雞幼貓配方",
+  "brand": "Carnilove",
+  "life_stage": "kitten",
+  "food_type": "dry",
+  "country": "捷克",
+  "source_url": "https://carnilove.com",
+  "ingredients_raw": "脫水鮭魚、脫水火雞肉、鮭魚油、豌豆、亞麻仁、DHA",
+  "protein_pct": 40.0,
+  "fat_pct": 20.0,
+  "fiber_pct": 2.0,
+  "moisture_pct": 10.0,
+  "ash_pct": 7.5,
+  "has_grain": false,
+  "has_allergen": false,
+  "has_4d_meat": false,
+  "is_aafco_certified": false,
+  "protein_dm_pct": 44.4,
+  "fat_dm_pct": 22.2,
+  "carb_dm_pct": 22.8,
+  "score_ingredient": 40,
+  "score_nutrition": 22,
+  "score_transparency": 20,
+  "score_total": 82,
+  "score_label": "強烈推薦",
+  "ai_summary": {
+    "good": "蛋白質含量優秀，符合貓咪日常營養需求",
+    "warning": "碳水化合物控制良好，適合需要低碳飲食的貓咪",
+    "bad": "無明顯成分疑慮"
+  }
+}

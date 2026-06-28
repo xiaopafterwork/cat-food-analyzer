@@ -1,0 +1,21 @@
+{
+  "name": "無穀羊肉全齡配方",
+  "brand": "Zignature",
+  "life_stage": "all",
+  "food_type": "dry",
+  "country": "美國",
+  "source_url": "https://www.zignature.com",
+  "ingredients_raw": "羊肉、羊肉粉、豌豆蛋白、豌豆、豌豆澱粉、亞麻仁、羊脂肪",
+  "protein_pct": 35.0,
+  "fat_pct": 15.0,
+  "fiber_pct": 4.0,
+  "moisture_pct": 10.0,
+  "ash_pct": 8.0,
+  "has_grain": false,
+  "has_allergen": false,
+  "has_4d_meat": false,
+  "is_aafco_certified": true,
+  "protein_dm_pct": 38.9,
+  "fat_dm_pct": 16.7,
+  "carb_dm_pct": 31.1
+}

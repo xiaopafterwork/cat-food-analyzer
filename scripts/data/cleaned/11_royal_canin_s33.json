@@ -1,0 +1,21 @@
+{
+  "name": "S33 腸胃敏感成貓專用飼料",
+  "brand": "法國皇家 Royal Canin",
+  "life_stage": "adult",
+  "food_type": "dry",
+  "country": "法國",
+  "source_url": "https://www.royalcanin.com/tw/cats/products/retail-products/sensible-33-2521",
+  "ingredients_raw": "脫水家禽蛋白、米、動物脂肪、植物分離蛋白、小麥麵粉、水解動物蛋白、玉米、小麥、玉米麩質、酵母及酵母提取物、甜菜漿、礦物質、魚油、蔬菜纖維、大豆油、果寡糖",
+  "protein_pct": 33.0,
+  "fat_pct": 22.0,
+  "fiber_pct": 1.6,
+  "moisture_pct": 10.0,
+  "ash_pct": 7.7,
+  "has_grain": true,
+  "has_allergen": false,
+  "has_4d_meat": false,
+  "is_aafco_certified": true,
+  "protein_dm_pct": 36.7,
+  "fat_dm_pct": 24.4,
+  "carb_dm_pct": 28.6
+}

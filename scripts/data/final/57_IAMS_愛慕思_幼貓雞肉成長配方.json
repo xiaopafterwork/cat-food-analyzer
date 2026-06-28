@@ -1,0 +1,31 @@
+{
+  "name": "幼貓雞肉成長配方",
+  "brand": "IAMS 愛慕思",
+  "life_stage": "kitten",
+  "food_type": "dry",
+  "country": "比利時",
+  "source_url": "https://www.iams.com",
+  "ingredients_raw": "雞肉、雞肉粉、玉米、玉米麩質粉、雞脂肪、甜菜漿",
+  "protein_pct": 34.0,
+  "fat_pct": 18.0,
+  "fiber_pct": 3.0,
+  "moisture_pct": 10.0,
+  "ash_pct": 7.5,
+  "has_grain": true,
+  "has_allergen": false,
+  "has_4d_meat": false,
+  "is_aafco_certified": true,
+  "protein_dm_pct": 37.8,
+  "fat_dm_pct": 20.0,
+  "carb_dm_pct": 30.6,
+  "score_ingredient": 30,
+  "score_nutrition": 16,
+  "score_transparency": 30,
+  "score_total": 76,
+  "score_label": "不錯的選擇",
+  "ai_summary": {
+    "good": "蛋白質含量達標，基本需求足夠",
+    "warning": "碳水化合物中等（30.6%），在可接受範圍內",
+    "bad": "含穀類成分，有穀物過敏的貓咪需避免"
+  }
+}

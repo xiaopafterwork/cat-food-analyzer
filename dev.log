@@ -13,3 +13,34 @@ You can learn more, including how to opt-out if you'd not like to participate in
 https://nextjs.org/telemetry
 
  ✓ Ready in 3.6s
+ ○ Compiling / ...
+ ✓ Compiled / in 3.8s (643 modules)
+ GET / 200 in 4089ms
+ ✓ Compiled in 336ms (309 modules)
+ ○ Compiling /favicon.ico ...
+ ✓ Compiled /favicon.ico in 1920ms (348 modules)
+ GET /favicon.ico 200 in 1989ms
+ GET / 200 in 117ms
+ GET /favicon.ico 200 in 12ms
+ GET / 200 in 43ms
+ GET /favicon.ico 200 in 8ms
+ ✓ Compiled /food/[id] in 430ms (651 modules)
+ ✓ Compiled in 223ms (633 modules)
+ ✓ Compiled in 57ms (312 modules)
+ ✓ Compiled in 195ms (633 modules)
+ ✓ Compiled in 250ms (633 modules)
+ ✓ Compiled in 101ms (633 modules)
+ ✓ Compiled in 115ms (633 modules)
+ ✓ Compiled in 198ms (633 modules)
+ ✓ Compiled in 251ms (633 modules)
+ ✓ Compiled in 173ms (633 modules)
+ ✓ Compiled in 51ms (312 modules)
+ ✓ Compiled in 61ms (312 modules)
+ ✓ Compiled in 81ms (619 modules)
+ ✓ Compiled in 106ms (312 modules)
+ ✓ Compiled in 59ms (312 modules)
+ ✓ Compiled in 61ms (312 modules)
+ ✓ Compiled in 57ms (312 modules)
+ ✓ Compiled in 59ms (312 modules)
+ ✓ Compiled in 53ms (312 modules)
+ ✓ Compiled in 296ms (633 modules)

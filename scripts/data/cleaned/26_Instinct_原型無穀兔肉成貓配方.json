@@ -1,0 +1,21 @@
+{
+  "name": "原型無穀兔肉成貓配方",
+  "brand": "Instinct",
+  "life_stage": "adult",
+  "food_type": "dry",
+  "country": "美國",
+  "source_url": "https://www.instinctpetfood.com",
+  "ingredients_raw": "去骨兔肉、兔肉粉、雞脂肪、豌豆蛋白、亞麻仁",
+  "protein_pct": 43.0,
+  "fat_pct": 16.0,
+  "fiber_pct": 4.0,
+  "moisture_pct": 10.0,
+  "ash_pct": 9.5,
+  "has_grain": false,
+  "has_allergen": false,
+  "has_4d_meat": false,
+  "is_aafco_certified": true,
+  "protein_dm_pct": 47.8,
+  "fat_dm_pct": 17.8,
+  "carb_dm_pct": 19.4
+}

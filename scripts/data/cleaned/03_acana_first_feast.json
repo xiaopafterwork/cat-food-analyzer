@@ -1,0 +1,21 @@
+{
+  "name": "First Feast 幼貓鮮雞配方",
+  "brand": "ACANA 愛肯拿",
+  "life_stage": "kitten",
+  "food_type": "dry",
+  "country": "加拿大",
+  "source_url": "https://24h.pchome.com.tw/prod/DXBP0V-A900B6D8S",
+  "ingredients_raw": "鮮雞肉(19%)、脫水雞肉(13%)、脫水鯡魚(13%)、燕麥、豌豆、雞脂(7%)、綠扁豆、脫水火雞肉(5%)、鷹嘴豆、紅扁豆、鮮整條鯡魚(4%)、放養雞蛋(4%)、鱈魚油(2%)、扁豆纖維、鮮鵪鶉(1%)、鮮雞內臟(1%)、雞軟骨(1%)、乾燥海帶、新鮮蔬菜與水果、天然抗氧化劑",
+  "protein_pct": 37.0,
+  "fat_pct": 18.0,
+  "fiber_pct": 4.0,
+  "moisture_pct": 10.0,
+  "ash_pct": 10.0,
+  "has_grain": false,
+  "has_allergen": false,
+  "has_4d_meat": false,
+  "is_aafco_certified": true,
+  "protein_dm_pct": 41.1,
+  "fat_dm_pct": 20.0,
+  "carb_dm_pct": 23.3
+}

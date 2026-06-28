@@ -1,0 +1,21 @@
+{
+  "name": "英國短毛貓成貓專用飼料",
+  "brand": "法國皇家 Royal Canin",
+  "life_stage": "adult",
+  "food_type": "dry",
+  "country": "法國",
+  "source_url": "https://www.royalcanin.com/tw",
+  "ingredients_raw": "雞肉粉、米、動物脂肪、植物分離蛋白、玉米麩質、魚油",
+  "protein_pct": 31.0,
+  "fat_pct": 14.0,
+  "fiber_pct": 5.2,
+  "moisture_pct": 8.0,
+  "ash_pct": 6.8,
+  "has_grain": true,
+  "has_allergen": false,
+  "has_4d_meat": false,
+  "is_aafco_certified": true,
+  "protein_dm_pct": 33.7,
+  "fat_dm_pct": 15.2,
+  "carb_dm_pct": 38.0
+}

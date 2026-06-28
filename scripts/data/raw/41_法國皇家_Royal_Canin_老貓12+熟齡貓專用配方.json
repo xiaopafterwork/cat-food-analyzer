@@ -1,0 +1,18 @@
+{
+  "name": "老貓12+熟齡貓專用配方",
+  "brand": "法國皇家 Royal Canin",
+  "life_stage": "senior",
+  "food_type": "dry",
+  "country": "法國",
+  "source_url": "https://www.royalcanin.com/tw",
+  "ingredients_raw": "雞肉粉、米、動物脂肪、植物分離蛋白、玉米麩質、魚油、EPA+DHA",
+  "protein_pct": 30.0,
+  "fat_pct": 13.0,
+  "fiber_pct": 7.2,
+  "moisture_pct": 8.0,
+  "ash_pct": 7.0,
+  "has_grain": true,
+  "has_allergen": false,
+  "has_4d_meat": false,
+  "is_aafco_certified": true
+}

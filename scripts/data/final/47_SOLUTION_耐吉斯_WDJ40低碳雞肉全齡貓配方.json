@@ -1,0 +1,31 @@
+{
+  "name": "WDJ40低碳雞肉全齡貓配方",
+  "brand": "SOLUTION 耐吉斯",
+  "life_stage": "all",
+  "food_type": "dry",
+  "country": "台灣",
+  "source_url": "https://www.solution.com.tw",
+  "ingredients_raw": "去骨雞肉、雞肉粉、豌豆蛋白、豌豆、亞麻仁、雞脂肪",
+  "protein_pct": 40.0,
+  "fat_pct": 16.0,
+  "fiber_pct": 4.5,
+  "moisture_pct": 10.0,
+  "ash_pct": 8.5,
+  "has_grain": false,
+  "has_allergen": false,
+  "has_4d_meat": false,
+  "is_aafco_certified": true,
+  "protein_dm_pct": 44.4,
+  "fat_dm_pct": 17.8,
+  "carb_dm_pct": 23.3,
+  "score_ingredient": 40,
+  "score_nutrition": 22,
+  "score_transparency": 30,
+  "score_total": 92,
+  "score_label": "強烈推薦",
+  "ai_summary": {
+    "good": "蛋白質含量優秀，符合貓咪日常營養需求",
+    "warning": "碳水化合物控制良好，適合需要低碳飲食的貓咪",
+    "bad": "無明顯成分疑慮"
+  }
+}

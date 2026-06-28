@@ -1,0 +1,21 @@
+{
+  "name": "幼貓鮮雞配方",
+  "brand": "Orijen 歐睿健",
+  "life_stage": "kitten",
+  "food_type": "dry",
+  "country": "加拿大",
+  "source_url": "https://24h.pchome.com.tw/prod/DEBV5P-A900F9G4C",
+  "ingredients_raw": "鮮雞肉、鮮火雞肉、鮮雞內臟、脫水雞肉、鮮整條鯡魚、脫水火雞肉、鮮雞肝、脫水雞肝、脫水鯡魚、脫水雞蛋、紅扁豆、斑豆、綠豌豆、海軍豆、鷹嘴豆、綠扁豆、鱈魚油、雞脂、豌豆纖維、全南瓜、全冬南瓜、全胡蘿蔔、蘋果、梨子、凍乾雞肝",
+  "protein_pct": 40.0,
+  "fat_pct": 20.0,
+  "fiber_pct": 3.0,
+  "moisture_pct": 10.0,
+  "ash_pct": 8.5,
+  "has_grain": false,
+  "has_allergen": false,
+  "has_4d_meat": false,
+  "is_aafco_certified": true,
+  "protein_dm_pct": 44.4,
+  "fat_dm_pct": 22.2,
+  "carb_dm_pct": 20.6
+}

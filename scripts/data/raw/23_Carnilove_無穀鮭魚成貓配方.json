@@ -1,0 +1,18 @@
+{
+  "name": "無穀鮭魚成貓配方",
+  "brand": "Carnilove",
+  "life_stage": "adult",
+  "food_type": "dry",
+  "country": "捷克",
+  "source_url": "https://carnilove.com",
+  "ingredients_raw": "脫水鮭魚、鮭魚油、豌豆、甜菜漿、亞麻仁、蘋果",
+  "protein_pct": 36.0,
+  "fat_pct": 17.0,
+  "fiber_pct": 2.0,
+  "moisture_pct": 10.0,
+  "ash_pct": 8.8,
+  "has_grain": false,
+  "has_allergen": false,
+  "has_4d_meat": false,
+  "is_aafco_certified": false
+}

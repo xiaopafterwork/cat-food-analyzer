@@ -1,0 +1,18 @@
+{
+  "name": "希爾思成貓吐毛球控制",
+  "brand": "Hill's 希爾思",
+  "life_stage": "adult",
+  "food_type": "dry",
+  "country": "美國",
+  "source_url": "https://www.hillspet.com",
+  "ingredients_raw": "雞肉、全粒小麥、玉米麩質粉、動物脂肪、米、大豆纖維",
+  "protein_pct": 31.0,
+  "fat_pct": 11.5,
+  "fiber_pct": 8.5,
+  "moisture_pct": 10.0,
+  "ash_pct": 6.5,
+  "has_grain": true,
+  "has_allergen": false,
+  "has_4d_meat": false,
+  "is_aafco_certified": true
+}

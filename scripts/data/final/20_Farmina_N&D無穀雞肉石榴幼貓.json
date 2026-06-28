@@ -1,0 +1,31 @@
+{
+  "name": "N&D無穀雞肉石榴幼貓",
+  "brand": "Farmina",
+  "life_stage": "kitten",
+  "food_type": "dry",
+  "country": "義大利",
+  "source_url": "https://www.farmina.com",
+  "ingredients_raw": "脫水雞肉、雞油、豌豆、馬鈴薯蛋白、石榴、魚油、DHA",
+  "protein_pct": 44.0,
+  "fat_pct": 20.0,
+  "fiber_pct": 1.8,
+  "moisture_pct": 8.0,
+  "ash_pct": 8.5,
+  "has_grain": false,
+  "has_allergen": false,
+  "has_4d_meat": false,
+  "is_aafco_certified": true,
+  "protein_dm_pct": 47.8,
+  "fat_dm_pct": 21.7,
+  "carb_dm_pct": 19.2,
+  "score_ingredient": 40,
+  "score_nutrition": 25,
+  "score_transparency": 30,
+  "score_total": 95,
+  "score_label": "強烈推薦",
+  "ai_summary": {
+    "good": "蛋白質含量極高，非常適合肉食性的貓咪需求",
+    "warning": "碳水化合物控制良好，適合需要低碳飲食的貓咪",
+    "bad": "無明顯成分疑慮"
+  }
+}

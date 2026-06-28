@@ -1,0 +1,21 @@
+{
+  "name": "幼貓鮮雞成長配方",
+  "brand": "PRO PLAN 冠能",
+  "life_stage": "kitten",
+  "food_type": "dry",
+  "country": "澳洲",
+  "source_url": "https://24h.pchome.com.tw/prod/DEBV5D-A900FHPAY",
+  "ingredients_raw": "脫水雞肉、雞肉、全穀小麥、玉米麩質、動物脂肪、魚油、甜菜漿、礦物質、維生素、胺基酸、天然香料、抗氧化劑、菊苣纖維",
+  "protein_pct": 40.0,
+  "fat_pct": 20.0,
+  "fiber_pct": 1.5,
+  "moisture_pct": 9.0,
+  "ash_pct": 7.5,
+  "has_grain": true,
+  "has_allergen": false,
+  "has_4d_meat": false,
+  "is_aafco_certified": true,
+  "protein_dm_pct": 44.0,
+  "fat_dm_pct": 22.0,
+  "carb_dm_pct": 24.2
+}

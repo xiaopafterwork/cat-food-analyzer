@@ -1,0 +1,31 @@
+{
+  "name": "無穀鴨肉火雞成貓配方",
+  "brand": "Carnilove",
+  "life_stage": "adult",
+  "food_type": "dry",
+  "country": "捷克",
+  "source_url": "https://carnilove.com",
+  "ingredients_raw": "脫水鴨肉、脫水火雞肉、鴨脂肪、豌豆、蘋果、梨子、亞麻仁",
+  "protein_pct": 37.0,
+  "fat_pct": 18.0,
+  "fiber_pct": 3.0,
+  "moisture_pct": 10.0,
+  "ash_pct": 7.5,
+  "has_grain": false,
+  "has_allergen": false,
+  "has_4d_meat": false,
+  "is_aafco_certified": false,
+  "protein_dm_pct": 41.1,
+  "fat_dm_pct": 20.0,
+  "carb_dm_pct": 27.2,
+  "score_ingredient": 40,
+  "score_nutrition": 22,
+  "score_transparency": 20,
+  "score_total": 82,
+  "score_label": "強烈推薦",
+  "ai_summary": {
+    "good": "蛋白質含量優秀，符合貓咪日常營養需求",
+    "warning": "碳水化合物中等（27.2%），在可接受範圍內",
+    "bad": "無明顯成分疑慮"
+  }
+}

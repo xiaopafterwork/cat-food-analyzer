@@ -1,0 +1,21 @@
+{
+  "name": "純天然無穀全齡雞肉配方",
+  "brand": "Canidae",
+  "life_stage": "all",
+  "food_type": "dry",
+  "country": "美國",
+  "source_url": "https://www.canidae.com",
+  "ingredients_raw": "雞肉、火雞肉、羊肉、魚、雞蛋、甘薯、豌豆",
+  "protein_pct": 36.0,
+  "fat_pct": 16.0,
+  "fiber_pct": 4.0,
+  "moisture_pct": 10.0,
+  "ash_pct": 8.5,
+  "has_grain": false,
+  "has_allergen": false,
+  "has_4d_meat": false,
+  "is_aafco_certified": true,
+  "protein_dm_pct": 40.0,
+  "fat_dm_pct": 17.8,
+  "carb_dm_pct": 28.3
+}

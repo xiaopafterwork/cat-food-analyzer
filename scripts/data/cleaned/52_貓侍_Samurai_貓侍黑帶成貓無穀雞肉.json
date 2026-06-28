@@ -1,0 +1,21 @@
+{
+  "name": "貓侍黑帶成貓無穀雞肉",
+  "brand": "貓侍 Samurai",
+  "life_stage": "adult",
+  "food_type": "dry",
+  "country": "台灣",
+  "source_url": "https://www.catsamurai.com.tw",
+  "ingredients_raw": "去骨雞肉、雞肉粉、豌豆蛋白、豌豆、亞麻仁、雞脂肪、益生菌",
+  "protein_pct": 40.0,
+  "fat_pct": 18.0,
+  "fiber_pct": 4.0,
+  "moisture_pct": 10.0,
+  "ash_pct": 8.0,
+  "has_grain": false,
+  "has_allergen": false,
+  "has_4d_meat": false,
+  "is_aafco_certified": true,
+  "protein_dm_pct": 44.4,
+  "fat_dm_pct": 20.0,
+  "carb_dm_pct": 22.2
+}

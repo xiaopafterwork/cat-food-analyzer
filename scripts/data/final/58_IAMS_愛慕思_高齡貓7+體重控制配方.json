@@ -1,0 +1,31 @@
+{
+  "name": "高齡貓7+體重控制配方",
+  "brand": "IAMS 愛慕思",
+  "life_stage": "senior",
+  "food_type": "dry",
+  "country": "比利時",
+  "source_url": "https://www.iams.com",
+  "ingredients_raw": "雞肉、雞肉粉、玉米、玉米麩質粉、雞脂肪、甜菜漿、L-肉鹼",
+  "protein_pct": 30.0,
+  "fat_pct": 11.0,
+  "fiber_pct": 4.5,
+  "moisture_pct": 10.0,
+  "ash_pct": 7.0,
+  "has_grain": true,
+  "has_allergen": false,
+  "has_4d_meat": false,
+  "is_aafco_certified": true,
+  "protein_dm_pct": 33.3,
+  "fat_dm_pct": 12.2,
+  "carb_dm_pct": 41.7,
+  "score_ingredient": 25,
+  "score_nutrition": 9,
+  "score_transparency": 30,
+  "score_total": 64,
+  "score_label": "還可以，但有更好的",
+  "ai_summary": {
+    "good": "蛋白質含量達標，基本需求足夠",
+    "warning": "碳水化合物偏高（41.7%），長期食用建議搭配濕食",
+    "bad": "含穀類成分，有穀物過敏的貓咪需避免"
+  }
+}

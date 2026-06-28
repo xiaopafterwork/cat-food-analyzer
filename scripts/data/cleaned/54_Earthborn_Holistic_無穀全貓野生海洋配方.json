@@ -1,0 +1,21 @@
+{
+  "name": "無穀全貓野生海洋配方",
+  "brand": "Earthborn Holistic",
+  "life_stage": "all",
+  "food_type": "dry",
+  "country": "美國",
+  "source_url": "https://www.earthbornholisticpetfood.com",
+  "ingredients_raw": "白鮭魚粉、鱈魚粉、豌豆蛋白、豌豆、馬鈴薯、雞脂肪、亞麻仁",
+  "protein_pct": 42.0,
+  "fat_pct": 15.0,
+  "fiber_pct": 5.0,
+  "moisture_pct": 10.0,
+  "ash_pct": 9.0,
+  "has_grain": false,
+  "has_allergen": false,
+  "has_4d_meat": false,
+  "is_aafco_certified": true,
+  "protein_dm_pct": 46.7,
+  "fat_dm_pct": 16.7,
+  "carb_dm_pct": 21.1
+}

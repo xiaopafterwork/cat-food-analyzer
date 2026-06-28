@@ -1,0 +1,18 @@
+{
+  "name": "成貓 Fit 32 飼料",
+  "brand": "法國皇家 Royal Canin",
+  "life_stage": "adult",
+  "food_type": "dry",
+  "country": "法國",
+  "source_url": "https://24h.pchome.com.tw/prod/DEBV7N-A900J52P2",
+  "ingredients_raw": "脫水禽肉蛋白、米、玉米、動物脂肪、玉米麩質、水解動物蛋白、礦物質、甜菜漿、植物纖維、魚油、大豆油、果寡糖、洋車前子殼和籽、酵母萃取、金盞花萃取物、維生素、胺基酸、抗氧化劑",
+  "protein_pct": 31.0,
+  "fat_pct": 12.0,
+  "fiber_pct": 5.8,
+  "moisture_pct": 10.0,
+  "ash_pct": 6.5,
+  "has_grain": true,
+  "has_allergen": false,
+  "has_4d_meat": false,
+  "is_aafco_certified": true
+}

@@ -1,0 +1,31 @@
+{
+  "name": "無穀原味火雞成貓飼料",
+  "brand": "Wellness CORE",
+  "life_stage": "adult",
+  "food_type": "dry",
+  "country": "美國",
+  "source_url": "https://www.wellnesspetfood.com",
+  "ingredients_raw": "去骨火雞、火雞粉、雞粉、馬鈴薯、豌豆、去骨白魚、雞脂肪、天然香料、亞麻仁",
+  "protein_pct": 45.0,
+  "fat_pct": 18.0,
+  "fiber_pct": 4.0,
+  "moisture_pct": 10.0,
+  "ash_pct": 8.5,
+  "has_grain": false,
+  "has_allergen": false,
+  "has_4d_meat": false,
+  "is_aafco_certified": true,
+  "protein_dm_pct": 50.0,
+  "fat_dm_pct": 20.0,
+  "carb_dm_pct": 16.1,
+  "score_ingredient": 40,
+  "score_nutrition": 25,
+  "score_transparency": 30,
+  "score_total": 95,
+  "score_label": "強烈推薦",
+  "ai_summary": {
+    "good": "蛋白質含量極高，非常適合肉食性的貓咪需求",
+    "warning": "碳水化合物控制良好，適合需要低碳飲食的貓咪",
+    "bad": "無明顯成分疑慮"
+  }
+}

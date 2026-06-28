@@ -1,0 +1,18 @@
+{
+  "name": "泌尿道護理成貓配方",
+  "brand": "法國皇家 Royal Canin",
+  "life_stage": "adult",
+  "food_type": "dry",
+  "country": "法國",
+  "source_url": "https://www.royalcanin.com/tw",
+  "ingredients_raw": "雞肉粉、米、植物分離蛋白、玉米、動物脂肪、礦物質",
+  "protein_pct": 34.0,
+  "fat_pct": 14.0,
+  "fiber_pct": 1.3,
+  "moisture_pct": 8.0,
+  "ash_pct": 7.5,
+  "has_grain": true,
+  "has_allergen": false,
+  "has_4d_meat": false,
+  "is_aafco_certified": true
+}

@@ -1,0 +1,31 @@
+{
+  "name": "火雞餐全齡貓配方",
+  "brand": "SOLUTION 耐吉斯",
+  "life_stage": "all",
+  "food_type": "dry",
+  "country": "美國",
+  "source_url": "https://24h.pchome.com.tw/prod/DEBV5O-A900HM7Y4",
+  "ingredients_raw": "脫水火雞、新鮮火雞肉、乾豌豆、豌豆粉、雞脂肪、亞麻籽粉、啤酒酵母、天然香料、乾甜菜漿、鮭魚油",
+  "protein_pct": 35.0,
+  "fat_pct": 16.0,
+  "fiber_pct": 5.0,
+  "moisture_pct": 10.0,
+  "ash_pct": 9.0,
+  "has_grain": false,
+  "has_allergen": false,
+  "has_4d_meat": false,
+  "is_aafco_certified": true,
+  "protein_dm_pct": 38.9,
+  "fat_dm_pct": 17.8,
+  "carb_dm_pct": 27.8,
+  "score_ingredient": 36,
+  "score_nutrition": 19,
+  "score_transparency": 30,
+  "score_total": 85,
+  "score_label": "強烈推薦",
+  "ai_summary": {
+    "good": "蛋白質含量達標，基本需求足夠",
+    "warning": "碳水化合物中等（27.8%），在可接受範圍內",
+    "bad": "無明顯成分疑慮"
+  }
+}
