@@ -27,3 +27,10 @@ C:\Users\P\cat-food-analyzer
 1. `cd C:\Users\P\cat-food-analyzer`
 2. `npx next build`（確認無錯誤）
 3. `git add` → `git commit` → `git push origin master`
+
+## ⚠️ 新 Session Git Push 注意
+Claude Code 有時會在 `claude/xxx` 分支工作，請用：
+```
+git push origin HEAD:master
+```
+這樣不管在哪個分支，都能推到 master。
