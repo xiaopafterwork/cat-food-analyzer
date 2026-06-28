@@ -68,17 +68,6 @@ function CaloricBar({ pct, color, label }: { pct: number; color: string; label: 
   )
 }
 
-// ai_summary 存的是字串，直接顯示
-function parseSummary(summary: unknown): string {
-  if (!summary) return ''
-  if (typeof summary === 'string') return summary
-  if (typeof summary === 'object' && summary !== null) {
-    const s = summary as Record<string, string>
-    return [s.good, s.warning, s.bad].filter(Boolean).join('。') + '。'
-  }
-  return ''
-}
-
 // ai_pros/ai_cons 存的是「、」分隔的字串
 function parseList(val: unknown): string[] {
   if (!val) return []
