@@ -9,8 +9,8 @@ const ACCENT = '#3D5A3E'
 
 function getScoreBadge(score: number | null): { bg: string; color: string } {
   if (!score) return { bg: '#f3f4f6', color: '#6b7280' }
-  if (score >= 80) return { bg: '#e8f9ee', color: '#1a7f37' }
-  if (score >= 65) return { bg: '#e6f0fb', color: '#1554a0' }
+  if (score >= 85) return { bg: '#e8f9ee', color: '#1a7f37' }
+  if (score >= 70) return { bg: '#e6f0fb', color: '#1554a0' }
   if (score >= 50) return { bg: '#fff3e0', color: '#b35c00' }
   return { bg: '#ffeaea', color: '#c0392b' }
 }
@@ -250,7 +250,7 @@ export default function FoodDetailPage() {
                     <CaloricBar pct={caloric.carb}    color="#b35c00" label="碳水"   />
                     {caloric.protein >= 40 && (
                       <p className="text-xs mt-1" style={{ color: '#1a7f37' }}>
-                        ✓ 蛋白質熱量佔 {caloric.protein}%，達 CatInfo.org 建議的 40% 以上
+                        ✓ 蛋白質熱量佔 {caloric.protein}%，達 AAFCO 建議標準的 40% 以上
                       </p>
                     )}
                     {caloric.carb <= 10 && (
@@ -290,10 +290,6 @@ export default function FoodDetailPage() {
 
           {showDetail && (
             <div className="px-5 pb-5 pt-1 border-t" style={{ borderColor: '#f3f4f6' }}>
-              <ScoreBar score={food.score_ingredient} label="成分評分" max={40} />
-              <ScoreBar score={food.score_nutrition} label="營養評分" max={30} />
-              <ScoreBar score={food.score_transparency} label="透明度評分" max={30} />
-
               {food.ai_pros && food.ai_pros.length > 0 && (
                 <div className="mt-5 p-4 rounded-xl" style={{ background: '#e8f9ee' }}>
                   <p className="text-xs font-semibold mb-2" style={{ color: '#1a7f37' }}>優點</p>
