@@ -1,139 +1,100 @@
 # -*- coding: utf-8 -*-
-import io
-import json
-import os
-import sys
-
+import io, json, os, sys
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 
 CLEANED_DIR = os.path.join(os.path.dirname(__file__), "../data/cleaned")
-SCORED_DIR = os.path.join(os.path.dirname(__file__), "../data/scored")
+SCORED_DIR  = os.path.join(os.path.dirname(__file__), "../data/scored")
 os.makedirs(SCORED_DIR, exist_ok=True)
 
 
-def score_ingredient(food: dict) -> int:
-    """成分評分，滿分 40"""
-    s = 0
-    protein_dm = food.get("protein_dm_pct") or 0
-
-    # 蛋白質品質（最高 20）— 對齊 CatInfo.org：40% DM 即為優秀
-    if protein_dm >= 40:
-        s += 20
-    elif protein_dm >= 35:
-        s += 16
-    elif protein_dm >= 30:
-        s += 11
-    elif protein_dm >= 26:
-        s += 6  # AAFCO 成貓最低標準
-    else:
-        s += 0  # 低於 AAFCO 最低標準，重扣
-
-    # 是否無穀（最高 10）
-    if not food.get("has_grain"):
-        s += 10
-    elif food.get("has_allergen"):
-        s += 0
-    else:
-        s += 4
-
-    # 無 4D 肉（最高 10）
-    if not food.get("has_4d_meat"):
-        s += 10
-
-    return min(s, 40)
-
-
-def score_nutrition(food: dict) -> int:
-    """營養評分，滿分 30"""
-    s = 0
-    protein_dm = food.get("protein_dm_pct") or 0
-    carb_dm = food.get("carb_dm_pct") or 100
-    fat_dm = food.get("fat_dm_pct") or 0
-    ash_dm = food.get("ash_pct") or 0  # 用標示值近似乾重
-
-    # 蛋白質乾物質（最高 13）— 對齊 CatInfo.org 40% 為理想值
-    if protein_dm >= 40:
-        s += 13
-    elif protein_dm >= 35:
-        s += 10
-    elif protein_dm >= 30:
-        s += 7
-    elif protein_dm >= 26:
-        s += 4
-    else:
-        s += 0
-
-    # 低碳水（最高 10）— CatInfo.org 核心紅線：< 10%
-    if carb_dm <= 10:
-        s += 10
-    elif carb_dm <= 20:
-        s += 8
-    elif carb_dm <= 30:
-        s += 5
-    elif carb_dm <= 40:
-        s += 2
-    else:
-        s += 0
-
-    # 脂肪合理範圍（最高 4）— 放寬低脂懲罰，≥ 8% 即可接受
-    if 15 <= fat_dm <= 35:
-        s += 4
-    elif 8 <= fat_dm < 15 or 35 < fat_dm <= 45:
-        s += 2
-    else:
-        s += 0
-
-    # 灰分腎臟風險扣分（最高扣 3）— 灰分 > 9% 開始扣
-    if ash_dm > 11:
-        s -= 3
-    elif ash_dm > 9:
-        s -= 1
-
-    return max(0, min(s, 30))
-
-
-def score_transparency(food: dict) -> int:
-    """透明度評分，滿分 30"""
-    s = 0
-
-    # AAFCO 認證（10）
-    if food.get("is_aafco_certified"):
-        s += 10
-
-    # 有成分列表（10）
-    if food.get("ingredients_raw"):
-        s += 10
-
-    # 有完整數值（蛋白/脂肪/纖維/水分/灰分都有）（10）
-    keys = ["protein_pct", "fat_pct", "fiber_pct", "moisture_pct", "ash_pct"]
-    if all(food.get(k) is not None for k in keys):
-        s += 10
-
-    return min(s, 30)
-
-
 def get_label(total: int) -> str:
-    if total >= 80:
-        return "強烈推薦"
-    if total >= 65:
-        return "不錯的選擇"
-    if total >= 50:
-        return "還可以，但有更好的"
-    if total >= 35:
-        return "謹慎考慮"
-    return "不推薦"
+    if total >= 85: return "優質主食"
+    if total >= 70: return "不錯的選擇"
+    if total >= 50: return "可以接受"
+    return "需謹慎"
 
 
 def score(food: dict) -> dict:
-    si = score_ingredient(food)
-    sn = score_nutrition(food)
-    st = score_transparency(food)
-    total = si + sn + st
-    food["score_ingredient"] = si
-    food["score_nutrition"] = sn
-    food["score_transparency"] = st
-    food["score_total"] = total
-    food["score_label"] = get_label(total)
+    """
+    加分制，滿分 100。
+    蛋白質 40 + 碳水 25 + 脂肪 10 + 透明度 20 + 無穀 5 = 100
+    AAFCO 降權（台灣優質品牌不一定有美國認證），蛋白質與碳水加重。
+    所有營養數值均為去除水分後的實際含量（乾重）。
+    """
+    p = food.get("protein_dm_pct") or 0
+    c = food.get("carb_dm_pct")    or 100
+    f = food.get("fat_dm_pct")     or 0
+    a = food.get("ash_pct")        or 0
+    has_grain  = food.get("has_grain", False)
+    is_aafco   = food.get("is_aafco_certified", False)
+    has_ingredients = bool(food.get("ingredients_raw"))
+    has_ash_data    = food.get("ash_pct") is not None
+    has_fat_data    = food.get("fat_dm_pct") is not None
+
+    total = 0
+    breakdown = {}
+
+    # ── 蛋白質 (40分) ──────────────────────────────────────
+    if   p >= 50: pts = 40
+    elif p >= 45: pts = 35
+    elif p >= 40: pts = 30
+    elif p >= 35: pts = 26
+    elif p >= 30: pts = 18
+    elif p >= 26: pts = 9
+    else:         pts = 3
+    total += pts
+    breakdown["protein"] = pts
+
+    # ── 碳水 (25分) ────────────────────────────────────────
+    if   c <= 10: pts = 25
+    elif c <= 20: pts = 20
+    elif c <= 30: pts = 15
+    elif c <= 40: pts = 12
+    else:         pts = 3
+    total += pts
+    breakdown["carb"] = pts
+
+    # ── 脂肪 (10分，有數據才計算) ──────────────────────────
+    if has_fat_data and f > 0:
+        if   20 <= f <= 40: pts = 10
+        elif 15 <= f < 20 or 40 < f <= 50: pts = 7
+        elif  9 <= f < 15: pts = 4
+        else:               pts = 1
+    else:
+        pts = 0
+    total += pts
+    breakdown["fat"] = pts
+
+    # ── 透明度 (20分) ──────────────────────────────────────
+    aafco_pts       = 8 if is_aafco else 0   # 從 18 降至 8
+    ingredient_pts  = 7 if has_ingredients else 0
+    ash_label_pts   = 5 if has_ash_data else 0
+    trans = aafco_pts + ingredient_pts + ash_label_pts
+    total += trans
+    breakdown["transparency"] = trans
+
+    # ── 無穀 (5分) ─────────────────────────────────────────
+    grain_pts = 0 if has_grain else 5        # 從 8 降至 5
+    total += grain_pts
+    breakdown["no_grain"] = grain_pts
+
+    # ── 灰分品質 (5分) ─────────────────────────────────────
+    if has_ash_data:
+        if   a <= 8:  pts = 5
+        elif a <= 10: pts = 2
+        else:         pts = 0
+    else:
+        pts = 0
+    total += pts
+    breakdown["ash"] = pts
+
+    total = max(0, min(100, total))
+    food["score_total"]      = total
+    food["score_label"]      = get_label(total)
+    food["score_breakdown"]  = breakdown
+    food["score_ingredient"] = None
+    food["score_nutrition"]  = None
+    food["score_transparency"] = None
     return food
 
 
@@ -147,7 +108,7 @@ def main():
         out_path = os.path.join(SCORED_DIR, filename)
         with open(out_path, "w", encoding="utf-8") as f:
             json.dump(scored, f, ensure_ascii=False, indent=2)
-        print(f"  {scored['name']} ({scored['brand']}) -> {scored['score_total']}分 [{scored['score_label']}]")
+        print(f"  {scored['name']} ({scored['brand']}) → {scored['score_total']} 分 [{scored['score_label']}]")
     print(f"\n完成：{len(files)} 筆")
 
 
