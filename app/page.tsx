@@ -112,7 +112,7 @@ export default function HomePage() {
               onChange={e => setQuery(e.target.value)}
               placeholder="搜尋品牌或飼料名稱…"
               className="w-full pl-11 pr-5 py-3.5 rounded-full text-base outline-none"
-              style={{ background: '#fff', border: '0.5px solid #d1d5db' }}
+              style={{ background: '#fff', border: '0.5px solid #d1d5db', color: '#1a1a1a' }}
             />
           </div>
         </div>
