@@ -57,28 +57,6 @@ const DIMENSIONS = [
   },
 ]
 
-const FAQS = [
-  {
-    q: '無穀飼料一定比較好嗎？',
-    a: '不一定。無穀代表沒有小麥、玉米等穀物，但仍可能含有豌豆、馬鈴薯等高碳水食材。關鍵是看乾物比的碳水化合物比例，低碳水才是重點。',
-  },
-  {
-    q: '乾物比是什麼？為什麼要換算？',
-    a: '飼料含水量不同（乾糧約 10%，濕食約 75%），直接比較蛋白質% 會不公平。乾物比把水分扣除後再計算，讓不同飼料站在同一基準上比較。',
-  },
-  {
-    q: '分數低的飼料不能吃嗎？',
-    a: '分數低代表相對品質較差，但不代表有害。每隻貓的體質不同，換糧前建議觀察糞便、毛髮、活動力，有疑問請諮詢獸醫。',
-  },
-  {
-    q: '你們的評分有接受廠商贊助嗎？',
-    a: '沒有。喵評鑑的評分完全依據公開的包裝成分資訊計算，不接受廠商付費影響評分。',
-  },
-  {
-    q: 'AAFCO 是什麼？',
-    a: 'AAFCO（美國飼料管理協會）制定了貓咪飼料的營養最低標準。通過 AAFCO 認證代表這款飼料的配方能滿足貓咪基本營養需求，是國際通用的參考依據。',
-  },
-]
 
 export default function HowWeScorePage() {
   return (
@@ -169,17 +147,6 @@ export default function HowWeScorePage() {
               </div>
             ))}
           </div>
-        </div>
-
-        {/* FAQ */}
-        <p className="text-xs font-semibold uppercase text-gray-400 mb-3" style={{ letterSpacing: '0.08em' }}>常見問題</p>
-        <div className="flex flex-col gap-3 mb-8">
-          {FAQS.map((faq, i) => (
-            <div key={i} className="p-4 rounded-2xl" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
-              <p className="text-sm font-semibold text-gray-900 mb-1.5">Q：{faq.q}</p>
-              <p className="text-sm text-gray-600 leading-relaxed">A：{faq.a}</p>
-            </div>
-          ))}
         </div>
 
         {/* CTA */}
