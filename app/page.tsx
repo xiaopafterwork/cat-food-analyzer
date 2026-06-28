@@ -9,8 +9,8 @@ const ACCENT = '#3D5A3E'
 
 function getScoreBadge(score: number | null): { bg: string; color: string } {
   if (!score) return { bg: '#f3f4f6', color: '#6b7280' }
-  if (score >= 80) return { bg: '#e8f9ee', color: '#1a7f37' }
-  if (score >= 65) return { bg: '#e6f0fb', color: '#1554a0' }
+  if (score >= 85) return { bg: '#e8f9ee', color: '#1a7f37' }
+  if (score >= 70) return { bg: '#e6f0fb', color: '#1554a0' }
   if (score >= 50) return { bg: '#fff3e0', color: '#b35c00' }
   return { bg: '#ffeaea', color: '#c0392b' }
 }
@@ -46,8 +46,17 @@ export default function HomePage() {
         q = q.or(conditions.join(','))
       }
       const { data } = await q
-      setFoods((data as CatFood[]) ?? [])
+      const results = (data as CatFood[]) ?? []
+      setFoods(results)
       setLoading(false)
+
+      // 記錄搜尋詞（至少3字才記錄，避免每打一個字就寫入）
+      if (query.trim().length >= 3) {
+        supabase.from('search_logs').insert({
+          query: query.trim(),
+          result_count: results.length,
+        })
+      }
     }
     fetchFoods()
   }, [query, lifeStageFilter, grainFilter])
