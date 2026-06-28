@@ -72,22 +72,6 @@ function CaloricBar({ pct, color, label }: { pct: number; color: string; label: 
   )
 }
 
-function ScoreBar({ score, label, max = 40 }: { score: number | null; label: string; max?: number }) {
-  const val = score ?? 0
-  const pct = Math.round((val / max) * 100)
-  const badge = getScoreBadge(Math.round((val / max) * 100))
-  return (
-    <div className="mb-4">
-      <div className="flex justify-between text-sm mb-1.5">
-        <span className="text-gray-600">{label}</span>
-        <span className="font-semibold" style={{ color: badge.color }}>{val} / {max}</span>
-      </div>
-      <div className="w-full h-2 rounded-full overflow-hidden" style={{ background: '#f3f4f6' }}>
-        <div className="h-full rounded-full transition-all" style={{ width: `${pct}%`, background: badge.color }} />
-      </div>
-    </div>
-  )
-}
 
 export default function FoodDetailPage() {
   const { id } = useParams()
