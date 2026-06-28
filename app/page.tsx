@@ -181,16 +181,18 @@ export default function HomePage() {
                     </div>
                   </Link>
 
-                  {/* Info */}
-                  <Link href={`/food/${food.id}`} className="flex-1 min-w-0">
-                    <p className="font-semibold text-gray-900 truncate mb-0.5" style={{ fontSize: 15 }}>{food.name}</p>
-                    <Link
-                      href={`/brand/${encodeURIComponent(food.brand)}`}
-                      onClick={e => e.stopPropagation()}
-                      className="text-xs text-gray-400 mb-1.5 hover:underline inline-block"
-                    >{food.brand}</Link>
+                  {/* Info — div 不是 Link，避免巢狀 <a> */}
+                  <div className="flex-1 min-w-0">
+                    <Link href={`/food/${food.id}`} className="block">
+                      <p className="font-semibold text-gray-900 truncate mb-0.5" style={{ fontSize: 15 }}>{food.name}</p>
+                    </Link>
+                    <Link href={`/brand/${encodeURIComponent(food.brand)}`} className="text-xs text-gray-400 mb-1.5 hover:underline inline-block">
+                      {food.brand}
+                    </Link>
                     {summary && (
-                      <p className="text-xs text-gray-500 mb-2 leading-relaxed line-clamp-2">{summary}</p>
+                      <Link href={`/food/${food.id}`} className="block">
+                        <p className="text-xs text-gray-500 mb-2 leading-relaxed line-clamp-2">{summary}</p>
+                      </Link>
                     )}
                     <div className="flex gap-1.5 flex-wrap">
                       {!food.has_grain && (
@@ -212,7 +214,7 @@ export default function HomePage() {
                         {LIFE_STAGE_LABEL[food.life_stage] ?? food.life_stage}
                       </span>
                     </div>
-                  </Link>
+                  </div>
 
                   {/* Compare checkbox */}
                   <button
