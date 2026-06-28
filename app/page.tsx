@@ -20,11 +20,6 @@ const LIFE_STAGE_LABEL: Record<string, string> = {
   kitten: '幼貓', adult: '成貓', senior: '熟齡貓', all: '全齡',
 }
 
-function getFirstSentence(summary: string | null): string {
-  if (!summary) return ''
-  const s = summary.split(/[。！？；]/)[0]
-  return s.length > 0 ? s + '。' : ''
-}
 
 export default function HomePage() {
   const [query, setQuery] = useState('')
@@ -165,7 +160,6 @@ export default function HomePage() {
             {foods.map(food => {
               const badge = getScoreBadge(food.score_total)
               const inCompare = compareIds.includes(food.id)
-              const summary = getFirstSentence(typeof food.ai_summary === 'string' ? food.ai_summary : null)
               return (
                 <div
                   key={food.id}
@@ -192,11 +186,6 @@ export default function HomePage() {
                       onClick={e => { e.stopPropagation(); router.push(`/brand/${encodeURIComponent(food.brand)}`) }}
                       className="text-xs text-gray-400 mb-1.5 underline block text-left"
                     >{food.brand}</button>
-                    {summary && (
-                      <Link href={`/food/${food.id}`} className="block">
-                        <p className="text-xs text-gray-500 mb-2 leading-relaxed line-clamp-2">{summary}</p>
-                      </Link>
-                    )}
                     <div className="flex gap-1.5 flex-wrap">
                       {!food.has_grain && (
                         <span className="text-xs px-2 py-0.5 rounded-md" style={{ background: '#e8f9ee', color: '#1a7f37' }}>無穀</span>
