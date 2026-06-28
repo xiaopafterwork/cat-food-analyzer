@@ -190,7 +190,7 @@ export default function HomePage() {
                     </Link>
                     <button
                       onClick={e => { e.stopPropagation(); router.push(`/brand/${encodeURIComponent(food.brand)}`) }}
-                      className="text-xs text-gray-400 mb-1.5 hover:underline block text-left"
+                      className="text-xs text-gray-400 mb-1.5 underline block text-left"
                     >{food.brand}</button>
                     {summary && (
                       <Link href={`/food/${food.id}`} className="block">
