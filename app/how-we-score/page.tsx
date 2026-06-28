@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 const ACCENT = '#3D5A3E'
 
 const SCORE_LEVELS = [
-  { range: '80–100', label: '強力推薦', bg: '#e8f9ee', color: '#1a7f37', desc: '成分優秀、蛋白質充足、資訊透明，適合作為長期主食。' },
+  { range: '80–100', label: '優質主食', bg: '#e8f9ee', color: '#1a7f37', desc: '成分優秀、蛋白質充足、資訊透明，適合作為長期主食。' },
   { range: '65–79',  label: '不錯的選擇', bg: '#e6f0fb', color: '#1554a0', desc: '整體品質良好，可能在某一維度稍有不足，日常餵食無虞。' },
   { range: '50–64',  label: '可以接受', bg: '#fff3e0', color: '#b35c00', desc: '基本需求可達，但有明顯改善空間，建議搭配其他優質飼料輪替。' },
   { range: '50 以下', label: '需謹慎', bg: '#ffeaea', color: '#c0392b', desc: '存在成分疑慮或蛋白質不足，建議尋找替代品或諮詢獸醫。' },
