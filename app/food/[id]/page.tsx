@@ -3,13 +3,18 @@ import { createClient } from '@supabase/supabase-js'
 import FoodDetailClient from './FoodDetailClient'
 
 export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+function getSupabase() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    { global: { fetch: (url, opts) => fetch(url, { ...opts, cache: 'no-store' }) } }
+  )
+}
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+  const supabase = getSupabase()
   const { data: food } = await supabase
     .from('cat_foods')
     .select('name, brand, score_total, score_label, protein_dm_pct, carb_dm_pct, ai_summary')
@@ -37,6 +42,7 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
 }
 
 export default async function FoodDetailPage({ params }: { params: { id: string } }) {
+  const supabase = getSupabase()
   const { data: food } = await supabase
     .from('cat_foods')
     .select('*')
