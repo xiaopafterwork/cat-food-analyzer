@@ -272,12 +272,6 @@ export default function FoodDetailClient({ food }: { food: CatFood }) {
           </div>
         )}
 
-        {/* 免責聲明 */}
-        <p className="text-xs text-center leading-relaxed mb-6" style={{ color: '#9ca3af' }}>
-          ⚠️ 本站評分依據成分數據計算，不構成獸醫建議。<br />
-          有特殊疾病或健康需求的貓咪，請諮詢獸醫後再做選擇。
-        </p>
-
         {/* 支持喵評鑑 */}
         <div
           className="text-center py-8 rounded-2xl mb-8"
