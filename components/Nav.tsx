@@ -54,40 +54,22 @@ export default function Nav({ backHref, backLabel = '返回', title, rightSlot }
           {/* 右側 */}
           <div className="flex items-center gap-2">
             {rightSlot}
-            {/* 漢堡按鈕 */}
+            {/* 漢堡 / 關閉按鈕 */}
             <button
               onClick={() => setOpen(v => !v)}
-              className="w-8 h-8 flex flex-col items-center justify-center gap-1.5 rounded-lg"
+              className="w-8 h-8 flex items-center justify-center rounded-lg"
               style={{ background: open ? '#f3f4f6' : 'transparent' }}
-              aria-label="選單"
+              aria-label={open ? '關閉選單' : '開啟選單'}
             >
-              <span
-                className="block w-4.5 h-0.5 rounded-full transition-all duration-200"
-                style={{
-                  background: '#374151',
-                  width: 18,
-                  height: 1.5,
-                  transform: open ? 'translateY(4.5px) rotate(45deg)' : 'none',
-                }}
-              />
-              <span
-                className="block rounded-full transition-all duration-200"
-                style={{
-                  background: '#374151',
-                  width: 18,
-                  height: 1.5,
-                  opacity: open ? 0 : 1,
-                }}
-              />
-              <span
-                className="block rounded-full transition-all duration-200"
-                style={{
-                  background: '#374151',
-                  width: 18,
-                  height: 1.5,
-                  transform: open ? 'translateY(-4.5px) rotate(-45deg)' : 'none',
-                }}
-              />
+              {open ? (
+                <svg width="18" height="18" fill="none" stroke="#374151" strokeWidth="2" strokeLinecap="round" viewBox="0 0 24 24">
+                  <path d="M18 6 6 18M6 6l12 12"/>
+                </svg>
+              ) : (
+                <svg width="18" height="18" fill="none" stroke="#374151" strokeWidth="2" strokeLinecap="round" viewBox="0 0 24 24">
+                  <path d="M3 12h18M3 6h18M3 18h18"/>
+                </svg>
+              )}
             </button>
           </div>
         </div>
