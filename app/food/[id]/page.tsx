@@ -45,13 +45,14 @@ function NutrCard({ label, value, unit = '%', sub }: { label: string; value: str
   )
 }
 
-function Tooltip({ text }: { text: string }) {
+function Tooltip({ text, down }: { text: string; down?: boolean }) {
   return (
     <span className="relative group inline-flex items-center ml-1 cursor-default">
       <span className="text-xs text-gray-400 border border-gray-300 rounded-full w-3.5 h-3.5 inline-flex items-center justify-center leading-none select-none"
         style={{ fontSize: 9, fontWeight: 600 }}>i</span>
-      <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-1.5 z-50 hidden group-hover:flex
-        w-48 px-3 py-2 rounded-xl text-xs text-gray-700 leading-relaxed shadow-lg pointer-events-none"
+      <span className={`absolute left-1/2 -translate-x-1/2 z-50 hidden group-hover:flex
+        w-48 px-3 py-2 rounded-xl text-xs text-gray-700 leading-relaxed shadow-lg pointer-events-none
+        ${down ? 'top-full mt-1.5' : 'bottom-full mb-1.5'}`}
         style={{ background: 'rgba(255,255,255,0.97)', border: '0.5px solid #e5e7eb', backdropFilter: 'blur(8px)' }}>
         {text}
       </span>
@@ -206,7 +207,7 @@ export default function FoodDetailPage() {
               <div className="px-5 pt-4 pb-3">
                 <p className="text-xs font-semibold uppercase mb-3 flex items-center" style={{ color: '#6b7280', letterSpacing: '0.06em' }}>
                   包裝保證值 <span className="font-normal normal-case ml-1">（同包裝標示）</span>
-                  <Tooltip text="直接來自飼料包裝上的保證分析值，蛋白質與脂肪標示最低值，纖維與水分標示最高值。" />
+                  <Tooltip text="直接來自飼料包裝上的保證分析值，蛋白質與脂肪標示最低值，纖維與水分標示最高值。" down />
                 </p>
                 <div className="grid grid-cols-5 gap-2">
                   <NutrCard label="粗蛋白質↑" value={food.protein_pct != null ? food.protein_pct.toFixed(1) : null} sub="最低" />
