@@ -277,6 +277,21 @@ export default function FoodDetailClient({ food }: { food: CatFood }) {
           ⚠️ 本站評分依據成分數據計算，不構成獸醫建議。<br />
           有特殊疾病或健康需求的貓咪，請諮詢獸醫後再做選擇。
         </p>
+
+        {/* 支持喵評鑑 */}
+        <div
+          className="text-center py-8 rounded-2xl mb-8"
+          style={{ background: '#e8f9ee', border: '0.5px solid #b2e0bb' }}
+        >
+          <p className="font-semibold text-gray-900 mb-1.5">這份分析對你有幫助嗎？</p>
+          <p className="text-sm mb-5" style={{ color: '#555' }}>你的支持讓我們繼續分析更多飼料 ☕</p>
+          <button
+            className="px-6 py-2.5 rounded-full text-sm font-semibold text-white"
+            style={{ background: '#3D5A3E' }}
+          >
+            ☕ 支持喵評鑑
+          </button>
+        </div>
       </div>
     </main>
   )
