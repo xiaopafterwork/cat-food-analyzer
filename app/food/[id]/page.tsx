@@ -240,7 +240,7 @@ export default function FoodDetailPage() {
               <div className="px-5 pt-3 pb-4">
                 <p className="text-xs font-semibold uppercase mb-2 flex items-center" style={{ color: '#6b7280', letterSpacing: '0.06em' }}>
                   熱量來源比 <span className="font-normal normal-case ml-1">（每日攝取能量佔比）</span>
-                  <Tooltip text="用 Atwater 係數換算：蛋白質×3.5、脂肪×8.5、碳水×3.5，計算每種營養素提供的熱量佔比。貓咪理想飲食中蛋白質熱量應佔 40% 以上。" />
+                  <Tooltip text="計算每種營養素提供的熱量佔比。貓咪理想飲食中蛋白質熱量應佔 40% 以上。" />
                 </p>
                 {caloric ? (
                   <div className="flex flex-col gap-2">
