@@ -70,19 +70,15 @@ function CaloricBar({ pct, color, label }: { pct: number; color: string; label: 
   )
 }
 
-// ai_summary 存的是字串，用句號切成段落後判斷正負
-function parseSummary(summary: unknown): { good: string | null; warning: string | null; bad: string | null } {
-  if (!summary) return { good: null, warning: null, bad: null }
-  const str = typeof summary === 'string' ? summary : JSON.stringify(summary)
-  const sentences = str.split(/[。！？]/).map(s => s.trim()).filter(Boolean)
-  // 第一句通常是主要評語，後續含「偏高」「偏低」「不建議」的為 warning/bad
-  const good = sentences[0] ? sentences[0] + '。' : null
-  const rest = sentences.slice(1)
-  const badIdx = rest.findIndex(s => /不建議|謹慎|注意/.test(s))
-  const warnIdx = rest.findIndex(s => /偏高|偏低|略高|留意/.test(s))
-  const warning = warnIdx >= 0 ? rest[warnIdx] + '。' : null
-  const bad = badIdx >= 0 ? rest[badIdx] + '。' : null
-  return { good, warning, bad }
+// ai_summary 存的是字串，直接顯示
+function parseSummary(summary: unknown): string {
+  if (!summary) return ''
+  if (typeof summary === 'string') return summary
+  if (typeof summary === 'object' && summary !== null) {
+    const s = summary as Record<string, string>
+    return [s.good, s.warning, s.bad].filter(Boolean).join('。') + '。'
+  }
+  return ''
 }
 
 // ai_pros/ai_cons 存的是「、」分隔的字串
@@ -95,7 +91,7 @@ function parseList(val: unknown): string[] {
 export default function FoodDetailClient({ food }: { food: CatFood }) {
   const [showDetail, setShowDetail] = useState(false)
   const badge = getScoreBadge(food.score_total)
-  const summary = parseSummary(food.ai_summary)
+  const summaryText = parseSummary(food.ai_summary)
   const pros = parseList(food.ai_pros)
   const cons = parseList(food.ai_cons)
 
@@ -150,26 +146,10 @@ export default function FoodDetailClient({ food }: { food: CatFood }) {
         </div>
 
         {/* AI Summary */}
-        {(summary.good || summary.warning || summary.bad) && (
-          <div className="flex flex-col gap-2 mb-4">
-            {summary.good && (
-              <div className="flex gap-3 p-4 rounded-2xl" style={{ background: '#e8f9ee' }}>
-                <span className="shrink-0">✅</span>
-                <p className="text-sm" style={{ color: '#1a4731' }}>{summary.good}</p>
-              </div>
-            )}
-            {summary.warning && (
-              <div className="flex gap-3 p-4 rounded-2xl" style={{ background: '#fff8ed' }}>
-                <span className="shrink-0">⚠️</span>
-                <p className="text-sm" style={{ color: '#7c4a00' }}>{summary.warning}</p>
-              </div>
-            )}
-            {summary.bad && (
-              <div className="flex gap-3 p-4 rounded-2xl" style={{ background: '#ffeaea' }}>
-                <span className="shrink-0">❌</span>
-                <p className="text-sm" style={{ color: '#7f1d1d' }}>{summary.bad}</p>
-              </div>
-            )}
+        {summaryText && (
+          <div className="flex gap-3 p-4 rounded-2xl mb-4" style={{ background: '#e8f9ee' }}>
+            <span className="shrink-0">📋</span>
+            <p className="text-sm leading-relaxed" style={{ color: '#1a4731' }}>{summaryText}</p>
           </div>
         )}
 

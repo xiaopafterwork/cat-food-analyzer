@@ -7,6 +7,7 @@ const ACCENT = '#3D5A3E'
 
 const MENU_ITEMS = [
   { href: '/',               label: '首頁' },
+  { href: '/brands',        label: '所有品牌' },
   { href: '/how-we-score',  label: '評分標準' },
   { href: '/request',       label: '新增飼料需求' },
   { href: 'mailto:xiaopafterwork@gmail.com', label: '聯絡我們', external: true },
