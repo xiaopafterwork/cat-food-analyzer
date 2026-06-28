@@ -56,15 +56,12 @@ export default function Nav({ backHref, backLabel = '返回', title, rightSlot }
           <div className="flex items-center gap-2">
             {rightSlot}
             {/* 支持按鈕 */}
-            <a
-              href="https://ko-fi.com/miaopingjian"
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
               className="text-xs font-semibold px-3 py-1.5 rounded-full text-white"
               style={{ background: ACCENT }}
             >
               ☕ 支持
-            </a>
+            </button>
             {/* 漢堡 / 關閉按鈕 */}
             <button
               onClick={() => setOpen(v => !v)}

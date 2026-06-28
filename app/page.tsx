@@ -242,7 +242,7 @@ export default function HomePage() {
 
         {/* ── Donate ── */}
         <div
-          className="text-center px-6 py-8 rounded-2xl"
+          className="text-center py-8 rounded-2xl"
           style={{ background: '#e8f9ee', border: '0.5px solid #b2e0bb' }}
         >
           <p className="font-semibold text-gray-900 mb-1.5">喜歡這個網站嗎？</p>
@@ -251,7 +251,7 @@ export default function HomePage() {
             className="px-6 py-2.5 rounded-full text-sm font-semibold text-white"
             style={{ background: ACCENT }}
           >
-            支持喵評鑑
+            ☕ 支持喵評鑑
           </button>
         </div>
       </div>
