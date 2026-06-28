@@ -55,6 +55,16 @@ export default function Nav({ backHref, backLabel = '返回', title, rightSlot }
           {/* 右側 */}
           <div className="flex items-center gap-2">
             {rightSlot}
+            {/* 支持按鈕 */}
+            <a
+              href="https://ko-fi.com/miaopingjian"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs font-semibold px-3 py-1.5 rounded-full text-white"
+              style={{ background: ACCENT }}
+            >
+              ☕ 支持
+            </a>
             {/* 漢堡 / 關閉按鈕 */}
             <button
               onClick={() => setOpen(v => !v)}
@@ -110,16 +120,6 @@ export default function Nav({ backHref, backLabel = '返回', title, rightSlot }
                 </Link>
               )
             ))}
-            {/* 支持我們 */}
-            <div style={{ borderTop: '0.5px solid #f3f4f6', padding: '12px 20px' }}>
-              <button
-                className="w-full py-2.5 rounded-full text-sm font-semibold text-white"
-                style={{ background: ACCENT }}
-                onClick={() => setOpen(false)}
-              >
-                ☕ 支持喵評鑑
-              </button>
-            </div>
           </div>
         )}
       </nav>
