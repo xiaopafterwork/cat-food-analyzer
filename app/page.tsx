@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { supabase, CatFood } from '@/lib/supabase'
 import Nav from '@/components/Nav'
 
@@ -32,6 +33,7 @@ export default function HomePage() {
   const [foods, setFoods] = useState<CatFood[]>([])
   const [loading, setLoading] = useState(true)
   const [compareIds, setCompareIds] = useState<string[]>([])
+  const router = useRouter()
 
   useEffect(() => {
     async function fetchFoods() {
@@ -186,9 +188,10 @@ export default function HomePage() {
                     <Link href={`/food/${food.id}`} className="block">
                       <p className="font-semibold text-gray-900 truncate mb-0.5" style={{ fontSize: 15 }}>{food.name}</p>
                     </Link>
-                    <Link href={`/brand/${encodeURIComponent(food.brand)}`} className="text-xs text-gray-400 mb-1.5 hover:underline inline-block">
-                      {food.brand}
-                    </Link>
+                    <button
+                      onClick={e => { e.stopPropagation(); router.push(`/brand/${encodeURIComponent(food.brand)}`) }}
+                      className="text-xs text-gray-400 mb-1.5 hover:underline block text-left"
+                    >{food.brand}</button>
                     {summary && (
                       <Link href={`/food/${food.id}`} className="block">
                         <p className="text-xs text-gray-500 mb-2 leading-relaxed line-clamp-2">{summary}</p>
