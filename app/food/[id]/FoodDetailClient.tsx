@@ -443,12 +443,13 @@ export default function FoodDetailClient({ food, reviews }: { food: CatFood; rev
           style={{ background: '#e8f9ee', border: '0.5px solid #b2e0bb' }}
         >
           <p className="font-semibold text-gray-900 mb-1.5">這份分析對你有幫助嗎？</p>
-          <p className="text-sm mb-5" style={{ color: '#555' }}>你的支持讓我們繼續分析更多飼料 ☕</p>
+          <p className="text-sm mb-5" style={{ color: '#555' }}>你的支持讓我們繼續分析更多飼料</p>
           <button
-            className="px-6 py-2.5 rounded-full text-sm font-semibold text-white"
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold text-white"
             style={{ background: '#3D5A3E' }}
           >
-            ☕ 支持喵評鑑
+            <img src="/coffee.png" alt="" width={16} height={16} style={{ objectFit: 'contain' }} />
+            支持喵評鑑
           </button>
         </div>
       </div>
