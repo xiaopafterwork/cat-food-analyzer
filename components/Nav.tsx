@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 const ACCENT = '#3D5A3E'
 
@@ -42,8 +43,8 @@ export default function Nav({ backHref, backLabel = '返回', title, rightSlot }
               {backLabel}
             </Link>
           ) : (
-            <Link href="/" className="font-semibold text-gray-900" style={{ fontSize: 17, letterSpacing: '-0.3px' }}>
-              喵評鑑
+            <Link href="/">
+              <Image src="/logo.png" alt="喵評鑑" width={120} height={40} style={{ objectFit: 'contain' }} priority />
             </Link>
           )}
 
