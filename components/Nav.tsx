@@ -44,7 +44,7 @@ export default function Nav({ backHref, backLabel = '返回', title, rightSlot }
             </Link>
           ) : (
             <Link href="/">
-              <Image src="/logo.png" alt="喵評鑑" width={120} height={40} style={{ objectFit: 'contain' }} priority />
+              <Image src="/logo.png" alt="喵評鑑" width={160} height={54} style={{ objectFit: 'contain' }} priority />
             </Link>
           )}
 
@@ -61,7 +61,7 @@ export default function Nav({ backHref, backLabel = '返回', title, rightSlot }
               className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full text-white"
               style={{ background: ACCENT }}
             >
-              <Image src="/coffee.png" alt="" width={16} height={16} style={{ objectFit: 'contain', filter: 'brightness(0) invert(1)' }} />
+              <Image src="/coffee.png" alt="" width={16} height={16} style={{ objectFit: 'contain' }} />
               支持
             </button>
             {/* 漢堡 / 關閉按鈕 */}
