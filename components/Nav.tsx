@@ -44,7 +44,7 @@ export default function Nav({ backHref, backLabel = '返回', title, rightSlot }
             </Link>
           ) : (
             <Link href="/">
-              <Image src="/logo.png" alt="喵評鑑" width={160} height={54} style={{ objectFit: 'contain' }} priority />
+              <Image src="/logo.png" alt="喵評鑑" width={150} height={44} style={{ objectFit: 'contain', display: 'block' }} priority />
             </Link>
           )}
 
