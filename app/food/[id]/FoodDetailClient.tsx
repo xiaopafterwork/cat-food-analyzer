@@ -133,8 +133,11 @@ function NutrCard({ label, value, unit = '%', sub }: { label: string; value: str
 function Tooltip({ text, down }: { text: string; down?: boolean }) {
   return (
     <span className="relative group inline-flex items-center ml-1 cursor-default">
-      <span className="text-gray-400 select-none shrink-0 inline-flex items-center justify-center"
-        style={{ fontSize: 15, lineHeight: 1 }}>ⓘ</span>
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" className="shrink-0 text-gray-400">
+        <circle cx="7.5" cy="7.5" r="6.5" stroke="currentColor" strokeWidth="1"/>
+        <circle cx="7.5" cy="5" r="0.8" fill="currentColor"/>
+        <line x1="7.5" y1="7" x2="7.5" y2="11" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+      </svg>
       <span className={`absolute left-1/2 -translate-x-1/2 z-[9999] hidden group-hover:flex
         w-52 px-3 py-2.5 rounded-xl text-xs text-gray-700 leading-relaxed shadow-xl pointer-events-none
         ${down ? 'top-full mt-2' : 'bottom-full mb-2'}`}
