@@ -42,34 +42,33 @@ def is_certified(brand: str) -> bool:
 
 def score_protein(p: float) -> int:
     if p is None: return 0
-    if p >= 50: return 40
-    if p >= 45: return 37
-    if p >= 40: return 33
-    if p >= 35: return 29
-    if p >= 30: return 26
-    if p >= 26: return 15
+    if p >= 50: return 50
+    if p >= 45: return 46
+    if p >= 40: return 41
+    if p >= 35: return 35
+    if p >= 30: return 30
+    if p >= 26: return 18
     return 5
 
 def score_carb(c: float) -> int:
-    if c is None: return 12   # 無資料給中位值
-    if c <= 10:  return 25
-    if c <= 20:  return 22
-    if c <= 30:  return 18
-    if c <= 40:  return 16
-    if c <= 50:  return 14
-    return 7
+    if c is None: return 15   # 無資料給中位值
+    if c <= 10:  return 30
+    if c <= 20:  return 26
+    if c <= 30:  return 21
+    if c <= 40:  return 18
+    if c <= 50:  return 15
+    return 8
 
 def score_quality(certified: bool, has_ingredients: bool, ash_dm: float | None) -> int:
     pts = 0
-    if certified:        pts += 18
-    if has_ingredients:  pts += 12
+    if certified:          pts += 15
     if ash_dm is not None: pts += 5
     return pts
 
 def score_label(total: int) -> str:
-    if total >= 70: return "優質主食"
-    if total >= 55: return "均衡日常"
-    if total >= 40: return "基礎配方"
+    if total >= 75: return "優質主食"
+    if total >= 60: return "均衡日常"
+    if total >= 45: return "基礎配方"
     return "建議搭配"
 
 def calc_score(food: dict) -> dict:

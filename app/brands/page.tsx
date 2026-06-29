@@ -13,9 +13,9 @@ const supabase = createClient(
 const ACCENT = '#3D5A3E'
 
 function getScoreColor(score: number) {
-  if (score >= 70) return '#1a7f37'
-  if (score >= 55) return '#1554a0'
-  if (score >= 40) return '#b35c00'
+  if (score >= 75) return '#1a7f37'
+  if (score >= 60) return '#1554a0'
+  if (score >= 45) return '#b35c00'
   return '#c0392b'
 }
 
