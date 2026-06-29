@@ -58,10 +58,11 @@ export default function Nav({ backHref, backLabel = '返回', title, rightSlot }
             {rightSlot}
             {/* 支持按鈕 */}
             <button
-              className="text-xs font-semibold px-3 py-1.5 rounded-full text-white"
+              className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full text-white"
               style={{ background: ACCENT }}
             >
-              ☕ 支持
+              <Image src="/coffee.png" alt="" width={16} height={16} style={{ objectFit: 'contain', filter: 'brightness(0) invert(1)' }} />
+              支持
             </button>
             {/* 漢堡 / 關閉按鈕 */}
             <button
