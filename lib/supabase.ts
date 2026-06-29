@@ -20,10 +20,16 @@ export type CatFood = {
   fiber_pct: number | null
   moisture_pct: number | null
   ash_pct: number | null
+  carb_pct: number | null
   carb_dm_pct: number | null
   protein_dm_pct: number | null
   fat_dm_pct: number | null
+  ash_dm_pct: number | null
+  fiber_dm_pct: number | null
   score_total: number | null
+  score_protein: number | null
+  score_carb: number | null
+  score_quality: number | null
   score_ingredient: number | null
   score_nutrition: number | null
   score_transparency: number | null

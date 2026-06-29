@@ -28,7 +28,21 @@ export default function HomePage() {
   const [foods, setFoods] = useState<CatFood[]>([])
   const [loading, setLoading] = useState(true)
   const [compareIds, setCompareIds] = useState<string[]>([])
+  const [totalCount, setTotalCount] = useState<number | null>(null)
   const router = useRouter()
+
+  useEffect(() => {
+    supabase.from('cat_foods').select('id', { count: 'exact', head: true })
+      .then(({ count }) => setTotalCount(count))
+    try {
+      const saved = JSON.parse(localStorage.getItem('compareIds') || '[]')
+      if (Array.isArray(saved) && saved.length > 0) setCompareIds(saved)
+    } catch {}
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('compareIds', JSON.stringify(compareIds))
+  }, [compareIds])
 
   useEffect(() => {
     async function fetchFoods() {
@@ -98,6 +112,11 @@ export default function HomePage() {
           <p className="text-sm mb-4" style={{ color: '#6b7280' }}>
             成分透明・科學評分・新手也看得懂・
             <Link href="/how-we-score" className="underline underline-offset-2" style={{ color: ACCENT }}>評分怎麼算？</Link>
+            {totalCount != null && (
+              <span className="ml-2 text-xs px-2 py-0.5 rounded-full" style={{ background: '#e8f9ee', color: '#1a7f37' }}>
+                已收錄 {totalCount} 款飼料
+              </span>
+            )}
           </p>
           <div className="relative">
             <svg className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -148,9 +167,14 @@ export default function HomePage() {
         </div>
 
         {/* ── Food list ── */}
-        <p className="text-xs font-semibold uppercase text-gray-400 mb-3" style={{ letterSpacing: '0.08em' }}>
-          評分排行 {!loading && foods.length > 0 && <span className="font-normal normal-case">· {foods.length} 款</span>}
-        </p>
+        <div className="flex items-center justify-between mb-3">
+          <p className="text-xs font-semibold uppercase text-gray-400" style={{ letterSpacing: '0.08em' }}>
+            評分排行 {!loading && foods.length > 0 && <span className="font-normal normal-case">· {foods.length} 款</span>}
+          </p>
+          {compareIds.length === 0 && !loading && foods.length > 0 && (
+            <p className="text-xs text-gray-400">☑ 點右側格子可比較</p>
+          )}
+        </div>
         {loading ? (
           <p className="text-center text-gray-400 py-12">載入中…</p>
         ) : foods.length === 0 ? (
@@ -169,10 +193,10 @@ export default function HomePage() {
                   {/* Score circle */}
                   <Link href={`/food/${food.id}`} className="shrink-0">
                     <div
-                      className="w-16 h-16 rounded-full flex flex-col items-center justify-center font-bold"
+                      className="w-20 h-20 rounded-full flex flex-col items-center justify-center font-bold"
                       style={{ background: badge.bg, color: badge.color }}
                     >
-                      <span style={{ fontSize: 22, lineHeight: 1.1 }}>{food.score_total ?? '–'}</span>
+                      <span style={{ fontSize: 26, lineHeight: 1.1 }}>{food.score_total ?? '–'}</span>
                       <span style={{ fontSize: 10, opacity: 0.7 }}>/ 100</span>
                     </div>
                   </Link>
@@ -181,6 +205,9 @@ export default function HomePage() {
                   <div className="flex-1 min-w-0">
                     <Link href={`/food/${food.id}`} className="block">
                       <p className="font-semibold text-gray-900 truncate mb-0.5" style={{ fontSize: 15 }}>{food.name}</p>
+                      {food.score_label && (
+                        <p className="text-xs mb-1" style={{ color: badge.color }}>{food.score_label}</p>
+                      )}
                     </Link>
                     <button
                       onClick={e => { e.stopPropagation(); router.push(`/brand/${encodeURIComponent(food.brand)}`) }}
@@ -229,19 +256,22 @@ export default function HomePage() {
           </div>
         )}
 
-        {/* ── Donate ── */}
-        <div
-          className="text-center py-8 rounded-2xl"
-          style={{ background: '#e8f9ee', border: '0.5px solid #b2e0bb' }}
-        >
-          <p className="font-semibold text-gray-900 mb-1.5">喜歡這個網站嗎？</p>
-          <p className="text-sm mb-5" style={{ color: '#555' }}>你的支持讓我們繼續分析更多飼料 ☕</p>
-          <button
-            className="px-6 py-2.5 rounded-full text-sm font-semibold text-white"
-            style={{ background: ACCENT }}
+        {/* ── CTA 區 ── */}
+        <div className="flex flex-col gap-3">
+          <Link
+            href="/brands"
+            className="w-full text-center py-3.5 rounded-2xl text-sm font-semibold"
+            style={{ background: '#fff', border: '0.5px solid #e5e7eb', color: '#374151' }}
           >
-            ☕ 支持喵評鑑
-          </button>
+            查看所有品牌 →
+          </Link>
+          <div className="text-center py-6 rounded-2xl" style={{ background: '#e8f9ee', border: '0.5px solid #b2e0bb' }}>
+            <p className="text-sm font-semibold text-gray-800 mb-1">這份分析對你有幫助嗎？</p>
+            <p className="text-xs mb-4" style={{ color: '#555' }}>你的支持讓我們繼續分析更多飼料 ☕</p>
+            <button className="px-5 py-2 rounded-full text-sm font-semibold text-white" style={{ background: ACCENT }}>
+              ☕ 支持喵評鑑
+            </button>
+          </div>
         </div>
       </div>
 

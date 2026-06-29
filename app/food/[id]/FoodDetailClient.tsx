@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
 import Nav from '@/components/Nav'
 import { CatFood } from '@/lib/supabase'
 
@@ -94,9 +95,9 @@ function ReviewForm({ foodId }: { foodId: string }) {
 
 function getScoreBadge(score: number | null): { bg: string; color: string } {
   if (!score) return { bg: '#f3f4f6', color: '#6b7280' }
-  if (score >= 80) return { bg: '#e8f9ee', color: '#1a7f37' }
-  if (score >= 65) return { bg: '#e6f0fb', color: '#1554a0' }
-  if (score >= 50) return { bg: '#fff3e0', color: '#b35c00' }
+  if (score >= 70) return { bg: '#e8f9ee', color: '#1a7f37' }
+  if (score >= 55) return { bg: '#e6f0fb', color: '#1554a0' }
+  if (score >= 40) return { bg: '#fff3e0', color: '#b35c00' }
   return { bg: '#ffeaea', color: '#c0392b' }
 }
 
@@ -156,17 +157,54 @@ function CaloricBar({ pct, color, label }: { pct: number; color: string; label: 
   )
 }
 
-// ai_pros/ai_cons 存的是「、」分隔的字串
-function parseList(val: unknown): string[] {
-  if (!val) return []
-  if (Array.isArray(val)) return val
-  return String(val).split(/[、，,]/).map(s => s.trim()).filter(Boolean)
+function IngredientsBlock({ raw }: { raw: string | null }) {
+  const [expanded, setExpanded] = useState(false)
+  if (!raw) return null
+  const preview = raw.slice(0, 120)
+  const needsExpand = raw.length > 120
+  return (
+    <div className="rounded-2xl mb-4 overflow-hidden" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
+      <div className="px-5 py-4">
+        <p className="text-xs font-semibold uppercase mb-2" style={{ color: '#6b7280', letterSpacing: '0.06em' }}>原料列表</p>
+        <p className="text-xs text-gray-600 leading-relaxed">
+          {expanded || !needsExpand ? raw : `${preview}…`}
+        </p>
+        {needsExpand && (
+          <button onClick={() => setExpanded(v => !v)} className="text-xs mt-2 underline" style={{ color: '#3D5A3E' }}>
+            {expanded ? '收合' : '顯示全部'}
+          </button>
+        )}
+      </div>
+    </div>
+  )
 }
 
 export default function FoodDetailClient({ food, reviews }: { food: CatFood; reviews: Review[] }) {
   const badge = getScoreBadge(food.score_total)
-  const pros = parseList(food.ai_pros)
-  const cons = parseList(food.ai_cons)
+  const aiSummary = food.ai_summary
+  const [inCompare, setInCompare] = useState(false)
+  const [compareIds, setCompareIds] = useState<string[]>([])
+
+  useEffect(() => {
+    try {
+      const ids: string[] = JSON.parse(localStorage.getItem('compareIds') || '[]')
+      setInCompare(ids.includes(food.id))
+      setCompareIds(ids)
+    } catch {}
+  }, [food.id])
+
+  function toggleCompare() {
+    const ids: string[] = JSON.parse(localStorage.getItem('compareIds') || '[]')
+    let newIds: string[]
+    if (ids.includes(food.id)) {
+      newIds = ids.filter(id => id !== food.id)
+    } else if (ids.length < 5) {
+      newIds = [...ids, food.id]
+    } else return
+    localStorage.setItem('compareIds', JSON.stringify(newIds))
+    setInCompare(newIds.includes(food.id))
+    setCompareIds(newIds)
+  }
 
   return (
     <main className="min-h-screen" style={{ background: '#f5f5f7' }}>
@@ -187,7 +225,26 @@ export default function FoodDetailClient({ food, reviews }: { food: CatFood; rev
               <div className="flex items-center gap-2 flex-wrap mb-1">
                 <h1 className="font-bold text-gray-900" style={{ fontSize: 20 }}>{food.name}</h1>
               </div>
-              <a href={`/brand/${encodeURIComponent(food.brand)}`} className="text-sm text-gray-400 mb-2 underline inline-block">{food.brand}</a>
+              <a href={`/brand/${encodeURIComponent(food.brand)}`} className="text-sm text-gray-400 underline inline-block">{food.brand}</a>
+              <div className="flex items-center gap-2 mt-1.5 mb-1 flex-wrap">
+                {food.score_label && (
+                  <span className="text-xs px-2 py-0.5 rounded-md font-semibold" style={{ background: badge.bg, color: badge.color }}>{food.score_label}</span>
+                )}
+                <button
+                  onClick={toggleCompare}
+                  className="text-xs px-2.5 py-0.5 rounded-md font-medium"
+                  style={inCompare
+                    ? { background: '#1d1d1f', color: '#fff' }
+                    : { background: '#f3f4f6', color: '#374151' }}
+                >
+                  {inCompare ? '✓ 已加入比較' : '+ 加入比較'}
+                </button>
+                {inCompare && compareIds.length >= 2 && (
+                  <Link href={`/compare?ids=${compareIds.join(',')}`} className="text-xs underline" style={{ color: ACCENT }}>
+                    前往比較 →
+                  </Link>
+                )}
+              </div>
               <div className="flex gap-1.5 flex-wrap">
                 <span className="text-xs px-2 py-0.5 rounded-md" style={{ background: '#f3f4f6', color: '#6b7280' }}>
                   {LIFE_STAGE_LABEL[food.life_stage] ?? food.life_stage}
@@ -219,47 +276,46 @@ export default function FoodDetailClient({ food, reviews }: { food: CatFood; rev
         </div>
 
         {/* 成分亮點 */}
-        <div className="p-4 rounded-2xl mb-4" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
-          <p className="text-xs font-semibold mb-3" style={{ color: '#6b7280', letterSpacing: '0.06em' }}>成分亮點</p>
-          <div className="flex flex-wrap gap-2">
-            {(food.protein_dm_pct ?? 0) >= 50 && (
-              <span className="text-xs px-3 py-1.5 rounded-full" style={{ background: '#e8f9ee', color: '#1a7f37' }}>✓ 蛋白質（乾重）{food.protein_dm_pct?.toFixed(1)}%，極高</span>
-            )}
-            {(food.protein_dm_pct ?? 0) >= 40 && (food.protein_dm_pct ?? 0) < 50 && (
-              <span className="text-xs px-3 py-1.5 rounded-full" style={{ background: '#e8f9ee', color: '#1a7f37' }}>✓ 蛋白質（乾重）{food.protein_dm_pct?.toFixed(1)}%，優秀</span>
-            )}
-            {(food.protein_dm_pct ?? 0) < 30 && (
-              <span className="text-xs px-3 py-1.5 rounded-full" style={{ background: '#ffeaea', color: '#c0392b' }}>! 蛋白質（乾重）{food.protein_dm_pct?.toFixed(1)}%，偏低</span>
-            )}
-            {(food.carb_dm_pct ?? 100) <= 10 && (
-              <span className="text-xs px-3 py-1.5 rounded-full" style={{ background: '#e8f9ee', color: '#1a7f37' }}>✓ 碳水（乾重）{food.carb_dm_pct?.toFixed(1)}%，極低</span>
-            )}
-            {(food.carb_dm_pct ?? 0) > 30 && (
-              <span className="text-xs px-3 py-1.5 rounded-full" style={{ background: '#ffeaea', color: '#c0392b' }}>! 碳水（乾重）{food.carb_dm_pct?.toFixed(1)}%，偏高</span>
-            )}
-            {!food.has_grain && (
-              <span className="text-xs px-3 py-1.5 rounded-full" style={{ background: '#e8f9ee', color: '#1a7f37' }}>✓ 無穀配方</span>
-            )}
-            {food.has_grain && (
-              <span className="text-xs px-3 py-1.5 rounded-full" style={{ background: '#ffeaea', color: '#c0392b' }}>! 含穀物成分</span>
-            )}
-            {food.is_aafco_certified && (
-              <span className="text-xs px-3 py-1.5 rounded-full" style={{ background: '#e6f0fb', color: '#1554a0' }}>✓ AAFCO 認證</span>
-            )}
-            {!food.is_aafco_certified && (
-              <span className="text-xs px-3 py-1.5 rounded-full" style={{ background: '#f3f4f6', color: '#6b7280' }}>— 未標示 AAFCO 認證</span>
-            )}
-            {food.ash_pct != null && food.ash_pct <= 8 && (
-              <span className="text-xs px-3 py-1.5 rounded-full" style={{ background: '#e8f9ee', color: '#1a7f37' }}>✓ 灰分 {food.ash_pct}%，低</span>
-            )}
-            {food.ash_pct != null && food.ash_pct > 10 && (
-              <span className="text-xs px-3 py-1.5 rounded-full" style={{ background: '#ffeaea', color: '#c0392b' }}>! 灰分 {food.ash_pct}%，偏高</span>
-            )}
-            {food.ash_pct == null && (
-              <span className="text-xs px-3 py-1.5 rounded-full" style={{ background: '#f3f4f6', color: '#6b7280' }}>— 灰分未公開</span>
-            )}
-          </div>
-        </div>
+        {(() => {
+          const good: string[] = []
+          const bad: string[] = []
+          const neutral: string[] = []
+          const p = food.protein_dm_pct ?? 0
+          const c = food.carb_dm_pct ?? 100
+          if (p >= 50) good.push(`✓ 蛋白質 ${food.protein_dm_pct?.toFixed(1)}%，極高`)
+          else if (p >= 40) good.push(`✓ 蛋白質 ${food.protein_dm_pct?.toFixed(1)}%，優秀`)
+          else if (p < 30 && food.protein_dm_pct != null) bad.push(`! 蛋白質 ${food.protein_dm_pct.toFixed(1)}%，偏低`)
+          if (c <= 10) good.push(`✓ 碳水 ${food.carb_dm_pct?.toFixed(1)}%，極低`)
+          else if (c > 30 && food.carb_dm_pct != null) bad.push(`! 碳水 ${food.carb_dm_pct.toFixed(1)}%，偏高`)
+          if (!food.has_grain) good.push('✓ 無穀配方')
+          else bad.push('! 含穀物成分')
+          if (food.is_aafco_certified) good.push('✓ AAFCO 認證')
+          else neutral.push('— 未標示 AAFCO')
+          if (food.ash_pct != null && food.ash_pct <= 8) good.push(`✓ 灰分 ${food.ash_pct}%，低`)
+          else if (food.ash_pct != null && food.ash_pct > 10) bad.push(`! 灰分 ${food.ash_pct}%，偏高`)
+          else neutral.push('— 灰分未公開')
+          if (good.length === 0 && bad.length === 0 && neutral.length === 0) return null
+          return (
+            <div className="p-4 rounded-2xl mb-4" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
+              <p className="text-xs font-semibold mb-3" style={{ color: '#6b7280', letterSpacing: '0.06em' }}>成分亮點</p>
+              {good.length > 0 && (
+                <div className="flex flex-wrap gap-2 mb-2">
+                  {good.map((t, i) => <span key={i} className="text-xs px-3 py-1.5 rounded-full" style={{ background: '#e8f9ee', color: '#1a7f37' }}>{t}</span>)}
+                </div>
+              )}
+              {bad.length > 0 && (
+                <div className="flex flex-wrap gap-2 mb-2">
+                  {bad.map((t, i) => <span key={i} className="text-xs px-3 py-1.5 rounded-full" style={{ background: '#ffeaea', color: '#c0392b' }}>{t}</span>)}
+                </div>
+              )}
+              {neutral.length > 0 && (
+                <div className="flex flex-wrap gap-2">
+                  {neutral.map((t, i) => <span key={i} className="text-xs px-3 py-1.5 rounded-full" style={{ background: '#f3f4f6', color: '#6b7280' }}>{t}</span>)}
+                </div>
+              )}
+            </div>
+          )
+        })()}
 
         {/* 營養數據卡 */}
         {(() => {
@@ -284,13 +340,15 @@ export default function FoodDetailClient({ food, reviews }: { food: CatFood; rev
 
               <div className="px-5 pt-3 pb-3">
                 <p className="text-xs font-semibold uppercase mb-1 flex items-center" style={{ color: '#6b7280', letterSpacing: '0.06em' }}>
-                  乾物比 <span className="font-normal normal-case ml-1">（排除水分後，同基準比較）</span>
-                  <Tooltip text="乾糧含水量約 10%，濕食約 75%，直接比較不公平。乾物比把水分扣除後重新計算，讓不同種類飼料可以直接比較蛋白質真實含量。" />
+                  乾物比
+                  <Tooltip text="把飼料的水分去除後重新計算的營養比例，這樣才能公平比較不同飼料的真實含量。喵評鑑的評分就是用這組數字。" />
                 </p>
                 <div className="grid grid-cols-3 gap-2 mt-2">
                   <NutrCard label="蛋白質" value={food.protein_dm_pct != null ? food.protein_dm_pct.toFixed(1) : null} />
                   <NutrCard label="脂肪"   value={food.fat_dm_pct     != null ? food.fat_dm_pct.toFixed(1)     : null} />
                   <NutrCard label="碳水"   value={food.carb_dm_pct    != null ? food.carb_dm_pct.toFixed(1)    : null} />
+                  <NutrCard label="纖維"   value={food.fiber_dm_pct   != null ? food.fiber_dm_pct.toFixed(1)   : null} />
+                  <NutrCard label="灰分"   value={food.ash_dm_pct     != null ? food.ash_dm_pct.toFixed(1)     : null} />
                 </div>
               </div>
 
@@ -308,7 +366,7 @@ export default function FoodDetailClient({ food, reviews }: { food: CatFood; rev
                     <CaloricBar pct={caloric.carb}    color="#b35c00" label="碳水"   />
                     {caloric.protein >= 40 && (
                       <p className="text-xs mt-1" style={{ color: '#1a7f37' }}>
-                        ✓ 蛋白質熱量佔 {caloric.protein}%，達 AAFCO 建議標準的 40% 以上
+                        ✓ 蛋白質熱量佔 {caloric.protein}%，符合貓咪每日建議攝取
                       </p>
                     )}
                     {caloric.carb <= 10 && (
@@ -330,33 +388,18 @@ export default function FoodDetailClient({ food, reviews }: { food: CatFood; rev
           )
         })()}
 
-        {/* 成分分析 */}
-        {(pros.length > 0 || cons.length > 0) && (
-          <div className="flex flex-col gap-3 mb-4">
-            {pros.length > 0 && (
-              <div className="p-4 rounded-2xl" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
-                <p className="text-xs font-semibold mb-2" style={{ color: '#1a7f37' }}>成分優勢</p>
-                <ul className="space-y-1.5">
-                  {pros.map((p, i) => (
-                    <li key={i} className="text-sm flex gap-2" style={{ color: '#1a4731' }}>
-                      <span className="shrink-0">·</span>{p}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            {cons.length > 0 && (
-              <div className="p-4 rounded-2xl" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
-                <p className="text-xs font-semibold mb-2 text-red-400">成分注意</p>
-                <ul className="space-y-1.5">
-                  {cons.map((c, i) => (
-                    <li key={i} className="text-sm flex gap-2" style={{ color: '#7f1d1d' }}>
-                      <span className="shrink-0">·</span>{c}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
+        {/* 原料列表 */}
+        <IngredientsBlock raw={food.ingredients_raw} />
+
+        {/* AI 快速總結 */}
+        {aiSummary && (aiSummary.good || aiSummary.warning || aiSummary.bad) && (
+          <div className="p-4 rounded-2xl mb-4" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
+            <p className="text-xs font-semibold mb-3" style={{ color: '#6b7280', letterSpacing: '0.06em' }}>成分總結</p>
+            <div className="flex flex-col gap-2">
+              {aiSummary.good    && <p className="text-sm leading-relaxed" style={{ color: '#1a4731' }}>{aiSummary.good}</p>}
+              {aiSummary.warning && <p className="text-sm leading-relaxed" style={{ color: '#92400e' }}>{aiSummary.warning}</p>}
+              {aiSummary.bad     && <p className="text-sm leading-relaxed" style={{ color: '#7f1d1d' }}>{aiSummary.bad}</p>}
+            </div>
           </div>
         )}
 
