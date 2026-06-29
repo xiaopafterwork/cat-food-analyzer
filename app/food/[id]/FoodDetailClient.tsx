@@ -133,12 +133,12 @@ function NutrCard({ label, value, unit = '%', sub }: { label: string; value: str
 function Tooltip({ text, down }: { text: string; down?: boolean }) {
   return (
     <span className="relative group inline-flex items-center ml-1 cursor-default">
-      <span className="text-xs text-gray-400 border border-gray-300 rounded-full w-3.5 h-3.5 inline-flex items-center justify-center leading-none select-none"
-        style={{ fontSize: 9, fontWeight: 600 }}>i</span>
-      <span className={`absolute left-1/2 -translate-x-1/2 z-50 hidden group-hover:flex
-        w-48 px-3 py-2 rounded-xl text-xs text-gray-700 leading-relaxed shadow-lg pointer-events-none
-        ${down ? 'top-full mt-1.5' : 'bottom-full mb-1.5'}`}
-        style={{ background: 'rgba(255,255,255,0.97)', border: '0.5px solid #e5e7eb', backdropFilter: 'blur(8px)' }}>
+      <span className="text-gray-400 border border-gray-300 rounded-full w-4 h-4 inline-flex items-center justify-center select-none shrink-0"
+        style={{ fontSize: 10, fontStyle: 'italic', fontFamily: 'Georgia, serif', fontWeight: 400, lineHeight: 1 }}>i</span>
+      <span className={`absolute left-1/2 -translate-x-1/2 z-[9999] hidden group-hover:flex
+        w-52 px-3 py-2.5 rounded-xl text-xs text-gray-700 leading-relaxed shadow-xl pointer-events-none
+        ${down ? 'top-full mt-2' : 'bottom-full mb-2'}`}
+        style={{ background: '#fff', border: '0.5px solid #e5e7eb', boxShadow: '0 8px 24px rgba(0,0,0,0.12)' }}>
         {text}
       </span>
     </span>
@@ -321,7 +321,7 @@ export default function FoodDetailClient({ food, reviews }: { food: CatFood; rev
         {(() => {
           const caloric = calcCaloric(food.protein_dm_pct, food.fat_dm_pct, food.carb_dm_pct)
           return (
-            <div className="rounded-2xl mb-4 overflow-hidden" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
+            <div className="rounded-2xl mb-4" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
               <div className="px-5 pt-4 pb-3">
                 <p className="text-xs font-semibold uppercase mb-3 flex items-center" style={{ color: '#6b7280', letterSpacing: '0.06em' }}>
                   包裝保證值 <span className="font-normal normal-case ml-1">（同包裝標示）</span>
