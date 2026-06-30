@@ -25,7 +25,7 @@ export default function HomePage() {
   const [query, setQuery] = useState('')
   const [lifeStageFilter, setLifeStageFilter] = useState<string | null>(null)
   const [grainFilter, setGrainFilter] = useState(false)
-  const [foodTypeFilter, setFoodTypeFilter] = useState<'dry' | 'wet' | null>(null)
+  const [foodTypeFilter, setFoodTypeFilter] = useState<'dry' | 'wet'>('dry')
   const [foods, setFoods] = useState<CatFood[]>([])
   const [loading, setLoading] = useState(true)
   const [compareIds, setCompareIds] = useState<string[]>([])
@@ -62,7 +62,7 @@ export default function HomePage() {
       let q = supabase.from('cat_foods').select('*').order('score_total', { ascending: false })
       if (lifeStageFilter) q = q.eq('life_stage', lifeStageFilter)
       if (grainFilter) q = q.eq('has_grain', false)
-      if (foodTypeFilter) q = q.eq('food_type', foodTypeFilter)
+      q = q.eq('food_type', foodTypeFilter)
       if (query.trim()) {
         const words = query.trim().split(/\s+/).filter(Boolean)
         const conditions = words.flatMap(w => [`name.ilike.%${w}%`, `brand.ilike.%${w}%`])
@@ -167,24 +167,22 @@ export default function HomePage() {
         {/* ── Food type tabs ── */}
         <div className="flex gap-0 mb-5 rounded-2xl overflow-hidden" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
           {([
-            { label: '全部', value: null, sub: '' },
-            { label: '乾飼料', value: 'dry', sub: '飼料・零食' },
-            { label: '主食罐', value: 'wet', sub: '濕食罐頭' },
-          ] as { label: string; value: 'dry' | 'wet' | null; sub: string }[]).map((item, i) => {
+            { label: '乾飼料', value: 'dry' },
+            { label: '主食罐', value: 'wet' },
+          ] as { label: string; value: 'dry' | 'wet' }[]).map((item, i) => {
             const active = foodTypeFilter === item.value
             return (
               <button
                 key={item.label}
                 onClick={() => setFoodTypeFilter(item.value)}
-                className="flex-1 flex flex-col items-center py-3 px-2 transition-colors"
+                className="flex-1 py-3 px-2 text-sm font-semibold transition-colors"
                 style={{
                   background: active ? ACCENT : 'transparent',
                   color: active ? '#fff' : '#6b7280',
-                  borderRight: i < 2 ? '0.5px solid #e5e7eb' : 'none',
+                  borderRight: i === 0 ? '0.5px solid #e5e7eb' : 'none',
                 }}
               >
-                <span className="text-sm font-semibold" style={{ color: active ? '#fff' : '#1a1a1a' }}>{item.label}</span>
-                {item.sub && <span className="text-xs mt-0.5" style={{ opacity: active ? 0.75 : 0.6 }}>{item.sub}</span>}
+                {item.label}
               </button>
             )
           })}
@@ -226,7 +224,7 @@ export default function HomePage() {
         {/* ── Food list ── */}
         <div className="flex items-center justify-between mb-3">
           <p className="text-xs font-semibold uppercase text-gray-400" style={{ letterSpacing: '0.08em' }}>
-            {foodTypeFilter === 'wet' ? '主食罐排行' : foodTypeFilter === 'dry' ? '乾飼料排行' : '綜合排行'}
+            {foodTypeFilter === 'wet' ? '主食罐排行' : '乾飼料排行'}
             {!loading && foods.length > 0 && <span className="font-normal normal-case"> · {foods.length} 款</span>}
           </p>
           {compareIds.length === 0 && !loading && foods.length > 0 && (
