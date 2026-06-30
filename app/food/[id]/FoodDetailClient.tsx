@@ -413,8 +413,24 @@ export default function FoodDetailClient({ food, reviews }: { food: CatFood; rev
                 {caloric ? (
                   <div className="flex flex-col gap-2">
                     <CaloricBar pct={caloric.protein} color="#1a7f37" label="蛋白質" />
-                    <CaloricBar pct={caloric.fat}     color="#1554a0" label="脂肪"   />
+                    <CaloricBar pct={caloric.fat}     color="#1B3A5C" label="脂肪"   />
                     <CaloricBar pct={caloric.carb}    color="#b35c00" label="碳水"   />
+                    {(() => {
+                      const p = food.protein_dm_pct ?? 0
+                      const f2 = food.fat_dm_pct ?? 0
+                      const c2 = food.carb_dm_pct ?? 0
+                      const totalKcal = p * 3.5 + f2 * 8.5 + c2 * 3.5
+                      if (totalKcal === 0) return null
+                      const gPer100kcal = Math.round((p / totalKcal) * 100 * 10) / 10
+                      return (
+                        <div className="mt-2 flex items-center gap-2">
+                          <span className="text-xs font-semibold px-3 py-1.5 rounded-full" style={{ background: '#e8f9ee', color: '#1a7f37' }}>
+                            每 100kcal 含蛋白質 {gPer100kcal}g
+                          </span>
+                          <Tooltip text="貓咪每 100 大卡建議至少攝取 6g 蛋白質（AAFCO 成貓標準）。數值越高代表這款飼料蛋白質熱量密度越好。" />
+                        </div>
+                      )
+                    })()}
                     {caloric.protein >= 40 && (
                       <p className="text-xs mt-1" style={{ color: '#1a7f37' }}>
                         ✓ 蛋白質熱量佔 {caloric.protein}%，符合貓咪每日建議攝取

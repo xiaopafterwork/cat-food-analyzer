@@ -25,6 +25,7 @@ export default function HomePage() {
   const [query, setQuery] = useState('')
   const [lifeStageFilter, setLifeStageFilter] = useState<string | null>(null)
   const [grainFilter, setGrainFilter] = useState(false)
+  const [foodTypeFilter, setFoodTypeFilter] = useState<'dry' | 'wet' | null>(null)
   const [foods, setFoods] = useState<CatFood[]>([])
   const [loading, setLoading] = useState(true)
   const [compareIds, setCompareIds] = useState<string[]>([])
@@ -61,6 +62,7 @@ export default function HomePage() {
       let q = supabase.from('cat_foods').select('*').order('score_total', { ascending: false })
       if (lifeStageFilter) q = q.eq('life_stage', lifeStageFilter)
       if (grainFilter) q = q.eq('has_grain', false)
+      if (foodTypeFilter) q = q.eq('food_type', foodTypeFilter)
       if (query.trim()) {
         const words = query.trim().split(/\s+/).filter(Boolean)
         const conditions = words.flatMap(w => [`name.ilike.%${w}%`, `brand.ilike.%${w}%`])
@@ -80,7 +82,7 @@ export default function HomePage() {
       }
     }
     fetchFoods()
-  }, [query, lifeStageFilter, grainFilter])
+  }, [query, lifeStageFilter, grainFilter, foodTypeFilter])
 
   function showToast(msg: string) {
     setToast(msg)
@@ -160,6 +162,29 @@ export default function HomePage() {
               style={{ background: '#fff', border: '0.5px solid #d1d5db', color: '#1a1a1a' }}
             />
           </div>
+        </div>
+
+        {/* ── Food type tabs ── */}
+        <div className="flex gap-1.5 mb-3">
+          {([
+            { label: '全部', value: null },
+            { label: '乾飼料', value: 'dry' },
+            { label: '濕食', value: 'wet' },
+          ] as { label: string; value: 'dry' | 'wet' | null }[]).map(item => {
+            const active = foodTypeFilter === item.value
+            return (
+              <button
+                key={item.label}
+                onClick={() => setFoodTypeFilter(item.value)}
+                className="px-4 py-1.5 rounded-full text-sm font-semibold"
+                style={active
+                  ? { background: ACCENT, color: '#fff', border: `0.5px solid ${ACCENT}` }
+                  : { background: '#fff', color: '#374151', border: '0.5px solid #d1d5db' }}
+              >
+                {item.label}
+              </button>
+            )
+          })}
         </div>
 
         {/* ── Filters ── */}
