@@ -11,7 +11,7 @@ const ACCENT = '#3D5A3E'
 
 const SCORE_LEVELS = [
   { range: '75–100', label: '優質主食', bg: '#e8f9ee', color: '#1a7f37', desc: '蛋白質充足、品質認證完整，適合作為長期日常主食。' },
-  { range: '60–74',  label: '均衡日常', bg: '#e6f0fb', color: '#1554a0', desc: '整體品質良好，日常餵食無虞，偶爾輪替更好。' },
+  { range: '60–74',  label: '均衡日常', bg: '#edf5f0', color: '#4a7c59', desc: '整體品質良好，日常餵食無虞，偶爾輪替更好。' },
   { range: '45–59',  label: '基礎配方', bg: '#fff3e0', color: '#b35c00', desc: '基本營養需求可達，建議搭配其他優質飼料輪替。' },
   { range: '45 以下', label: '建議搭配', bg: '#ffeaea', color: '#c0392b', desc: '不建議長期單獨餵食，需搭配其他營養來源。' },
 ]
@@ -142,7 +142,7 @@ export default function HowWeScorePage() {
         <p className="text-xs font-semibold uppercase text-gray-400 mb-3" style={{ letterSpacing: '0.08em' }}>實際計算範例</p>
         <div className="rounded-2xl overflow-hidden mb-8" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
           {[
-            { brand: '希爾斯（典型配方）',   p: '35%',  c: '38%', cert: 'AAFCO ✓', ash: '—', sp: 35, sc: 18, sq: 15, total: 68, label: '均衡日常', color: '#1554a0' },
+            { brand: '希爾斯（典型配方）',   p: '35%',  c: '38%', cert: 'AAFCO ✓', ash: '—', sp: 35, sc: 18, sq: 15, total: 68, label: '均衡日常', color: '#4a7c59' },
             { brand: '皇家（E42 泌尿道）',   p: '45.6%',c: '24.7%',cert: 'AAFCO ✓', ash: '✓', sp: 46, sc: 26, sq: 20, total: 92, label: '優質主食', color: '#1a7f37' },
             { brand: '高蛋白無穀品牌（示例）',p: '52%',  c: '8%',  cert: 'AAFCO ✓', ash: '✓', sp: 50, sc: 30, sq: 20, total: 100,label: '優質主食', color: '#1a7f37' },
             { brand: '廉價無認證品牌（示例）',p: '28%',  c: '44%', cert: '—',       ash: '—', sp: 18, sc: 15, sq: 0,  total: 33, label: '建議搭配', color: '#c0392b' },
