@@ -18,6 +18,7 @@ function getScoreBadge(score: number | null): { bg: string; color: string } {
 
 const LIFE_STAGE_LABEL: Record<string, string> = {
   kitten: '幼貓', adult: '成貓', senior: '熟齡貓', all: '全齡',
+  幼貓: '幼貓', 成貓: '成貓', 熟齡貓: '熟齡貓', 全齡: '全齡',
 }
 
 
@@ -192,9 +193,9 @@ export default function HomePage() {
         <div className="flex gap-2 flex-wrap mb-6">
           {([
             { label: '全部', value: null },
-            { label: '幼貓', value: 'kitten' },
-            { label: '成貓', value: 'adult' },
-            { label: '全齡', value: 'all' },
+            { label: '幼貓', value: '幼貓' },
+            { label: '成貓', value: '成貓' },
+            { label: '全齡', value: '全齡' },
           ] as { label: string; value: string | null }[]).map(item => {
             const active = item.value === null ? lifeStageFilter === null && !grainFilter : lifeStageFilter === item.value
             return (
@@ -210,15 +211,17 @@ export default function HomePage() {
               </button>
             )
           })}
-          <button
-            onClick={() => setGrainFilter(v => !v)}
-            className="px-4 py-1.5 rounded-full text-sm font-medium"
-            style={grainFilter
-              ? { background: '#e8f9ee', color: '#1a7f37', border: '0.5px solid #86efac' }
-              : { background: '#fff', color: '#374151', border: '0.5px solid #d1d5db' }}
-          >
-            無穀
-          </button>
+          {foodTypeFilter === 'dry' && (
+            <button
+              onClick={() => setGrainFilter(v => !v)}
+              className="px-4 py-1.5 rounded-full text-sm font-medium"
+              style={grainFilter
+                ? { background: '#e8f9ee', color: '#1a7f37', border: '0.5px solid #86efac' }
+                : { background: '#fff', color: '#374151', border: '0.5px solid #d1d5db' }}
+            >
+              無穀
+            </button>
+          )}
         </div>
 
         {/* ── Food list ── */}
@@ -234,15 +237,7 @@ export default function HomePage() {
         {loading ? (
           <p className="text-center text-gray-400 py-12">載入中…</p>
         ) : foods.length === 0 ? (
-          foodTypeFilter === 'wet' && !query.trim() ? (
-            <div className="text-center py-14 rounded-2xl" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
-              <div className="text-3xl mb-3">🥫</div>
-              <p className="text-sm font-semibold text-gray-800 mb-1">主食罐資料即將上線</p>
-              <p className="text-xs text-gray-400">我們正在整理 1,800+ 款主食罐資料，敬請期待</p>
-            </div>
-          ) : (
-            <p className="text-center text-gray-400 py-12">找不到符合的飼料</p>
-          )
+          <p className="text-center text-gray-400 py-12">找不到符合的結果，換個條件試試</p>
         ) : (
           <div className="flex flex-col gap-3 mb-8">
             {foods.slice(0, visibleCount).map((food, index) => {
@@ -281,9 +276,6 @@ export default function HomePage() {
                       style={{ color: ACCENT }}
                     >{food.brand}</button>
                     <div className="flex gap-1.5 flex-wrap">
-                      {food.food_type === 'wet' && (
-                        <span className="text-xs px-2 py-0.5 rounded-md font-semibold" style={{ background: '#EEF3F8', color: '#1B3A5C' }}>主食罐</span>
-                      )}
                       {!food.has_grain && food.food_type !== 'wet' && (
                         <span className="text-xs px-2 py-0.5 rounded-md" style={{ background: '#e8f9ee', color: '#1a7f37' }}>無穀</span>
                       )}
