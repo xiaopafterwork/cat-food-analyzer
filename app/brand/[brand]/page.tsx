@@ -17,7 +17,7 @@ const ACCENT = '#3D5A3E'
 function getScoreBadge(score: number | null) {
   if (!score) return { bg: '#f3f4f6', color: '#6b7280' }
   if (score >= 75) return { bg: '#e8f9ee', color: '#1a7f37' }
-  if (score >= 60) return { bg: '#eef2f7', color: '#4b6280' }
+  if (score >= 60) return { bg: '#f0f1f3', color: '#5c6370' }
   if (score >= 45) return { bg: '#fff3e0', color: '#b35c00' }
   return { bg: '#ffeaea', color: '#c0392b' }
 }
@@ -152,7 +152,7 @@ export default async function BrandPage({ params }: { params: { brand: string } 
                       <span className="text-xs px-2 py-0.5 rounded-md" style={{ background: '#ffeaea', color: '#c0392b' }}>含穀</span>
                     )}
                     {food.is_aafco_certified && (
-                      <span className="text-xs px-2 py-0.5 rounded-md" style={{ background: '#e8f9ee', color: '#1a7f37' }}>AAFCO</span>
+                      <span className="text-xs px-2 py-0.5 rounded-md font-semibold" style={{ background: '#3D5A3E', color: '#fff' }}>AAFCO</span>
                     )}
                     <span className="text-xs px-2 py-0.5 rounded-md" style={{ background: '#f3f4f6', color: '#6b7280' }}>
                       {LIFE_STAGE_LABEL[food.life_stage] ?? food.life_stage}
