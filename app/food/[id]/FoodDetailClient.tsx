@@ -189,6 +189,21 @@ export default function FoodDetailClient({ food, reviews }: { food: CatFood; rev
   const [compareIds, setCompareIds] = useState<string[]>([])
   const [isMobile, setIsMobile] = useState(false)
   const [toast, setToast] = useState('')
+  const [copied, setCopied] = useState(false)
+
+  function shareToThreads() {
+    const url = `https://meowpj.com/food/${food.id}`
+    const text = `${food.name} 在喵評鑑拿到 ${food.score_total} 分（${food.score_label}）！\n\n成分分析、評分明細都在這裡 👇\n${url}`
+    window.open(`https://www.threads.net/intent/post?text=${encodeURIComponent(text)}`, '_blank')
+  }
+
+  function copyLink() {
+    const url = `https://meowpj.com/food/${food.id}`
+    navigator.clipboard.writeText(url).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    })
+  }
 
   useEffect(() => {
     const mq = window.matchMedia('(max-width: 767px)')
@@ -274,6 +289,20 @@ export default function FoodDetailClient({ food, reviews }: { food: CatFood; rev
                     前往比較 →
                   </Link>
                 )}
+                <button
+                  onClick={shareToThreads}
+                  className="text-xs px-2.5 py-0.5 rounded-md font-medium"
+                  style={{ background: '#1d1d1f', color: '#fff' }}
+                >
+                  分享到 Threads
+                </button>
+                <button
+                  onClick={copyLink}
+                  className="text-xs px-2.5 py-0.5 rounded-md font-medium"
+                  style={{ background: '#f3f4f6', color: '#374151' }}
+                >
+                  {copied ? '✓ 已複製' : '複製連結'}
+                </button>
               </div>
               <div className="flex gap-1.5 flex-wrap">
                 <span className="text-xs px-2 py-0.5 rounded-md" style={{ background: '#f3f4f6', color: '#6b7280' }}>
