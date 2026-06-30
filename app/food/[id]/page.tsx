@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
     ? food.ai_summary.split(/[。！？]/)[0]
     : ''
 
-  const description = `${food.name}成分分析。蛋白質（乾重）${food.protein_dm_pct?.toFixed(1) ?? '–'}%、碳水${food.carb_dm_pct?.toFixed(1) ?? '–'}%，喵評鑑綜合評分 ${food.score_total} 分（${food.score_label}）。${summary ? summary + '。' : ''}台灣貓奴最信賴的飼料成分分析平台。`
+  const description = `${food.name}成分分析。蛋白質（乾重）${food.protein_dm_pct?.toFixed(1) ?? '–'}%、碳水${food.carb_dm_pct?.toFixed(1) ?? '–'}%，喵評鑑綜合評分 ${food.score_total} 分（${food.score_label}）。${summary ? summary + '。' : ''}喵評鑑 — 成分透明、科學評分。`
 
   return {
     title: `${food.name} 評分 ${food.score_total} 分 | 喵評鑑`,

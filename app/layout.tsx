@@ -17,8 +17,8 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://meowpj.com'),
-  title: "喵評鑑 — 台灣最完整的貓咪飼料評鑑",
-  description: "喵評鑑幫你分析貓飼料成分、評分、優缺點，找到最適合你家貓咪的飼料。",
+  title: "喵評鑑 MEOWPJ — 貓咪飼料與主食罐成分評分",
+  description: "乾飼料和主食罐都有，用分數告訴你這款值不值得買。成分透明、科學評分，已收錄 2,600+ 款。",
   alternates: { canonical: 'https://meowpj.com' },
   openGraph: {
     siteName: '喵評鑑',
@@ -69,7 +69,7 @@ export default function RootLayout({
               <p>
                 📋 <strong className="text-gray-500">資料時效</strong>：飼料配方可能因批次或年份調整，本站資料以收集時為準，實際成分請以產品標示為主。
               </p>
-              <p className="text-gray-300">© 2026 喵評鑑 · 台灣貓咪飼料評鑑平台</p>
+              <p className="text-gray-300">© 2026 喵評鑑 MEOWPJ · 貓咪飼料與主食罐評分平台</p>
             </div>
           </div>
         </footer>
