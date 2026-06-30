@@ -210,23 +210,30 @@ export default function HomePage() {
           <p className="text-center text-gray-400 py-12">找不到符合的飼料</p>
         ) : (
           <div className="flex flex-col gap-3 mb-8">
-            {foods.slice(0, visibleCount).map(food => {
+            {foods.slice(0, visibleCount).map((food, index) => {
               const badge = getScoreBadge(food.score_total)
               const inCompare = compareIds.includes(food.id)
+              const rank = index + 1
+              const topStyle =
+                rank === 1 ? { background: '#fffbeb', border: '1.5px solid #f59e0b' } :
+                rank === 2 ? { background: '#fafafa', border: '1.5px solid #c0c0c0' } :
+                rank === 3 ? { background: '#fff8f5', border: '1.5px solid #cd7c4a' } :
+                { background: '#fff', border: '0.5px solid #e5e7eb' }
               return (
                 <div
                   key={food.id}
                   className="flex items-center gap-4 p-4 rounded-2xl"
-                  style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}
+                  style={topStyle}
                 >
-                  {/* Score circle */}
+                  {/* Score circle — white bg + colored ring */}
                   <Link href={`/food/${food.id}`} className="shrink-0">
                     <div
-                      className="w-20 h-20 rounded-full flex flex-col items-center justify-center font-bold"
-                      style={{ background: badge.bg, color: badge.color }}
+                      className="w-20 h-20 rounded-full flex flex-col items-center justify-center font-bold relative"
+                      style={{ background: '#fff', boxShadow: `0 0 0 3.5px ${badge.color}`, color: badge.color }}
                     >
-                      <span style={{ fontSize: 26, lineHeight: 1.1 }}>{food.score_total ?? '–'}</span>
-                      <span style={{ fontSize: 10, opacity: 0.7 }}>/ 100</span>
+                      <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.03em', opacity: 0.55, marginBottom: 1 }}>#{rank}</span>
+                      <span style={{ fontSize: 24, lineHeight: 1 }}>{food.score_total ?? '–'}</span>
+                      <span style={{ fontSize: 9, opacity: 0.55 }}>/ 100</span>
                     </div>
                   </Link>
 
