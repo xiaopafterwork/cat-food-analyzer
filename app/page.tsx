@@ -234,7 +234,15 @@ export default function HomePage() {
         {loading ? (
           <p className="text-center text-gray-400 py-12">載入中…</p>
         ) : foods.length === 0 ? (
-          <p className="text-center text-gray-400 py-12">找不到符合的飼料</p>
+          foodTypeFilter === 'wet' && !query.trim() ? (
+            <div className="text-center py-14 rounded-2xl" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
+              <div className="text-3xl mb-3">🥫</div>
+              <p className="text-sm font-semibold text-gray-800 mb-1">主食罐資料即將上線</p>
+              <p className="text-xs text-gray-400">我們正在整理 1,800+ 款主食罐資料，敬請期待</p>
+            </div>
+          ) : (
+            <p className="text-center text-gray-400 py-12">找不到符合的飼料</p>
+          )
         ) : (
           <div className="flex flex-col gap-3 mb-8">
             {foods.slice(0, visibleCount).map((food, index) => {
