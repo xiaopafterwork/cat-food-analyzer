@@ -91,7 +91,7 @@ export default function RequestPage() {
             className="inline-block px-5 py-2 rounded-full text-sm font-semibold text-white"
             style={{ background: ACCENT }}
           >
-            瀏覽所有飼料評分
+            瀏覽所有評分
           </Link>
         </div>
       </div>

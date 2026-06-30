@@ -26,7 +26,7 @@ export default async function AboutPage() {
     { global: { fetch: (url, opts) => fetch(url, { ...opts, cache: 'no-store' }) } }
   )
   const { count } = await supabase.from('cat_foods').select('id', { count: 'exact', head: true })
-  const foodCount = count ?? 775
+  const foodCount = count ?? 2600
 
   const { data: brandData } = await supabase.from('cat_foods').select('brand')
   const brandSet: Record<string, boolean> = {}
@@ -101,7 +101,7 @@ export default async function AboutPage() {
         {/* 數據小卡 */}
         <div className="grid grid-cols-3 gap-3 mb-6">
           {[
-            { num: `${foodCount}款`, label: '收錄飼料' },
+            { num: `${foodCount}款`, label: '收錄飼料與主食罐' },
             { num: `${brandCount}個`, label: '收錄品牌' },
             { num: '免費', label: '永遠對貓奴' },
           ].map(item => (

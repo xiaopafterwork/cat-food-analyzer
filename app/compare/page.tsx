@@ -209,7 +209,7 @@ export default function ComparePage() {
   return (
     <main className="min-h-screen" style={{ background: '#f5f5f7' }}>
       {/* Nav */}
-      <Nav backHref="/" title="飼料比較" />
+      <Nav backHref="/" title="比較" />
 
       <div className="max-w-4xl mx-auto px-4 pb-16 mt-6">
         <div className="rounded-3xl p-6" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
