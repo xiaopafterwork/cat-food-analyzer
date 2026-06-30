@@ -3,8 +3,8 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 
 export const metadata: Metadata = {
-  title: '評分標準 — 喵評鑑怎麼幫飼料打分數',
-  description: '喵評鑑採用 v3.0 評分，蛋白質、碳水、品質指標三大面向，滿分 100 分。符合 AAFCO/FEDIAF 國際標準，讓你一眼看出飼料好不好。',
+  title: '評分標準 | 喵評鑑',
+  description: '喵評鑑採用科學化評分，從蛋白質含量（50分）、碳水化合物（30分）、AAFCO 國際認證（15分）、灰分透明度（5分）四大面向評比，滿分 100 分。符合 AAFCO/FEDIAF/NRC 國際標準，讓你一眼看出飼料好不好。',
 }
 
 const ACCENT = '#3D5A3E'
@@ -44,11 +44,11 @@ export default function HowWeScorePage() {
 
         {/* Hero */}
         <div className="text-center pt-10 pb-8">
-          <p className="text-xs font-semibold uppercase mb-3" style={{ color: ACCENT, letterSpacing: '0.08em' }}>評分 v3.0 · 參考 AAFCO / FEDIAF / NRC</p>
+          <p className="text-xs font-semibold uppercase mb-3" style={{ color: ACCENT, letterSpacing: '0.08em' }}>參考 AAFCO / FEDIAF / NRC 國際標準</p>
           <h1 className="text-3xl font-bold text-gray-900 mb-3" style={{ letterSpacing: '-0.5px' }}>我們怎麼幫飼料打分數？</h1>
           <p className="text-gray-500 text-sm leading-relaxed max-w-md mx-auto">
             蛋白質、碳水、品質認證三個面向，<strong>滿分 100 分</strong>。<br />
-            符合國際獸醫營養標準，皇家、希爾斯等大品牌公平評比。
+            符合國際獸醫營養標準，皇家、希爾思等大品牌公平評比。
           </p>
         </div>
 
