@@ -67,7 +67,7 @@ export default function RequestPage() {
         <div className="grid grid-cols-2 gap-3 mb-8">
           {[
             { icon: '⚡', title: '盡快上線', desc: '收到需求後，通常在 1–2 週內完成評鑑並上線。' },
-            { icon: '🔍', title: '資料來源', desc: '我們從官方包裝及品牌官網取得成分資料，確保準確。' },
+            { icon: '🔍', title: '資料來源', desc: '成分資料來自網路公開資訊彙整，如有誤差歡迎來信告知。' },
             { icon: '📊', title: '公正評分', desc: '所有飼料採用相同標準評分，不因品牌或通路而有所不同。' },
             { icon: '💬', title: '歡迎回饋', desc: '發現評分有誤或資料過期，也歡迎來信告知！' },
           ].map(item => (
