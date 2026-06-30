@@ -56,9 +56,10 @@ export default function AboutPage() {
             </p>
 
             <p>
-              我是做產品的，<br />
-              遇到問題的第一反應就是：<br />
-              那我來建一個工具好了。
+              我白天上班做產品，<br />
+              下班的時間就用來研究這些。<br />
+              沒什麼特別的原因，<br />
+              就是懶得每次買飼料都要自己查一遍。
             </p>
 
             <p>於是就有了喵評鑑。</p>
@@ -84,7 +85,7 @@ export default function AboutPage() {
         {/* 數據小卡 */}
         <div className="grid grid-cols-3 gap-3 mb-6">
           {[
-            { num: '780+', label: '收錄飼料款數' },
+            { num: '775', label: '收錄飼料款數' },
             { num: '100', label: '科學評分滿分' },
             { num: '免費', label: '永遠對貓奴' },
           ].map(item => (
