@@ -19,9 +19,11 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://meowpj.com'),
   title: "喵評鑑 — 台灣最完整的貓咪飼料評鑑",
   description: "喵評鑑幫你分析貓飼料成分、評分、優缺點，找到最適合你家貓咪的飼料。",
+  alternates: { canonical: 'https://meowpj.com' },
   openGraph: {
     siteName: '喵評鑑',
     locale: 'zh_TW',
+    images: [{ url: '/logo.png', width: 512, height: 512, alt: '喵評鑑' }],
   },
 };
 
@@ -34,6 +36,20 @@ export default function RootLayout({
     <html lang="zh-TW">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <GoogleAnalytics />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'WebSite',
+            name: '喵評鑑',
+            url: 'https://meowpj.com',
+            potentialAction: {
+              '@type': 'SearchAction',
+              target: { '@type': 'EntryPoint', urlTemplate: 'https://meowpj.com/?q={search_term_string}' },
+              'query-input': 'required name=search_term_string',
+            },
+          }) }}
+        />
         {children}
         <footer className="border-t border-gray-100 mt-16 py-10 px-4 bg-white">
           <div className="max-w-2xl mx-auto">

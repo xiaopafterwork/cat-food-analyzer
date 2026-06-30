@@ -40,11 +40,13 @@ export async function generateMetadata({ params }: { params: { brand: string } }
   return {
     title: `${brandName} 貓飼料評價｜${count} 款成分分析 - 喵評鑑`,
     description: `${brandName} 所有貓飼料成分分析與評分。共 ${count} 款，最高評分 ${topScore} 分。科學評分、成分透明，台灣貓奴最信賴的飼料分析平台。`,
+    alternates: { canonical: `https://meowpj.com/brand/${params.brand}` },
     openGraph: {
       title: `${brandName} 貓飼料評價 | 喵評鑑`,
       description: `${brandName} 共 ${count} 款飼料，最高分 ${topScore} 分`,
       url: `https://meowpj.com/brand/${params.brand}`,
       siteName: '喵評鑑',
+      images: [{ url: '/logo.png', width: 512, height: 512, alt: `${brandName} | 喵評鑑` }],
     },
   }
 }
@@ -73,9 +75,22 @@ export default async function BrandPage({ params }: { params: { brand: string } 
   const topScore = foods[0].score_total ?? 0
   const grainFreeCount = foods.filter(f => !f.has_grain).length
 
+  const itemListLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: `${brandName} 貓飼料評分列表`,
+    itemListElement: foods.slice(0, 10).map((food, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: food.name,
+      url: `https://meowpj.com/food/${food.id}`,
+    })),
+  }
+
   return (
     <main className="min-h-screen" style={{ background: '#f5f5f7' }}>
       <Nav backHref="/" />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListLd) }} />
 
       <div className="max-w-2xl mx-auto px-4 pb-16">
 

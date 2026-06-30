@@ -32,11 +32,13 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   return {
     title: `${food.name} 評分 ${food.score_total} 分 | 喵評鑑`,
     description: description.slice(0, 155),
+    alternates: { canonical: `https://meowpj.com/food/${params.id}` },
     openGraph: {
       title: `${food.name} 評分 ${food.score_total} 分 | 喵評鑑`,
       description: description.slice(0, 100),
       url: `https://meowpj.com/food/${params.id}`,
       siteName: '喵評鑑',
+      images: [{ url: '/logo.png', width: 512, height: 512, alt: food.name }],
     },
   }
 }
@@ -61,29 +63,38 @@ export default async function FoodDetailPage({ params }: { params: { id: string 
     )
   }
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: food.name,
-    brand: { '@type': 'Brand', name: food.brand },
-    review: {
-      '@type': 'Review',
-      reviewRating: {
-        '@type': 'Rating',
-        ratingValue: String(food.score_total ?? 0),
-        bestRating: '100',
-        worstRating: '0',
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name: food.name,
+      brand: { '@type': 'Brand', name: food.brand },
+      review: {
+        '@type': 'Review',
+        reviewRating: {
+          '@type': 'Rating',
+          ratingValue: String(food.score_total ?? 0),
+          bestRating: '100',
+          worstRating: '0',
+        },
+        author: { '@type': 'Organization', name: '喵評鑑' },
       },
-      author: { '@type': 'Organization', name: '喵評鑑' },
     },
-  }
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: '首頁', item: 'https://meowpj.com' },
+        { '@type': 'ListItem', position: 2, name: food.brand, item: `https://meowpj.com/brand/${encodeURIComponent(food.brand)}` },
+        { '@type': 'ListItem', position: 3, name: food.name, item: `https://meowpj.com/food/${food.id}` },
+      ],
+    },
+  ]
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd[0]) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd[1]) }} />
       <FoodDetailClient food={food} reviews={reviews ?? []} />
     </>
   )
