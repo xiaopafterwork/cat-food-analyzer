@@ -3,7 +3,7 @@ import { createClient } from '@supabase/supabase-js'
 import Nav from '@/components/Nav'
 import BrandDetailClient from './BrandDetailClient'
 
-export const revalidate = 86400 // 24小時重新生成
+export const revalidate = false // 永久快取，上傳資料後手動重新部署
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,

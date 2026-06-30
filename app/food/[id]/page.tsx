@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import { createClient } from '@supabase/supabase-js'
 import FoodDetailClient from './FoodDetailClient'
 
-export const revalidate = 86400 // 24小時重新生成
+export const revalidate = false // 永久快取，上傳資料後手動重新部署
 
 function getSupabase() {
   return createClient(
