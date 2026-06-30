@@ -61,7 +61,7 @@ export default function HomePage() {
   useEffect(() => {
     async function fetchFoods() {
       setLoading(true)
-      let q = supabase.from('cat_foods').select('*').order('score_total', { ascending: false })
+      let q = supabase.from('cat_foods').select('*').order('score_total', { ascending: false }).limit(3000)
       if (lifeStageFilter) q = q.eq('life_stage', lifeStageFilter)
       if (grainFilter) q = q.eq('has_grain', false)
       if (aafcoFilter) q = q.eq('is_aafco_certified', true)
