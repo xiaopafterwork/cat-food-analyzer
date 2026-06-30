@@ -270,7 +270,7 @@ export default function FoodDetailClient({ food, reviews }: { food: CatFood; rev
                 <span className="text-xs mt-0.5" style={{ color: badge.color, opacity: 0.7 }}>/ 100</span>
               </div>
               {food.score_label && (
-                <span className="text-xs font-semibold px-2 py-0.5 rounded-md text-center" style={{ background: badge.bg, color: badge.color }}>{food.score_label}</span>
+                <span className="text-xs font-semibold px-2 py-0.5 rounded-md text-center" style={{ background: '#f3f4f6', color: '#374151', border: '0.5px solid #e5e7eb' }}>{food.score_label}</span>
               )}
             </div>
 
