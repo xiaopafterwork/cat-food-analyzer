@@ -62,7 +62,7 @@ export default function HowWeScorePage() {
         {/* Hero */}
         <div className="text-center pt-10 pb-6">
           <p className="text-xs font-semibold uppercase mb-3" style={{ color: ACCENT, letterSpacing: '0.08em' }}>參考 AAFCO / FEDIAF / NRC 國際標準</p>
-          <h1 className="text-3xl font-bold text-gray-900 mb-3" style={{ letterSpacing: '-0.5px' }}>我們怎麼幫飼料打分數？</h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-3" style={{ letterSpacing: '-0.5px' }}>我們怎麼幫飼料和主食罐打分數？</h1>
           <p className="text-gray-500 text-sm leading-relaxed max-w-md mx-auto">
             蛋白質、碳水、品質認證三個面向，<strong>滿分 100 分</strong>。<br />
             乾飼料和主食罐分開計算，標準不同、分數才有意義。
