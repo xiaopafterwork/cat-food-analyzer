@@ -85,7 +85,7 @@ export default function RequestPage() {
           style={{ background: '#EEF3F8', border: '0.5px solid #C8D9E8' }}
         >
           <p className="text-sm text-gray-700 mb-3">
-            目前已有 <strong style={{ color: ACCENT }}>2,600+ 款</strong> 飼料完成評鑑
+            目前已有 <strong style={{ color: ACCENT }}>2,600+ 款</strong> 飼料與主食罐完成評鑑
           </p>
           <Link
             href="/"
