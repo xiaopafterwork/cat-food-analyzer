@@ -26,6 +26,7 @@ export default function HomePage() {
   const [query, setQuery] = useState('')
   const [lifeStageFilter, setLifeStageFilter] = useState<string | null>(null)
   const [grainFilter, setGrainFilter] = useState(false)
+  const [aafcoFilter, setAafcoFilter] = useState(false)
   const [foodTypeFilter, setFoodTypeFilter] = useState<'dry' | 'wet'>('dry')
   const [foods, setFoods] = useState<CatFood[]>([])
   const [loading, setLoading] = useState(true)
@@ -63,6 +64,7 @@ export default function HomePage() {
       let q = supabase.from('cat_foods').select('*').order('score_total', { ascending: false })
       if (lifeStageFilter) q = q.eq('life_stage', lifeStageFilter)
       if (grainFilter) q = q.eq('has_grain', false)
+      if (aafcoFilter) q = q.eq('is_aafco_certified', true)
       q = q.eq('food_type', foodTypeFilter)
       if (query.trim()) {
         const words = query.trim().split(/\s+/).filter(Boolean)
@@ -83,7 +85,7 @@ export default function HomePage() {
       }
     }
     fetchFoods()
-  }, [query, lifeStageFilter, grainFilter, foodTypeFilter])
+  }, [query, lifeStageFilter, grainFilter, aafcoFilter, foodTypeFilter])
 
   function showToast(msg: string) {
     setToast(msg)
@@ -175,7 +177,7 @@ export default function HomePage() {
             return (
               <button
                 key={item.label}
-                onClick={() => { setFoodTypeFilter(item.value); setLifeStageFilter(null); setGrainFilter(false) }}
+                onClick={() => { setFoodTypeFilter(item.value); setLifeStageFilter(null); setGrainFilter(false); setAafcoFilter(false) }}
                 className="flex-1 py-3 px-2 text-sm font-semibold transition-colors"
                 style={{
                   background: active ? ACCENT : 'transparent',
@@ -191,17 +193,16 @@ export default function HomePage() {
 
         {/* ── Filters ── */}
         <div className="flex gap-2 flex-wrap mb-6">
-          {([
-            { label: '全部', value: null },
-            { label: '幼貓', value: '幼貓' },
-            { label: '成貓', value: '成貓' },
-            { label: '全齡', value: '全齡' },
-          ] as { label: string; value: string | null }[]).map(item => {
-            const active = item.value === null ? lifeStageFilter === null && !grainFilter : lifeStageFilter === item.value
+          {/* 生命階段：乾飼料 全部/幼貓/成貓/熟齡貓，主食罐 全部/幼貓/成貓 */}
+          {(foodTypeFilter === 'dry'
+            ? [{ label: '全部', value: null }, { label: '幼貓', value: '幼貓' }, { label: '成貓', value: '成貓' }, { label: '熟齡貓', value: '熟齡貓' }]
+            : [{ label: '全部', value: null }, { label: '幼貓', value: '幼貓' }, { label: '成貓', value: '成貓' }]
+          ).map(item => {
+            const active = item.value === null ? lifeStageFilter === null && !grainFilter && !aafcoFilter : lifeStageFilter === item.value
             return (
               <button
                 key={item.label}
-                onClick={() => { setLifeStageFilter(item.value); if (item.value === null) setGrainFilter(false) }}
+                onClick={() => { setLifeStageFilter(item.value); if (item.value === null) { setGrainFilter(false); setAafcoFilter(false) } }}
                 className="px-4 py-1.5 rounded-full text-sm font-medium"
                 style={active
                   ? { background: '#1d1d1f', color: '#fff', border: '0.5px solid #1d1d1f' }
@@ -211,6 +212,7 @@ export default function HomePage() {
               </button>
             )
           })}
+          {/* 無穀：僅乾飼料 */}
           {foodTypeFilter === 'dry' && (
             <button
               onClick={() => setGrainFilter(v => !v)}
@@ -220,6 +222,18 @@ export default function HomePage() {
                 : { background: '#fff', color: '#374151', border: '0.5px solid #d1d5db' }}
             >
               無穀
+            </button>
+          )}
+          {/* AAFCO：主食罐專屬 */}
+          {foodTypeFilter === 'wet' && (
+            <button
+              onClick={() => setAafcoFilter(v => !v)}
+              className="px-4 py-1.5 rounded-full text-sm font-medium"
+              style={aafcoFilter
+                ? { background: '#EEF3F8', color: '#1B3A5C', border: '0.5px solid #C8D9E8' }
+                : { background: '#fff', color: '#374151', border: '0.5px solid #d1d5db' }}
+            >
+              AAFCO 認證
             </button>
           )}
         </div>
