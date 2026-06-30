@@ -27,6 +27,11 @@ export default async function AboutPage() {
   )
   const { count } = await supabase.from('cat_foods').select('id', { count: 'exact', head: true })
   const foodCount = count ?? 775
+
+  const { data: brandData } = await supabase.from('cat_foods').select('brand')
+  const brandSet: Record<string, boolean> = {}
+  for (const f of brandData ?? []) { if (f.brand) brandSet[f.brand] = true }
+  const brandCount = Object.keys(brandSet).length
   return (
     <main className="min-h-screen" style={{ background: '#f5f5f7' }}>
       <Nav backHref="/" backLabel="返回首頁" />
@@ -97,7 +102,7 @@ export default async function AboutPage() {
         <div className="grid grid-cols-3 gap-3 mb-6">
           {[
             { num: `${foodCount}款`, label: '收錄飼料' },
-            { num: '4項', label: '評分指標' },
+            { num: `${brandCount}個`, label: '收錄品牌' },
             { num: '免費', label: '永遠對貓奴' },
           ].map(item => (
             <div
