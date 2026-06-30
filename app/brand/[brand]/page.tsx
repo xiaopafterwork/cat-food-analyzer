@@ -10,6 +10,14 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 )
 
+export async function generateStaticParams() {
+  const { data } = await supabase.from('cat_foods').select('brand')
+  if (!data) return []
+  const brands: Record<string, boolean> = {}
+  data.forEach(f => { if (f.brand) brands[f.brand] = true })
+  return Object.keys(brands).map(brand => ({ brand: encodeURIComponent(brand) }))
+}
+
 export async function generateMetadata({ params }: { params: { brand: string } }): Promise<Metadata> {
   const brandName = decodeURIComponent(params.brand)
   const { data } = await supabase

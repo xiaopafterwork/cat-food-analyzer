@@ -11,6 +11,18 @@ function getSupabase() {
   )
 }
 
+export async function generateStaticParams() {
+  const supabase = getSupabase()
+  const allIds: { id: string }[] = []
+  for (let offset = 0; offset < 4000; offset += 1000) {
+    const { data } = await supabase.from('cat_foods').select('id').range(offset, offset + 999)
+    if (!data || data.length === 0) break
+    allIds.push(...data.map(f => ({ id: String(f.id) })))
+    if (data.length < 1000) break
+  }
+  return allIds
+}
+
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
   const supabase = getSupabase()
   const { data: food } = await supabase
