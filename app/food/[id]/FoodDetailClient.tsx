@@ -235,7 +235,7 @@ export default function FoodDetailClient({ food, reviews }: { food: CatFood; rev
     } else if (ids.length < limit) {
       newIds = [...ids, food.id]
     } else {
-      showToast(isMobile ? '最多比較 3 款飼料，請先取消一款再新增' : '最多比較 5 款飼料，請先取消一款再新增')
+      showToast(isMobile ? '最多比較 3 款，請先取消一款再新增' : '最多比較 5 款，請先取消一款再新增')
       return
     }
     localStorage.setItem('compareIds', JSON.stringify(newIds))
@@ -507,7 +507,7 @@ export default function FoodDetailClient({ food, reviews }: { food: CatFood; rev
           style={{ background: '#EEF3F8', border: '0.5px solid #C8D9E8' }}
         >
           <p className="font-semibold text-gray-900 mb-1.5">這份分析對你有幫助嗎？</p>
-          <p className="text-sm mb-5" style={{ color: '#555' }}>你的支持讓我們繼續分析更多飼料</p>
+          <p className="text-sm mb-5" style={{ color: '#555' }}>你的支持讓我們繼續分析更多飼料與主食罐</p>
           <button
             className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold text-white"
             style={{ background: '#1B3A5C' }}

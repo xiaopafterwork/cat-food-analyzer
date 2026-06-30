@@ -27,12 +27,12 @@ export async function generateMetadata({ params }: { params: { brand: string } }
     : 0
 
   return {
-    title: `${brandName} 貓飼料評價｜${count} 款成分分析 - 喵評鑑`,
-    description: `${brandName} 旗下 ${count} 款飼料，平均 ${avgScore} 分，最高 ${topScore} 分。成分拆給你看。`,
+    title: `${brandName} 評鑑｜${count} 款成分分析 - 喵評鑑`,
+    description: `${brandName} 旗下 ${count} 款飼料與主食罐，平均 ${avgScore} 分，最高 ${topScore} 分。成分拆給你看。`,
     alternates: { canonical: `https://meowpj.com/brand/${params.brand}` },
     openGraph: {
-      title: `${brandName} 貓飼料評價 | 喵評鑑`,
-      description: `${brandName} 旗下 ${count} 款飼料，平均 ${avgScore} 分，最高 ${topScore} 分。成分拆給你看。`,
+      title: `${brandName} 評鑑 | 喵評鑑`,
+      description: `${brandName} 旗下 ${count} 款飼料與主食罐，平均 ${avgScore} 分，最高 ${topScore} 分。成分拆給你看。`,
       url: `https://meowpj.com/brand/${params.brand}`,
       siteName: '喵評鑑',
       images: [{ url: '/logo.png', width: 512, height: 512, alt: `${brandName} | 喵評鑑` }],

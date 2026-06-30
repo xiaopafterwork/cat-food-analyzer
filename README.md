@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 喵評鑑 MEOWPJ
 
-## Getting Started
+台灣貓咪飼料與主食罐科學評分平台。  
+成分透明・科學評分・乾飼料和主食罐都有。
 
-First, run the development server:
+**網址**：https://meowpj.com
+
+---
+
+## 技術棧
+
+- **前端**：Next.js 14 App Router + TypeScript + Tailwind CSS
+- **資料庫**：Supabase (PostgreSQL)
+- **部署**：Vercel（push to master 自動上線）
+
+## 本地開發
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+開啟 http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+環境變數（`.env.local`，不可 commit）：
+```
+NEXT_PUBLIC_SUPABASE_URL=...
+NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 部署
 
-## Learn More
+```bash
+git push origin HEAD:master
+```
 
-To learn more about Next.js, take a look at the following resources:
+## 資料庫
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| 類型 | 筆數 |
+|------|------|
+| 乾飼料 | 775 筆 |
+| 主食罐 | 1,870 筆 |
+| 合計 | 2,645 筆 |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 評分系統 v4.0
 
-## Deploy on Vercel
+蛋白質(50) + 碳水(30) + AAFCO(15) + 灰分(5) = 100 分
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| 分數 | 等級 |
+|------|------|
+| 75–100 | 優質主食 |
+| 60–74 | 均衡日常 |
+| 45–59 | 基礎配方 |
+| <45 | 建議搭配 |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 資料夾結構
+
+```
+cat-food-analyzer/
+├── app/                    # Next.js 頁面
+│   ├── page.tsx            # 首頁
+│   ├── food/[id]/          # 飼料/主食罐詳情
+│   ├── brand/[brand]/      # 品牌頁
+│   ├── brands/             # 所有品牌
+│   ├── compare/            # 比較頁
+│   ├── how-we-score/       # 評分標準
+│   └── request/            # 新增需求
+├── components/             # 共用元件（Nav 等）
+├── lib/                    # Supabase client
+├── public/                 # 靜態資源（logo.png 等）
+├── LOGO/                   # Logo 原始檔
+├── 飼料資料庫/              # 乾飼料 Excel + JSON
+├── 主食罐資料庫/            # 主食罐 Excel + JSON
+├── .ai-team/               # AI 團隊 Agent 規範
+└── dev.log                 # 開發日誌
+```

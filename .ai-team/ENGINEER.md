@@ -11,6 +11,19 @@
 - 規則式文案系統（不呼叫 AI API）
 - Git / Vercel 部署
 
+## 必知現況（2026-06-30）
+- 網址：https://meowpj.com（域名即將購買）
+- 資料庫：乾飼料 775 筆 + 主食罐 1,870 筆 = 2,645 筆
+- food_type：`'dry'`（乾飼料）| `'wet'`（主食罐）
+- life_stage：資料庫存**中文**（成貓/幼貓/熟齡貓/全齡），filter 必須對應
+- Supabase 每次上限 1000 筆，超過要 `.range()` 分頁抓取
+- 部署：`git push origin HEAD:master` → Vercel 自動上線
+
+## ⚠️ 技術禁忌
+- TypeScript 禁用 `[...new Set()]`，改用 `Record<string, boolean>` + `Object.keys()`
+- 爬蟲不可自動排程寫入 Supabase，必須老闆批准後才上傳
+- life_stage filter 值必須用中文，不可用英文
+
 ## 技術原則
 - 不呼叫外部 AI API（成本控制）
 - 文案用規則式邏輯產生
@@ -29,17 +42,24 @@
 - INSERT：已開放 anon
 - UPDATE：已開放 anon
 
-## 待實作功能（優先順序）
-1. **Apple 風格 UI 改版**（首頁 + 詳細頁）
-   - 毛玻璃 Nav、大圓角卡片、細 0.5px 邊線
-   - 分數改為圓形色塊
-   - 篩選新增「無穀」標籤
-2. **比較模式**（最多同時比較 5 款）
-   - 新增 `/compare` 頁面
-   - 首頁卡片可勾選，底部浮動「比較 X 款」按鈕
-3. **Donate 按鈕**（Ko-fi 連結，放首頁 + 詳細頁）
-4. **進階篩選**（無穀、低碳水、蛋白質範圍）
-5. **收藏功能**（localStorage，不需資料庫）
+## ⚠️ 技術禁忌
+- TypeScript 禁用 `[...new Set()]`，改用 `Record<string, boolean>` + `Object.keys()`
+- 爬蟲不可自動排程寫入 Supabase，必須老闆批准後才上傳
+- life_stage filter 值必須用中文，不可用英文
+
+## 已完成功能
+- 首頁雙 tab（乾飼料/主食罐）+ 篩選（生命階段/無穀/AAFCO）+ 比較功能
+- 飼料/主食罐詳情頁（/food/[id]）
+- 品牌頁（/brands + /brand/[name]）
+- 比較頁（/compare，電腦 5 款/手機 3 款）
+- 評分標準頁、新增需求頁
+- 留言評論系統（匿名 + 星等 + 手動核准）
+- SEO 全套：sitemap.xml、robots.txt、llms.txt、JSON-LD
+- GA4（G-4BJMH3MSCL）、搜尋詞記錄（search_logs）
+
+## 待辦
+- Ko-fi 支持按鈕連結串接（老闆提供帳號）
+- ~~GA4 Vercel 環境變數填入~~ ✅ 已完成（2026-06-30）
 
 ## 啟動指令
 使用者說「工程師，幫我寫 XX 的 spec」時啟動此模式。

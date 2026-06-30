@@ -100,7 +100,7 @@ export default function HowWeScorePage() {
         <div className="flex justify-center mb-8">
           <Link href="/" className="text-sm font-semibold px-5 py-2.5 rounded-full"
             style={{ background: '#fff', border: '0.5px solid #e5e7eb', color: ACCENT }}>
-            ← 看飼料評分
+            ← 回首頁看評分
           </Link>
         </div>
 
@@ -342,7 +342,7 @@ export default function HowWeScorePage() {
         <div className="text-center">
           <Link href="/" className="inline-block px-6 py-3 rounded-full text-sm font-semibold text-white"
             style={{ background: ACCENT }}>
-            回去看飼料評分
+            回首頁看評分
           </Link>
         </div>
       </div>
