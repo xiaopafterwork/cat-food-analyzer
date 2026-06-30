@@ -165,23 +165,26 @@ export default function HomePage() {
         </div>
 
         {/* ── Food type tabs ── */}
-        <div className="flex gap-1.5 mb-3">
+        <div className="flex gap-0 mb-5 rounded-2xl overflow-hidden" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
           {([
-            { label: '全部', value: null },
-            { label: '乾飼料', value: 'dry' },
-            { label: '濕食', value: 'wet' },
-          ] as { label: string; value: 'dry' | 'wet' | null }[]).map(item => {
+            { label: '全部', value: null, sub: '' },
+            { label: '乾飼料', value: 'dry', sub: '飼料・零食' },
+            { label: '主食罐', value: 'wet', sub: '濕食罐頭' },
+          ] as { label: string; value: 'dry' | 'wet' | null; sub: string }[]).map((item, i) => {
             const active = foodTypeFilter === item.value
             return (
               <button
                 key={item.label}
                 onClick={() => setFoodTypeFilter(item.value)}
-                className="px-4 py-1.5 rounded-full text-sm font-semibold"
-                style={active
-                  ? { background: ACCENT, color: '#fff', border: `0.5px solid ${ACCENT}` }
-                  : { background: '#fff', color: '#374151', border: '0.5px solid #d1d5db' }}
+                className="flex-1 flex flex-col items-center py-3 px-2 transition-colors"
+                style={{
+                  background: active ? ACCENT : 'transparent',
+                  color: active ? '#fff' : '#6b7280',
+                  borderRight: i < 2 ? '0.5px solid #e5e7eb' : 'none',
+                }}
               >
-                {item.label}
+                <span className="text-sm font-semibold" style={{ color: active ? '#fff' : '#1a1a1a' }}>{item.label}</span>
+                {item.sub && <span className="text-xs mt-0.5" style={{ opacity: active ? 0.75 : 0.6 }}>{item.sub}</span>}
               </button>
             )
           })}
@@ -223,7 +226,8 @@ export default function HomePage() {
         {/* ── Food list ── */}
         <div className="flex items-center justify-between mb-3">
           <p className="text-xs font-semibold uppercase text-gray-400" style={{ letterSpacing: '0.08em' }}>
-            評分排行 {!loading && foods.length > 0 && <span className="font-normal normal-case">· {foods.length} 款</span>}
+            {foodTypeFilter === 'wet' ? '主食罐排行' : foodTypeFilter === 'dry' ? '乾飼料排行' : '綜合排行'}
+            {!loading && foods.length > 0 && <span className="font-normal normal-case"> · {foods.length} 款</span>}
           </p>
           {compareIds.length === 0 && !loading && foods.length > 0 && (
             <p className="text-xs text-gray-400">☑ 點右側格子可比較</p>
@@ -271,7 +275,10 @@ export default function HomePage() {
                       style={{ color: ACCENT }}
                     >{food.brand}</button>
                     <div className="flex gap-1.5 flex-wrap">
-                      {!food.has_grain && (
+                      {food.food_type === 'wet' && (
+                        <span className="text-xs px-2 py-0.5 rounded-md font-semibold" style={{ background: '#EEF3F8', color: '#1B3A5C' }}>主食罐</span>
+                      )}
+                      {!food.has_grain && food.food_type !== 'wet' && (
                         <span className="text-xs px-2 py-0.5 rounded-md" style={{ background: '#e8f9ee', color: '#1a7f37' }}>無穀</span>
                       )}
                       {food.has_grain && (
