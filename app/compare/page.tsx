@@ -116,16 +116,10 @@ function CompareContent() {
         : <span className="text-xs text-gray-400">–</span>
     },
     {
-      label: '成分評分',
-      render: f => <span className="text-sm font-semibold text-gray-700">{f.score_ingredient ?? '–'} / 40</span>
-    },
-    {
-      label: '營養評分',
-      render: f => <span className="text-sm font-semibold text-gray-700">{f.score_nutrition ?? '–'} / 30</span>
-    },
-    {
-      label: '透明度評分',
-      render: f => <span className="text-sm font-semibold text-gray-700">{f.score_transparency ?? '–'} / 30</span>
+      label: '食物類型',
+      render: f => f.food_type === 'wet'
+        ? <span className="text-xs px-2 py-0.5 rounded-md font-semibold" style={{ background: '#EEF3F8', color: '#1B3A5C' }}>主食罐</span>
+        : <span className="text-xs px-2 py-0.5 rounded-md" style={{ background: '#f3f4f6', color: '#6b7280' }}>乾飼料</span>
     },
   ]
 
