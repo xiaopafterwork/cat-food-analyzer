@@ -29,7 +29,17 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true)
   const [compareIds, setCompareIds] = useState<string[]>([])
   const [totalCount, setTotalCount] = useState<number | null>(null)
+  const [isMobile, setIsMobile] = useState(false)
+  const [toast, setToast] = useState('')
   const router = useRouter()
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)')
+    setIsMobile(mq.matches)
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
 
   useEffect(() => {
     supabase.from('cat_foods').select('id', { count: 'exact', head: true })
@@ -70,14 +80,31 @@ export default function HomePage() {
     fetchFoods()
   }, [query, lifeStageFilter, grainFilter])
 
+  function showToast(msg: string) {
+    setToast(msg)
+    setTimeout(() => setToast(''), 2000)
+  }
+
   function toggleCompare(id: string) {
-    setCompareIds(prev =>
-      prev.includes(id) ? prev.filter(x => x !== id) : prev.length < 5 ? [...prev, id] : prev
-    )
+    const limit = isMobile ? 3 : 5
+    setCompareIds(prev => {
+      if (prev.includes(id)) return prev.filter(x => x !== id)
+      if (prev.length < limit) return [...prev, id]
+      showToast(isMobile ? '最多比較 3 款飼料，請先取消一款再新增' : '最多比較 5 款飼料，請先取消一款再新增')
+      return prev
+    })
   }
 
   return (
     <main className="min-h-screen" style={{ background: '#f5f5f7' }}>
+      {toast && (
+        <div
+          className="fixed top-4 left-1/2 -translate-x-1/2 z-[9999] px-5 py-2.5 rounded-full text-sm font-medium text-white shadow-lg pointer-events-none"
+          style={{ background: '#f97316', whiteSpace: 'nowrap' }}
+        >
+          {toast}
+        </div>
+      )}
 
       {/* ── Nav ── */}
       <Nav
@@ -242,7 +269,7 @@ export default function HomePage() {
                     style={inCompare
                       ? { background: ACCENT, borderColor: ACCENT }
                       : { background: '#fff', borderColor: '#d1d5db' }}
-                    title={inCompare ? '移出比較' : '加入比較（最多5款）'}
+                    title={inCompare ? '移出比較' : `加入比較（最多${isMobile ? 3 : 5}款）`}
                   >
                     {inCompare && (
                       <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
@@ -281,7 +308,7 @@ export default function HomePage() {
           className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 px-5 py-3 rounded-full shadow-xl"
           style={{ background: '#1d1d1f', color: '#fff', whiteSpace: 'nowrap' }}
         >
-          <span className="text-sm">已選 {compareIds.length} / 5 款</span>
+          <span className="text-sm">已選 {compareIds.length} / {isMobile ? 3 : 5} 款</span>
           <Link
             href={`/compare?ids=${compareIds.join(',')}`}
             className="text-sm font-semibold px-4 py-1.5 rounded-full"

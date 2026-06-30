@@ -187,6 +187,16 @@ export default function FoodDetailClient({ food, reviews }: { food: CatFood; rev
   const aiSummary = food.ai_summary
   const [inCompare, setInCompare] = useState(false)
   const [compareIds, setCompareIds] = useState<string[]>([])
+  const [isMobile, setIsMobile] = useState(false)
+  const [toast, setToast] = useState('')
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)')
+    setIsMobile(mq.matches)
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
 
   useEffect(() => {
     try {
@@ -196,14 +206,23 @@ export default function FoodDetailClient({ food, reviews }: { food: CatFood; rev
     } catch {}
   }, [food.id])
 
+  function showToast(msg: string) {
+    setToast(msg)
+    setTimeout(() => setToast(''), 2000)
+  }
+
   function toggleCompare() {
+    const limit = isMobile ? 3 : 5
     const ids: string[] = JSON.parse(localStorage.getItem('compareIds') || '[]')
     let newIds: string[]
     if (ids.includes(food.id)) {
       newIds = ids.filter(id => id !== food.id)
-    } else if (ids.length < 5) {
+    } else if (ids.length < limit) {
       newIds = [...ids, food.id]
-    } else return
+    } else {
+      showToast(isMobile ? '最多比較 3 款飼料，請先取消一款再新增' : '最多比較 5 款飼料，請先取消一款再新增')
+      return
+    }
     localStorage.setItem('compareIds', JSON.stringify(newIds))
     setInCompare(newIds.includes(food.id))
     setCompareIds(newIds)
@@ -211,6 +230,14 @@ export default function FoodDetailClient({ food, reviews }: { food: CatFood; rev
 
   return (
     <main className="min-h-screen" style={{ background: '#f5f5f7' }}>
+      {toast && (
+        <div
+          className="fixed top-4 left-1/2 -translate-x-1/2 z-[9999] px-5 py-2.5 rounded-full text-sm font-medium text-white shadow-lg pointer-events-none"
+          style={{ background: '#f97316', whiteSpace: 'nowrap' }}
+        >
+          {toast}
+        </div>
+      )}
       <Nav backHref="/" />
 
       <div className="max-w-2xl mx-auto px-4 pb-16">
