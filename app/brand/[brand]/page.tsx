@@ -3,13 +3,11 @@ import { createClient } from '@supabase/supabase-js'
 import Nav from '@/components/Nav'
 import BrandDetailClient from './BrandDetailClient'
 
-export const dynamic = 'force-dynamic'
-export const revalidate = 0
+export const revalidate = 86400 // 24小時重新生成
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-  { global: { fetch: (url, opts) => fetch(url, { ...opts, cache: 'no-store' }) } }
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 )
 
 export async function generateMetadata({ params }: { params: { brand: string } }): Promise<Metadata> {

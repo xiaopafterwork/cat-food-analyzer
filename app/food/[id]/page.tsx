@@ -2,14 +2,12 @@ import { Metadata } from 'next'
 import { createClient } from '@supabase/supabase-js'
 import FoodDetailClient from './FoodDetailClient'
 
-export const dynamic = 'force-dynamic'
-export const revalidate = 0
+export const revalidate = 86400 // 24小時重新生成
 
 function getSupabase() {
   return createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    { global: { fetch: (url, opts) => fetch(url, { ...opts, cache: 'no-store' }) } }
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
   )
 }
 
