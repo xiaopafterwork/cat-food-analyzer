@@ -1,6 +1,10 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Nav from '@/components/Nav'
+import { createClient } from '@supabase/supabase-js'
+
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 export const metadata: Metadata = {
   title: '關於喵評鑑 | 喵評鑑',
@@ -15,7 +19,14 @@ export const metadata: Metadata = {
 
 const ACCENT = '#3D5A3E'
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    { global: { fetch: (url, opts) => fetch(url, { ...opts, cache: 'no-store' }) } }
+  )
+  const { count } = await supabase.from('cat_foods').select('id', { count: 'exact', head: true })
+  const foodCount = count ?? 775
   return (
     <main className="min-h-screen" style={{ background: '#f5f5f7' }}>
       <Nav backHref="/" backLabel="返回首頁" />
@@ -85,8 +96,8 @@ export default function AboutPage() {
         {/* 數據小卡 */}
         <div className="grid grid-cols-3 gap-3 mb-6">
           {[
-            { num: '775', label: '收錄飼料款數' },
-            { num: '100', label: '綜合評分滿分' },
+            { num: `${foodCount}款`, label: '收錄飼料' },
+            { num: '4項', label: '評分指標' },
             { num: '免費', label: '永遠對貓奴' },
           ].map(item => (
             <div
