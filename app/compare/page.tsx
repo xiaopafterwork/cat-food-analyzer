@@ -48,7 +48,7 @@ function CompareContent() {
   if (loading) return <p className="text-center text-gray-400 py-16">載入中…</p>
   if (!foods.length) return (
     <div className="text-center py-16">
-      <p className="text-gray-400 mb-4">沒有選擇飼料</p>
+      <p className="text-gray-400 mb-4">沒有選擇項目</p>
       <Link href="/" className="text-sm font-semibold" style={{ color: ACCENT }}>← 返回選擇</Link>
     </div>
   )

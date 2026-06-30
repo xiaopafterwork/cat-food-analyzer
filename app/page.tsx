@@ -111,7 +111,7 @@ export default function HomePage() {
     setCompareIds(prev => {
       if (prev.includes(id)) return prev.filter(x => x !== id)
       if (prev.length < limit) return [...prev, id]
-      showToast(isMobile ? '最多比較 3 款飼料，請先取消一款再新增' : '最多比較 5 款飼料，請先取消一款再新增')
+      showToast(isMobile ? '最多比較 3 款，請先取消一款再新增' : '最多比較 5 款，請先取消一款再新增')
       return prev
     })
   }
@@ -142,7 +142,7 @@ export default function HomePage() {
             <button
               className="text-sm px-4 py-1.5 rounded-full"
               style={{ border: '0.5px solid #d1d5db', color: '#374151', background: '#fff' }}
-              onClick={() => alert('請先勾選飼料加入比較')}
+              onClick={() => alert('請先勾選飼料或主食罐加入比較')}
             >
               比較
             </button>
@@ -174,7 +174,7 @@ export default function HomePage() {
               type="text"
               value={query}
               onChange={e => setQuery(e.target.value)}
-              placeholder="搜尋品牌或飼料名稱…"
+              placeholder="搜尋品牌或飼料、主食罐名稱…"
               className="w-full pl-11 pr-5 py-3.5 rounded-full text-base outline-none"
               style={{ background: '#fff', border: '0.5px solid #d1d5db', color: '#1a1a1a' }}
             />
