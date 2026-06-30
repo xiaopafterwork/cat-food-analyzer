@@ -2,10 +2,10 @@ import { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: '所有品牌 | 喵評鑑',
-  description: '台灣貓飼料品牌完整列表。皇家、希爾思、法米納、冠能等所有品牌評分排行，找到最適合你家貓咪的飼料品牌。',
+  description: '所有品牌飼料與主食罐評分排行。皇家、希爾思、法米納、冠能等品牌，成分一覽無遺。',
   openGraph: {
     title: '所有品牌 | 喵評鑑',
-    description: '台灣貓飼料品牌完整評分排行',
+    description: '所有品牌飼料與主食罐評分排行',
     url: 'https://meowpj.com/brands',
     siteName: '喵評鑑',
   },
