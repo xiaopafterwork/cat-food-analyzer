@@ -3,8 +3,8 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 
 export const metadata: Metadata = {
-  title: '新增飼料需求 — 喵評鑑',
-  description: '找不到你家貓咪吃的飼料？告訴我們，我們盡快加入評鑑！',
+  title: '新增飼料／主食罐需求 — 喵評鑑',
+  description: '找不到你家貓咪吃的飼料或主食罐？告訴我們，我們盡快加入評鑑！',
 }
 
 const ACCENT = '#1B3A5C'
@@ -13,7 +13,7 @@ export default function RequestPage() {
   return (
     <main className="min-h-screen" style={{ background: '#f5f5f7' }}>
       {/* Nav */}
-      <Nav backHref="/" backLabel="返回首頁" title="新增飼料需求" />
+      <Nav backHref="/" backLabel="返回首頁" title="新增飼料／主食罐需求" />
 
       <div className="max-w-2xl mx-auto px-4 pb-16">
 
@@ -32,7 +32,7 @@ export default function RequestPage() {
         <div className="rounded-3xl p-6 mb-6" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
           <p className="text-sm font-semibold text-gray-900 mb-1">📧 寄信告訴我們</p>
           <p className="text-xs text-gray-400 mb-5 leading-relaxed">
-            請寄信到以下信箱，附上飼料品牌與品名，我們會優先安排評鑑。
+            請寄信到以下信箱，附上品牌與品名，我們會優先安排評鑑。
           </p>
 
           {/* Email 區塊 */}
@@ -42,7 +42,7 @@ export default function RequestPage() {
           >
             <span className="text-sm font-medium text-gray-700">xiaopafterwork@gmail.com</span>
             <a
-              href="mailto:xiaopafterwork@gmail.com?subject=新增飼料需求&body=品牌名稱：%0A飼料品名：%0A購買通路（選填）：%0A其他備註（選填）："
+              href="mailto:xiaopafterwork@gmail.com?subject=新增飼料／主食罐需求&body=品牌名稱：%0A品名：%0A類型（飼料／主食罐）：%0A購買通路（選填）：%0A其他備註（選填）："
               className="text-xs font-semibold px-3 py-1.5 rounded-full text-white shrink-0"
               style={{ background: ACCENT }}
             >
@@ -53,10 +53,11 @@ export default function RequestPage() {
           {/* 信件範本 */}
           <p className="text-xs text-gray-400 mb-2">建議信件內容包含：</p>
           <div className="rounded-xl p-4 text-xs leading-relaxed" style={{ background: '#f9fafb', color: '#374151', fontFamily: 'monospace' }}>
-            <p>主旨：新增飼料需求</p>
+            <p>主旨：新增飼料／主食罐需求</p>
             <br />
             <p>品牌名稱：例如 法米納 / Farmina</p>
-            <p>飼料品名：例如 N&D 無穀雞肉石榴成貓配方</p>
+            <p>品名：例如 N&D 無穀雞肉石榴成貓配方</p>
+            <p>類型：飼料 或 主食罐</p>
             <p>購買通路（選填）：momo、PChome、寵物店…</p>
             <p>其他備註（選填）：例如我家貓有腎臟病，想看這款</p>
           </div>
