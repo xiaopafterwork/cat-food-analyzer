@@ -1,11 +1,8 @@
-import type { Metadata } from 'next'
+'use client'
+
+import { useState } from 'react'
 import Link from 'next/link'
 import Nav from '@/components/Nav'
-
-export const metadata: Metadata = {
-  title: '評分標準 | 喵評鑑',
-  description: '喵評鑑採用科學化評分，乾飼料與主食罐分別有專屬評分標準。從蛋白質含量、碳水化合物、品質認證三大面向評比，滿分 100 分，讓你一眼看出飼料好不好。',
-}
 
 const ACCENT = '#1B3A5C'
 
@@ -55,6 +52,7 @@ const WET_CARB_TIERS = [
 ]
 
 export default function HowWeScorePage() {
+  const [tab, setTab] = useState<'dry' | 'wet'>('dry')
   return (
     <main className="min-h-screen" style={{ background: '#f5f5f7' }}>
       <Nav backHref="/" backLabel="返回首頁" title="評分標準" />
@@ -62,13 +60,28 @@ export default function HowWeScorePage() {
       <div className="max-w-2xl mx-auto px-4 pb-16">
 
         {/* Hero */}
-        <div className="text-center pt-10 pb-8">
+        <div className="text-center pt-10 pb-6">
           <p className="text-xs font-semibold uppercase mb-3" style={{ color: ACCENT, letterSpacing: '0.08em' }}>參考 AAFCO / FEDIAF / NRC 國際標準</p>
           <h1 className="text-3xl font-bold text-gray-900 mb-3" style={{ letterSpacing: '-0.5px' }}>我們怎麼幫飼料打分數？</h1>
           <p className="text-gray-500 text-sm leading-relaxed max-w-md mx-auto">
             蛋白質、碳水、品質認證三個面向，<strong>滿分 100 分</strong>。<br />
-            符合國際獸醫營養標準，皇家、希爾思等大品牌公平評比。
+            乾飼料與主食罐各有專屬門檻，才能公平比較。
           </p>
+        </div>
+
+        {/* 乾飼料 / 主食罐 Tab */}
+        <div className="flex gap-0 mb-6 rounded-2xl overflow-hidden" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
+          {(['dry', 'wet'] as const).map((t, i) => (
+            <button key={t} onClick={() => setTab(t)}
+              className="flex-1 py-3 text-sm font-semibold transition-colors"
+              style={{
+                background: tab === t ? ACCENT : 'transparent',
+                color: tab === t ? '#fff' : '#6b7280',
+                borderRight: i === 0 ? '0.5px solid #e5e7eb' : 'none',
+              }}>
+              {t === 'dry' ? '乾飼料' : '主食罐'}
+            </button>
+          ))}
         </div>
 
         {/* 分數等級 */}
@@ -94,115 +107,137 @@ export default function HowWeScorePage() {
         {/* 評分說明 */}
         <p className="text-xs font-semibold uppercase text-gray-400 mb-3" style={{ letterSpacing: '0.08em' }}>評分項目</p>
 
-        {/* 蛋白質 */}
-        <div className="rounded-2xl overflow-hidden mb-4" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
-          <div className="px-5 py-4" style={{ borderBottom: '0.5px solid #f3f4f6' }}>
-            <div className="flex items-center justify-between">
-              <p className="font-semibold text-gray-900">蛋白質含量</p>
-              <span className="text-sm font-bold" style={{ color: ACCENT }}>最高 50 分</span>
-            </div>
-            <p className="text-xs text-gray-400 mt-1">去除水分後計算（乾物比）。貓咪是肉食動物，蛋白質是最重要的指標。</p>
-          </div>
-          <div className="px-5 py-3">
-            {PROTEIN_TIERS.map((t, i) => (
-              <div key={i} className="flex items-center gap-3 py-2" style={{ borderTop: i > 0 ? '0.5px solid #f9fafb' : 'none' }}>
-                <span className="text-sm font-bold shrink-0 w-10 text-right" style={{ color: t.color }}>{t.pts}</span>
-                <span className="text-sm text-gray-700">{t.range}</span>
+        {tab === 'dry' ? (<>
+          {/* 乾飼料：蛋白質 */}
+          <div className="rounded-2xl overflow-hidden mb-4" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
+            <div className="px-5 py-4" style={{ borderBottom: '0.5px solid #f3f4f6' }}>
+              <div className="flex items-center justify-between">
+                <p className="font-semibold text-gray-900">蛋白質含量</p>
+                <span className="text-sm font-bold" style={{ color: ACCENT }}>最高 50 分</span>
               </div>
-            ))}
-          </div>
-        </div>
-
-        {/* 碳水 */}
-        <div className="rounded-2xl overflow-hidden mb-4" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
-          <div className="px-5 py-4" style={{ borderBottom: '0.5px solid #f3f4f6' }}>
-            <div className="flex items-center justify-between">
-              <p className="font-semibold text-gray-900">碳水化合物</p>
-              <span className="text-sm font-bold" style={{ color: ACCENT }}>最高 30 分</span>
+              <p className="text-xs text-gray-400 mt-1">去除水分後計算（乾物比）。貓咪是肉食動物，蛋白質是最重要的指標。</p>
             </div>
-            <p className="text-xs text-gray-400 mt-1">去除水分後計算。貓咪天生不擅長代謝大量碳水，越低越好。</p>
+            <div className="px-5 py-3">
+              {PROTEIN_TIERS.map((t, i) => (
+                <div key={i} className="flex items-center gap-3 py-2" style={{ borderTop: i > 0 ? '0.5px solid #f9fafb' : 'none' }}>
+                  <span className="text-sm font-bold shrink-0 w-10 text-right" style={{ color: t.color }}>{t.pts}</span>
+                  <span className="text-sm text-gray-700">{t.range}</span>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="px-5 py-3">
-            {CARB_TIERS.map((t, i) => (
-              <div key={i} className="flex items-center gap-3 py-2" style={{ borderTop: i > 0 ? '0.5px solid #f9fafb' : 'none' }}>
-                <span className="text-sm font-bold shrink-0 w-10 text-right" style={{ color: t.color }}>{t.pts}</span>
-                <span className="text-sm text-gray-700">{t.range}</span>
+
+          {/* 乾飼料：碳水 */}
+          <div className="rounded-2xl overflow-hidden mb-4" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
+            <div className="px-5 py-4" style={{ borderBottom: '0.5px solid #f3f4f6' }}>
+              <div className="flex items-center justify-between">
+                <p className="font-semibold text-gray-900">碳水化合物</p>
+                <span className="text-sm font-bold" style={{ color: ACCENT }}>最高 30 分</span>
               </div>
-            ))}
-          </div>
-        </div>
-
-        {/* 品質指標 */}
-        <div className="rounded-2xl overflow-hidden mb-8" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
-          <div className="px-5 py-4" style={{ borderBottom: '0.5px solid #f3f4f6' }}>
-            <div className="flex items-center justify-between">
-              <p className="font-semibold text-gray-900">品質指標</p>
-              <span className="text-sm font-bold" style={{ color: ACCENT }}>最高 20 分</span>
+              <p className="text-xs text-gray-400 mt-1">去除水分後計算。貓咪天生不擅長代謝大量碳水，越低越好。</p>
             </div>
-            <p className="text-xs text-gray-400 mt-1">品牌的研發投入與資訊透明度，反映飼料的整體可信度。</p>
+            <div className="px-5 py-3">
+              {CARB_TIERS.map((t, i) => (
+                <div key={i} className="flex items-center gap-3 py-2" style={{ borderTop: i > 0 ? '0.5px solid #f9fafb' : 'none' }}>
+                  <span className="text-sm font-bold shrink-0 w-10 text-right" style={{ color: t.color }}>{t.pts}</span>
+                  <span className="text-sm text-gray-700">{t.range}</span>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="px-5 py-3">
-            {[
-              { pts: '15', label: 'AAFCO 或 FEDIAF 認證', desc: '通過美國（AAFCO）或歐盟（FEDIAF）飼料管理協會認證，代表配方符合貓咪完整營養需求最低標準。皇家、希爾斯均持有此認證。' },
-              { pts: '5',  label: '標示灰分含量',           desc: '許多品牌不標示灰分（礦物質殘留量），主動標示代表更高透明度，也讓我們能評估腎臟友善程度。' },
-            ].map((item, i) => (
-              <div key={i} className="flex gap-3 py-2.5" style={{ borderTop: i > 0 ? '0.5px solid #f9fafb' : 'none' }}>
-                <span className="text-sm font-bold shrink-0 w-10 text-right" style={{ color: ACCENT }}>{item.pts}</span>
+
+          {/* 品質指標 */}
+          <div className="rounded-2xl overflow-hidden mb-8" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
+            <div className="px-5 py-4" style={{ borderBottom: '0.5px solid #f3f4f6' }}>
+              <div className="flex items-center justify-between">
+                <p className="font-semibold text-gray-900">品質指標</p>
+                <span className="text-sm font-bold" style={{ color: ACCENT }}>最高 20 分</span>
+              </div>
+              <p className="text-xs text-gray-400 mt-1">品牌的研發投入與資訊透明度，反映飼料的整體可信度。</p>
+            </div>
+            <div className="px-5 py-3">
+              {[
+                { pts: '15', label: 'AAFCO 或 FEDIAF 認證', desc: '通過美國（AAFCO）或歐盟（FEDIAF）飼料管理協會認證，代表配方符合貓咪完整營養需求最低標準。皇家、希爾斯均持有此認證。' },
+                { pts: '5',  label: '標示灰分含量',           desc: '許多品牌不標示灰分（礦物質殘留量），主動標示代表更高透明度，也讓我們能評估腎臟友善程度。' },
+              ].map((item, i) => (
+                <div key={i} className="flex gap-3 py-2.5" style={{ borderTop: i > 0 ? '0.5px solid #f9fafb' : 'none' }}>
+                  <span className="text-sm font-bold shrink-0 w-10 text-right" style={{ color: ACCENT }}>{item.pts}</span>
+                  <div>
+                    <p className="text-sm font-medium text-gray-800">{item.label}</p>
+                    <p className="text-xs text-gray-400 leading-relaxed">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </>) : (<>
+          {/* 主食罐：說明 */}
+          <div className="rounded-2xl px-5 py-4 mb-4 flex items-center gap-3" style={{ background: '#EEF3F8', border: '0.5px solid #C8D9E8' }}>
+            <span className="text-2xl">🥫</span>
+            <div>
+              <p className="text-sm font-semibold mb-0.5" style={{ color: ACCENT }}>主食罐含水量高，門檻更嚴格</p>
+              <p className="text-xs" style={{ color: '#4a6a8a' }}>乾物比蛋白質天生偏高，若用乾飼料標準，大多數主食罐都會拿高分，失去鑑別力。</p>
+            </div>
+          </div>
+
+          {/* 主食罐：蛋白質 */}
+          <div className="rounded-2xl overflow-hidden mb-4" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
+            <div className="px-5 py-4" style={{ borderBottom: '0.5px solid #f3f4f6' }}>
+              <div className="flex items-center justify-between">
+                <p className="font-semibold text-gray-900">蛋白質含量</p>
+                <span className="text-sm font-bold" style={{ color: ACCENT }}>最高 50 分</span>
+              </div>
+              <p className="text-xs text-gray-400 mt-1">乾物比計算。主食罐門檻較高，需 ≥65% 才能拿滿分。</p>
+            </div>
+            <div className="px-5 py-3">
+              {WET_PROTEIN_TIERS.map((t, i) => (
+                <div key={i} className="flex items-center gap-3 py-2" style={{ borderTop: i > 0 ? '0.5px solid #f9fafb' : 'none' }}>
+                  <span className="text-sm font-bold shrink-0 w-10 text-right" style={{ color: t.color }}>{t.pts}</span>
+                  <span className="text-sm text-gray-700">{t.range}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* 主食罐：碳水 */}
+          <div className="rounded-2xl overflow-hidden mb-4" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
+            <div className="px-5 py-4" style={{ borderBottom: '0.5px solid #f3f4f6' }}>
+              <div className="flex items-center justify-between">
+                <p className="font-semibold text-gray-900">碳水化合物</p>
+                <span className="text-sm font-bold" style={{ color: ACCENT }}>最高 30 分</span>
+              </div>
+              <p className="text-xs text-gray-400 mt-1">主食罐天生碳水偏低，≤5% 才能拿滿分。</p>
+            </div>
+            <div className="px-5 py-3">
+              {WET_CARB_TIERS.map((t, i) => (
+                <div key={i} className="flex items-center gap-3 py-2" style={{ borderTop: i > 0 ? '0.5px solid #f9fafb' : 'none' }}>
+                  <span className="text-sm font-bold shrink-0 w-10 text-right" style={{ color: t.color }}>{t.pts}</span>
+                  <span className="text-sm text-gray-700">{t.range}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* 主食罐：品質 */}
+          <div className="rounded-2xl overflow-hidden mb-8" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
+            <div className="px-5 py-4" style={{ borderBottom: '0.5px solid #f3f4f6' }}>
+              <div className="flex items-center justify-between">
+                <p className="font-semibold text-gray-900">品質指標</p>
+                <span className="text-sm font-bold" style={{ color: ACCENT }}>最高 5 分</span>
+              </div>
+              <p className="text-xs text-gray-400 mt-1">主食罐目前普遍無 AAFCO 認證資料，以灰分透明度計分。</p>
+            </div>
+            <div className="px-5 py-3">
+              <div className="flex gap-3 py-2.5">
+                <span className="text-sm font-bold shrink-0 w-10 text-right" style={{ color: ACCENT }}>5</span>
                 <div>
-                  <p className="text-sm font-medium text-gray-800">{item.label}</p>
-                  <p className="text-xs text-gray-400 leading-relaxed">{item.desc}</p>
+                  <p className="text-sm font-medium text-gray-800">標示灰分含量</p>
+                  <p className="text-xs text-gray-400 leading-relaxed">主動標示灰分代表品牌資訊透明，也讓我們能評估腎臟友善程度。</p>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-
-        {/* ── 主食罐專屬評分 ── */}
-        <div className="rounded-2xl px-5 py-4 mb-4 flex items-center gap-3" style={{ background: '#EEF3F8', border: '0.5px solid #C8D9E8' }}>
-          <span className="text-2xl">🥫</span>
-          <div>
-            <p className="text-sm font-semibold mb-0.5" style={{ color: ACCENT }}>主食罐有專屬評分標準</p>
-            <p className="text-xs" style={{ color: '#4a6a8a' }}>主食罐含水量高，乾物比蛋白質天生偏高，因此門檻也更嚴格，才有鑑別力。</p>
-          </div>
-        </div>
-
-        {/* 主食罐蛋白質 */}
-        <div className="rounded-2xl overflow-hidden mb-4" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
-          <div className="px-5 py-4" style={{ borderBottom: '0.5px solid #f3f4f6' }}>
-            <div className="flex items-center justify-between">
-              <p className="font-semibold text-gray-900">🥫 主食罐｜蛋白質含量</p>
-              <span className="text-sm font-bold" style={{ color: ACCENT }}>最高 50 分</span>
             </div>
-            <p className="text-xs text-gray-400 mt-1">主食罐乾物比蛋白質通常較乾飼料高，門檻因此更嚴格。</p>
           </div>
-          <div className="px-5 py-3">
-            {WET_PROTEIN_TIERS.map((t, i) => (
-              <div key={i} className="flex items-center gap-3 py-2" style={{ borderTop: i > 0 ? '0.5px solid #f9fafb' : 'none' }}>
-                <span className="text-sm font-bold shrink-0 w-10 text-right" style={{ color: t.color }}>{t.pts}</span>
-                <span className="text-sm text-gray-700">{t.range}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* 主食罐碳水 */}
-        <div className="rounded-2xl overflow-hidden mb-8" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
-          <div className="px-5 py-4" style={{ borderBottom: '0.5px solid #f3f4f6' }}>
-            <div className="flex items-center justify-between">
-              <p className="font-semibold text-gray-900">🥫 主食罐｜碳水化合物</p>
-              <span className="text-sm font-bold" style={{ color: ACCENT }}>最高 30 分</span>
-            </div>
-            <p className="text-xs text-gray-400 mt-1">主食罐天生碳水偏低，門檻稍嚴，低於 5% 才能拿滿分。</p>
-          </div>
-          <div className="px-5 py-3">
-            {WET_CARB_TIERS.map((t, i) => (
-              <div key={i} className="flex items-center gap-3 py-2" style={{ borderTop: i > 0 ? '0.5px solid #f9fafb' : 'none' }}>
-                <span className="text-sm font-bold shrink-0 w-10 text-right" style={{ color: t.color }}>{t.pts}</span>
-                <span className="text-sm text-gray-700">{t.range}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+        </>)}
 
         {/* 實際例子 */}
         <p className="text-xs font-semibold uppercase text-gray-400 mb-3" style={{ letterSpacing: '0.08em' }}>實際計算範例</p>

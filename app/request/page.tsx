@@ -21,10 +21,10 @@ export default function RequestPage() {
         <div className="text-center pt-10 pb-8">
           <div className="text-4xl mb-4">🐱</div>
           <h1 className="text-3xl font-bold text-gray-900 mb-3" style={{ letterSpacing: '-0.5px' }}>
-            找不到你家貓咪的飼料？
+            找不到你家貓咪的飼料或主食罐？
           </h1>
           <p className="text-gray-500 text-sm leading-relaxed max-w-sm mx-auto">
-            告訴我們你想看哪款飼料的評分，我們會盡快加入資料庫！
+            告訴我們你想看哪款飼料或主食罐的評分，我們會盡快加入資料庫！
           </p>
         </div>
 

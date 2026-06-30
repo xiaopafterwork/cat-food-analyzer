@@ -22,33 +22,39 @@ function getScoreColor(score: number) {
 type BrandStat = { name: string; count: number; avgScore: number; topScore: number }
 
 export default function BrandsPage() {
-  const [allBrands, setAllBrands] = useState<BrandStat[]>([])
+  const [dryBrands, setDryBrands] = useState<BrandStat[]>([])
+  const [wetBrands, setWetBrands] = useState<BrandStat[]>([])
+  const [foodType, setFoodType] = useState<'dry' | 'wet'>('dry')
   const [query, setQuery] = useState('')
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    supabase.from('cat_foods').select('brand, score_total').then(({ data }) => {
+    supabase.from('cat_foods').select('brand, score_total, food_type').then(({ data }) => {
       if (!data) return
-      const map: Record<string, { count: number; scores: number[] }> = {}
+      const dryMap: Record<string, { count: number; scores: number[] }> = {}
+      const wetMap: Record<string, { count: number; scores: number[] }> = {}
       for (const f of data) {
         const b = f.brand || '其他'
+        const map = f.food_type === 'wet' ? wetMap : dryMap
         if (!map[b]) map[b] = { count: 0, scores: [] }
         map[b].count++
         if (f.score_total != null) map[b].scores.push(f.score_total)
       }
-      const brands = Object.entries(map)
-        .map(([name, { count, scores }]) => ({
-          name,
-          count,
-          avgScore: scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : 0,
-          topScore: scores.length ? Math.max(...scores) : 0,
-        }))
-        .sort((a, b) => b.avgScore - a.avgScore)
-      setAllBrands(brands)
+      const toStats = (map: Record<string, { count: number; scores: number[] }>) =>
+        Object.entries(map)
+          .map(([name, { count, scores }]) => ({
+            name, count,
+            avgScore: scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : 0,
+            topScore: scores.length ? Math.max(...scores) : 0,
+          }))
+          .sort((a, b) => b.avgScore - a.avgScore)
+      setDryBrands(toStats(dryMap))
+      setWetBrands(toStats(wetMap))
       setLoading(false)
     })
   }, [])
 
+  const allBrands = foodType === 'wet' ? wetBrands : dryBrands
   const brands = query.trim()
     ? allBrands.filter(b => b.name.toLowerCase().includes(query.trim().toLowerCase()))
     : allBrands
@@ -59,9 +65,25 @@ export default function BrandsPage() {
 
       <div className="max-w-2xl mx-auto px-4 pb-16">
         <div className="pt-6 pb-4">
-          <h1 className="text-2xl font-bold text-gray-900 mb-1">所有品牌</h1>
+          <h1 className="text-2xl font-bold text-gray-900 mb-3">所有品牌</h1>
+
+          {/* 乾飼料 / 主食罐 Tab */}
+          <div className="flex gap-0 mb-4 rounded-2xl overflow-hidden" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
+            {(['dry', 'wet'] as const).map((t, i) => (
+              <button key={t} onClick={() => { setFoodType(t); setQuery('') }}
+                className="flex-1 py-2.5 text-sm font-semibold transition-colors"
+                style={{
+                  background: foodType === t ? ACCENT : 'transparent',
+                  color: foodType === t ? '#fff' : '#6b7280',
+                  borderRight: i === 0 ? '0.5px solid #e5e7eb' : 'none',
+                }}>
+                {t === 'dry' ? '乾飼料' : '主食罐'}
+              </button>
+            ))}
+          </div>
+
           <p className="text-sm text-gray-400 mb-4">
-            {loading ? '載入中…' : `共 ${allBrands.length} 個品牌・${allBrands.reduce((s, b) => s + b.count, 0)} 款飼料`}
+            {loading ? '載入中…' : `共 ${allBrands.length} 個品牌・${allBrands.reduce((s, b) => s + b.count, 0)} 款`}
           </p>
           {/* 搜尋框 */}
           <div className="relative">
@@ -103,7 +125,7 @@ export default function BrandsPage() {
               >
                 <div>
                   <p className="font-semibold text-gray-900 mb-0.5">{brand.name}</p>
-                  <p className="text-xs text-gray-400">{brand.count} 款飼料</p>
+                  <p className="text-xs text-gray-400">{brand.count} 款{foodType === 'wet' ? '主食罐' : '飼料'}</p>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="text-right">

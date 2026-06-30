@@ -138,14 +138,14 @@ export default function HomePage() {
         {/* ── Hero（精簡版）── */}
         <div className="pt-8 pb-5">
           <h1 className="text-3xl font-bold text-gray-900 mb-1.5" style={{ letterSpacing: '-0.5px' }}>
-            貓飼料怎麼選？<br />看分數就知道
+            貓咪吃什麼好？<br />看分數就知道
           </h1>
           <p className="text-sm mb-4" style={{ color: '#6b7280' }}>
-            成分透明・科學評分・新手也看得懂・
+            成分透明・科學評分・乾飼料和主食罐都有・
             <Link href="/how-we-score" className="underline underline-offset-2" style={{ color: ACCENT }}>評分怎麼算？</Link>
             {totalCount != null && (
               <span className="ml-2 text-xs px-2 py-0.5 rounded-full" style={{ background: '#e8f9ee', color: '#1a7f37' }}>
-                已收錄 {totalCount} 款飼料
+                已收錄 {totalCount} 款
               </span>
             )}
           </p>

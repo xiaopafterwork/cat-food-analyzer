@@ -97,7 +97,7 @@ export default async function BrandPage({ params }: { params: { brand: string } 
         {/* Brand header */}
         <div className="rounded-3xl p-6 mt-4 mb-4" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
           <h1 className="text-2xl font-bold text-gray-900 mb-1">{brandName}</h1>
-          <p className="text-sm text-gray-400 mb-4">喵評鑑收錄 {foods.length} 款飼料</p>
+          <p className="text-sm text-gray-400 mb-4">喵評鑑收錄 {foods.length} 款</p>
           <div className="grid grid-cols-3 gap-3">
             <div className="flex flex-col items-center p-3 rounded-2xl" style={{ background: '#f5f5f7' }}>
               <span className="text-2xl font-bold" style={{ color: ACCENT }}>{avgScore}</span>
