@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://meowpj.com/sitemap.xml

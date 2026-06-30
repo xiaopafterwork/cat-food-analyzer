@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: { params: { brand: string } }
     openGraph: {
       title: `${brandName} 貓飼料評價 | 喵評鑑`,
       description: `${brandName} 共 ${count} 款飼料，最高分 ${topScore} 分`,
-      url: `https://cat-food-analyzer.vercel.app/brand/${params.brand}`,
+      url: `https://meowpj.com/brand/${params.brand}`,
       siteName: '喵評鑑',
     },
   }

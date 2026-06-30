@@ -16,8 +16,13 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://meowpj.com'),
   title: "喵評鑑 — 台灣最完整的貓咪飼料評鑑",
   description: "喵評鑑幫你分析貓飼料成分、評分、優缺點，找到最適合你家貓咪的飼料。",
+  openGraph: {
+    siteName: '喵評鑑',
+    locale: 'zh_TW',
+  },
 };
 
 export default function RootLayout({

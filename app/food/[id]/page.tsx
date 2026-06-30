@@ -30,12 +30,12 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   const description = `${food.name}成分分析。蛋白質（乾重）${food.protein_dm_pct?.toFixed(1) ?? '–'}%、碳水${food.carb_dm_pct?.toFixed(1) ?? '–'}%，喵評鑑綜合評分 ${food.score_total} 分（${food.score_label}）。${summary ? summary + '。' : ''}台灣貓奴最信賴的飼料成分分析平台。`
 
   return {
-    title: `${food.brand} ${food.name} 評測｜成分分析與評分 - 喵評鑑`,
+    title: `${food.name} 評分 ${food.score_total} 分 | 喵評鑑`,
     description: description.slice(0, 155),
     openGraph: {
       title: `${food.name} 評分 ${food.score_total} 分 | 喵評鑑`,
       description: description.slice(0, 100),
-      url: `https://cat-food-analyzer.vercel.app/food/${params.id}`,
+      url: `https://meowpj.com/food/${params.id}`,
       siteName: '喵評鑑',
     },
   }
@@ -54,5 +54,30 @@ export default async function FoodDetailPage({ params }: { params: { id: string 
     return <div className="min-h-screen flex items-center justify-center text-gray-400">找不到此飼料</div>
   }
 
-  return <FoodDetailClient food={food} reviews={reviews ?? []} />
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: food.name,
+    brand: { '@type': 'Brand', name: food.brand },
+    review: {
+      '@type': 'Review',
+      reviewRating: {
+        '@type': 'Rating',
+        ratingValue: String(food.score_total ?? 0),
+        bestRating: '100',
+        worstRating: '0',
+      },
+      author: { '@type': 'Organization', name: '喵評鑑' },
+    },
+  }
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <FoodDetailClient food={food} reviews={reviews ?? []} />
+    </>
+  )
 }
