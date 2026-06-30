@@ -25,6 +25,12 @@ C:\Users\P\cat-food-analyzer
 git push origin HEAD:master
 ```
 
+## 快取策略
+- 飼料詳情頁（/food/[id]）、品牌頁（/brand/[brand]）使用**永久快取**（`revalidate = false`）
+- 資料不會自動更新，需要手動重新部署才會反映新資料
+- 流程：上傳資料到 Supabase → git push → Vercel 重新部署 → 快取更新
+- **不可改回 `force-dynamic` 或 `revalidate = 0`**，會導致每次點擊都重新打 Supabase，速度很慢
+
 ## ⚠️ 絕對禁止
 - 爬蟲不可自動排程寫入 Supabase，必須老闆批准後才上傳
 - 爬蟲只產出 JSON/Excel，確認後才執行上傳

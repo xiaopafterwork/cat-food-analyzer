@@ -57,6 +57,12 @@
 - SEO 全套：sitemap.xml、robots.txt、llms.txt、JSON-LD
 - GA4（G-4BJMH3MSCL）、搜尋詞記錄（search_logs）
 
+## 快取策略（重要）
+- 飼料詳情頁、品牌頁：`export const revalidate = false`（永久快取）
+- 首頁保持動態（有搜尋、篩選，需即時）
+- 資料更新流程：Supabase 上傳 → git push → Vercel 重新部署
+- **禁止**改回 `force-dynamic`，會讓每次點擊都重新打 DB，速度很慢
+
 ## 待辦
 - Ko-fi 支持按鈕連結串接（老闆提供帳號）
 - ~~GA4 Vercel 環境變數填入~~ ✅ 已完成（2026-06-30）
