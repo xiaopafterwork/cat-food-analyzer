@@ -214,16 +214,11 @@ export default function HomePage() {
               const badge = getScoreBadge(food.score_total)
               const inCompare = compareIds.includes(food.id)
               const rank = index + 1
-              const topStyle =
-                rank === 1 ? { background: '#fffbeb', border: '1.5px solid #f59e0b' } :
-                rank === 2 ? { background: '#fafafa', border: '1.5px solid #c0c0c0' } :
-                rank === 3 ? { background: '#fff8f5', border: '1.5px solid #cd7c4a' } :
-                { background: '#fff', border: '0.5px solid #e5e7eb' }
               return (
                 <div
                   key={food.id}
                   className="flex items-center gap-4 p-4 rounded-2xl"
-                  style={topStyle}
+                  style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}
                 >
                   {/* Score circle — white bg + colored ring */}
                   <Link href={`/food/${food.id}`} className="shrink-0">
@@ -258,7 +253,7 @@ export default function HomePage() {
                         <span className="text-xs px-2 py-0.5 rounded-md" style={{ background: '#ffeaea', color: '#c0392b' }}>含穀</span>
                       )}
                       {food.is_aafco_certified && (
-                        <span className="text-xs px-2 py-0.5 rounded-md font-semibold" style={{ background: '#3D5A3E', color: '#fff' }}>AAFCO</span>
+                        <span className="text-xs px-2 py-0.5 rounded-md font-semibold" style={{ background: '#1e3a5f', color: '#fff' }}>AAFCO</span>
                       )}
                       {(food.carb_dm_pct ?? 100) <= 10 && (
                         <span className="text-xs px-2 py-0.5 rounded-md" style={{ background: '#fef3e2', color: '#92520b' }}>低碳水</span>

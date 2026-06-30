@@ -311,7 +311,7 @@ export default function FoodDetailClient({ food, reviews }: { food: CatFood; rev
                 {!food.has_grain && <span className="text-xs px-2 py-0.5 rounded-md" style={{ background: '#e8f9ee', color: '#1a7f37' }}>無穀</span>}
                 {food.has_grain && <span className="text-xs px-2 py-0.5 rounded-md" style={{ background: '#ffeaea', color: '#c0392b' }}>含穀</span>}
                 {food.is_aafco_certified && (
-                  <span className="relative group inline-flex items-center text-xs px-2 py-0.5 rounded-md font-semibold cursor-default" style={{ background: '#3D5A3E', color: '#fff' }}>
+                  <span className="relative group inline-flex items-center text-xs px-2 py-0.5 rounded-md font-semibold cursor-default" style={{ background: '#1e3a5f', color: '#fff' }}>
                     AAFCO
                     <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-1.5 z-50 hidden group-hover:flex
                       w-52 px-3 py-2 rounded-xl text-xs text-gray-700 leading-relaxed shadow-lg pointer-events-none"
