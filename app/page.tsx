@@ -31,6 +31,7 @@ export default function HomePage() {
   const [totalCount, setTotalCount] = useState<number | null>(null)
   const [isMobile, setIsMobile] = useState(false)
   const [toast, setToast] = useState('')
+  const [visibleCount, setVisibleCount] = useState(20)
   const router = useRouter()
 
   useEffect(() => {
@@ -68,6 +69,7 @@ export default function HomePage() {
       const { data } = await q
       const results = (data as CatFood[]) ?? []
       setFoods(results)
+      setVisibleCount(20)
       setLoading(false)
 
       if (query.trim().length >= 3) {
@@ -208,7 +210,7 @@ export default function HomePage() {
           <p className="text-center text-gray-400 py-12">找不到符合的飼料</p>
         ) : (
           <div className="flex flex-col gap-3 mb-8">
-            {foods.map(food => {
+            {foods.slice(0, visibleCount).map(food => {
               const badge = getScoreBadge(food.score_total)
               const inCompare = compareIds.includes(food.id)
               return (
@@ -280,6 +282,15 @@ export default function HomePage() {
                 </div>
               )
             })}
+            {visibleCount < foods.length && (
+              <button
+                onClick={() => setVisibleCount(v => v + 20)}
+                className="w-full py-3.5 rounded-2xl text-sm font-semibold"
+                style={{ background: '#fff', border: '0.5px solid #e5e7eb', color: '#374151' }}
+              >
+                顯示更多（還有 {foods.length - visibleCount} 款）
+              </button>
+            )}
           </div>
         )}
 
