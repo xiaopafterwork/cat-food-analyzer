@@ -146,7 +146,7 @@ export default function HowWeScorePage() {
             </div>
           </div>
 
-          {/* 品質指標 */}
+          {/* 乾飼料：品質指標 */}
           <div className="rounded-2xl overflow-hidden mb-8" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
             <div className="px-5 py-4" style={{ borderBottom: '0.5px solid #f3f4f6' }}>
               <div className="flex items-center justify-between">
@@ -166,6 +166,48 @@ export default function HowWeScorePage() {
                     <p className="text-sm font-medium text-gray-800">{item.label}</p>
                     <p className="text-xs text-gray-400 leading-relaxed">{item.desc}</p>
                   </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* 乾飼料：實際計算範例 */}
+          <p className="text-xs font-semibold uppercase text-gray-400 mb-3" style={{ letterSpacing: '0.08em' }}>實際計算範例</p>
+          <div className="rounded-2xl overflow-hidden mb-8" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
+            {[
+              { brand: '希爾斯（典型配方）',    p: '35%',   c: '38%',  cert: 'AAFCO ✓', ash: '—', sp: 35, sc: 18, sq: 15, total: 68,  label: '均衡日常', color: '#3a6090' },
+              { brand: '皇家（E42 泌尿道）',    p: '45.6%', c: '24.7%',cert: 'AAFCO ✓', ash: '✓', sp: 46, sc: 26, sq: 20, total: 92,  label: '優質主食', color: '#1a7f37' },
+              { brand: '高蛋白無穀品牌（示例）', p: '52%',   c: '8%',   cert: 'AAFCO ✓', ash: '✓', sp: 50, sc: 30, sq: 20, total: 100, label: '優質主食', color: '#1a7f37' },
+              { brand: '廉價無認證品牌（示例）', p: '28%',   c: '44%',  cert: '—',       ash: '—', sp: 18, sc: 15, sq: 0,  total: 33,  label: '建議搭配', color: '#c0392b' },
+            ].map((ex, i) => (
+              <div key={i} className="px-5 py-4" style={{ borderTop: i > 0 ? '0.5px solid #f3f4f6' : 'none' }}>
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-sm font-semibold text-gray-800">{ex.brand}</p>
+                  <span className="text-sm font-bold" style={{ color: ex.color }}>{ex.total}分</span>
+                </div>
+                <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-500">
+                  <span>蛋白質 {ex.p} → <strong>{ex.sp}</strong>分</span>
+                  <span>碳水 {ex.c} → <strong>{ex.sc}</strong>分</span>
+                  <span>品質 {ex.cert}／灰分{ex.ash} → <strong>{ex.sq}</strong>分</span>
+                </div>
+                <span className="inline-block mt-2 text-xs px-2 py-0.5 rounded-md font-semibold"
+                  style={{ background: ex.color + '22', color: ex.color }}>{ex.label}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* 乾飼料：參考標準 */}
+          <div className="p-5 rounded-2xl mb-8" style={{ background: '#EEF3F8', border: '0.5px solid #C8D9E8' }}>
+            <p className="text-sm font-semibold mb-3" style={{ color: ACCENT }}>參考國際標準</p>
+            <div className="flex flex-col gap-3">
+              {[
+                { name: 'AAFCO 2024', desc: '美國飼料管理協會，北美最權威的寵物食品標準，設定蛋白質、脂肪等最低需求值。' },
+                { name: 'FEDIAF 2025', desc: '歐洲寵物食品聯盟，歐盟最高寵物食品標準，與 AAFCO 互補，兩者均計入認證分數。' },
+                { name: 'NRC 2006',    desc: '美國國家研究委員會，AAFCO 與 FEDIAF 均以此為科學基礎。' },
+              ].map(s => (
+                <div key={s.name} className="flex gap-3">
+                  <span className="text-sm font-bold shrink-0" style={{ color: ACCENT, minWidth: 88 }}>{s.name}</span>
+                  <p className="text-xs text-gray-600 leading-relaxed">{s.desc}</p>
                 </div>
               ))}
             </div>
@@ -237,49 +279,58 @@ export default function HowWeScorePage() {
               </div>
             </div>
           </div>
-        </>)}
 
-        {/* 實際例子 */}
-        <p className="text-xs font-semibold uppercase text-gray-400 mb-3" style={{ letterSpacing: '0.08em' }}>實際計算範例</p>
-        <div className="rounded-2xl overflow-hidden mb-8" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
-          {[
-            { brand: '希爾斯（典型配方）',   p: '35%',  c: '38%', cert: 'AAFCO ✓', ash: '—', sp: 35, sc: 18, sq: 15, total: 68, label: '均衡日常', color: '#3a6090' },
-            { brand: '皇家（E42 泌尿道）',   p: '45.6%',c: '24.7%',cert: 'AAFCO ✓', ash: '✓', sp: 46, sc: 26, sq: 20, total: 92, label: '優質主食', color: '#1a7f37' },
-            { brand: '高蛋白無穀品牌（示例）',p: '52%',  c: '8%',  cert: 'AAFCO ✓', ash: '✓', sp: 50, sc: 30, sq: 20, total: 100,label: '優質主食', color: '#1a7f37' },
-            { brand: '廉價無認證品牌（示例）',p: '28%',  c: '44%', cert: '—',       ash: '—', sp: 18, sc: 15, sq: 0,  total: 33, label: '建議搭配', color: '#c0392b' },
-          ].map((ex, i) => (
-            <div key={i} className="px-5 py-4" style={{ borderTop: i > 0 ? '0.5px solid #f3f4f6' : 'none' }}>
-              <div className="flex items-center justify-between mb-2">
-                <p className="text-sm font-semibold text-gray-800">{ex.brand}</p>
-                <span className="text-sm font-bold" style={{ color: ex.color }}>{ex.total}分</span>
-              </div>
-              <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-500">
-                <span>蛋白質 {ex.p} → <strong>{ex.sp}</strong>分</span>
-                <span>碳水 {ex.c} → <strong>{ex.sc}</strong>分</span>
-                <span>品質 {ex.cert}／灰分{ex.ash} → <strong>{ex.sq}</strong>分</span>
-              </div>
-              <span className="inline-block mt-2 text-xs px-2 py-0.5 rounded-md font-semibold"
-                style={{ background: ex.color + '22', color: ex.color }}>{ex.label}</span>
-            </div>
-          ))}
-        </div>
-
-        {/* 參考標準 */}
-        <div className="p-5 rounded-2xl mb-8" style={{ background: '#EEF3F8', border: '0.5px solid #C8D9E8' }}>
-          <p className="text-sm font-semibold mb-3" style={{ color: ACCENT }}>參考國際標準</p>
-          <div className="flex flex-col gap-3">
+          {/* 主食罐：實際計算範例 */}
+          <p className="text-xs font-semibold uppercase text-gray-400 mb-3" style={{ letterSpacing: '0.08em' }}>實際計算範例</p>
+          <div className="rounded-2xl overflow-hidden mb-4" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
             {[
-              { name: 'AAFCO 2024', desc: '美國飼料管理協會，北美最權威的寵物食品標準，設定蛋白質、脂肪等最低需求值。' },
-              { name: 'FEDIAF 2025', desc: '歐洲寵物食品聯盟，歐盟最高寵物食品標準，與 AAFCO 互補，兩者均計入認證分數。' },
-              { name: 'NRC 2006',    desc: '美國國家研究委員會，AAFCO 與 FEDIAF 均以此為科學基礎。' },
-            ].map(s => (
-              <div key={s.name} className="flex gap-3">
-                <span className="text-sm font-bold shrink-0" style={{ color: ACCENT, minWidth: 88 }}>{s.name}</span>
-                <p className="text-xs text-gray-600 leading-relaxed">{s.desc}</p>
+              { brand: '優質主食罐（示例）', p: 'DM 70%', c: 'DM 3%',  ash: '✓', sp: 50, sc: 30, sq: 5, total: 85, label: '優質主食', color: '#1a7f37' },
+              { brand: '均衡主食罐（示例）', p: 'DM 55%', c: 'DM 12%', ash: '✓', sp: 41, sc: 21, sq: 5, total: 67, label: '均衡日常', color: '#3a6090' },
+              { brand: '普通主食罐（示例）', p: 'DM 48%', c: 'DM 18%', ash: '—', sp: 35, sc: 18, sq: 0, total: 53, label: '基礎配方', color: '#b35c00' },
+              { brand: '低分主食罐（示例）', p: 'DM 35%', c: 'DM 25%', ash: '—', sp: 5,  sc: 12, sq: 0, total: 17, label: '建議搭配', color: '#c0392b' },
+            ].map((ex, i) => (
+              <div key={i} className="px-5 py-4" style={{ borderTop: i > 0 ? '0.5px solid #f3f4f6' : 'none' }}>
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-sm font-semibold text-gray-800">{ex.brand}</p>
+                  <span className="text-sm font-bold" style={{ color: ex.color }}>{ex.total}分</span>
+                </div>
+                <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-500">
+                  <span>蛋白質 {ex.p} → <strong>{ex.sp}</strong>分</span>
+                  <span>碳水 {ex.c} → <strong>{ex.sc}</strong>分</span>
+                  <span>灰分{ex.ash} → <strong>{ex.sq}</strong>分</span>
+                </div>
+                <span className="inline-block mt-2 text-xs px-2 py-0.5 rounded-md font-semibold"
+                  style={{ background: ex.color + '22', color: ex.color }}>{ex.label}</span>
               </div>
             ))}
           </div>
-        </div>
+
+          {/* 主食罐：乾物比說明 */}
+          <div className="rounded-2xl px-5 py-4 mb-8" style={{ background: '#f9fafb', border: '0.5px solid #e5e7eb' }}>
+            <p className="text-xs font-semibold mb-2 text-gray-700">什麼是乾物比（DM%）？</p>
+            <p className="text-xs text-gray-500 leading-relaxed">
+              主食罐含水量通常 70–80%，直接看標示百分比會被水稀釋。乾物比是「去除水分後」的實際比例，讓不同含水量的食品可以公平比較。<br />
+              計算方式：標示蛋白質 ÷（100 - 含水量%）× 100
+            </p>
+          </div>
+
+          {/* 主食罐：參考標準 */}
+          <div className="p-5 rounded-2xl mb-8" style={{ background: '#EEF3F8', border: '0.5px solid #C8D9E8' }}>
+            <p className="text-sm font-semibold mb-3" style={{ color: ACCENT }}>參考國際標準</p>
+            <div className="flex flex-col gap-3">
+              {[
+                { name: 'AAFCO 2024', desc: '美國飼料管理協會，同樣適用於濕食。主食罐評分目前因資料取得限制，以灰分取代認證計分。' },
+                { name: 'FEDIAF 2025', desc: '歐洲寵物食品聯盟對濕食的蛋白質最低要求更嚴格，是本評分門檻設計的重要參考。' },
+                { name: 'NRC 2006',    desc: '美國國家研究委員會，AAFCO 與 FEDIAF 均以此為科學基礎。' },
+              ].map(s => (
+                <div key={s.name} className="flex gap-3">
+                  <span className="text-sm font-bold shrink-0" style={{ color: ACCENT, minWidth: 88 }}>{s.name}</span>
+                  <p className="text-xs text-gray-600 leading-relaxed">{s.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </>)}
 
         {/* 免責聲明 */}
         <p className="text-xs text-gray-400 text-center leading-relaxed mb-8">
