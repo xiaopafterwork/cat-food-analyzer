@@ -69,7 +69,7 @@ export default function RequestPage() {
             { icon: '⚡', title: '盡快上線', desc: '收到需求後，通常在 1–2 週內完成評鑑並上線。' },
             { icon: '🔍', title: '資料來源', desc: '成分資料來自網路公開資訊彙整，如有誤差歡迎來信告知。' },
             { icon: '📊', title: '公正評分', desc: '飼料與主食罐採用各自標準評分，不因品牌或通路而有所不同。' },
-            { icon: '💬', title: '歡迎回饋', desc: '發現評分有誤或資料過期，也歡迎來信告知！' },
+            { icon: '🆓', title: '完全免費', desc: '查詢評分、提需求永遠免費，不會有任何收費。' },
           ].map(item => (
             <div key={item.title} className="p-4 rounded-2xl" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
               <div className="text-xl mb-2">{item.icon}</div>
