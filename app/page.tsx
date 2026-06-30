@@ -175,7 +175,7 @@ export default function HomePage() {
             return (
               <button
                 key={item.label}
-                onClick={() => setFoodTypeFilter(item.value)}
+                onClick={() => { setFoodTypeFilter(item.value); setLifeStageFilter(null); setGrainFilter(false) }}
                 className="flex-1 py-3 px-2 text-sm font-semibold transition-colors"
                 style={{
                   background: active ? ACCENT : 'transparent',
