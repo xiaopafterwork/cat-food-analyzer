@@ -96,7 +96,7 @@ function ReviewForm({ foodId }: { foodId: string }) {
 function getScoreBadge(score: number | null): { bg: string; color: string } {
   if (!score) return { bg: '#f3f4f6', color: '#6b7280' }
   if (score >= 75) return { bg: '#e8f9ee', color: '#1a7f37' }
-  if (score >= 60) return { bg: '#e6f0fb', color: '#1554a0' }
+  if (score >= 60) return { bg: '#eef2f7', color: '#4b6280' }
   if (score >= 45) return { bg: '#fff3e0', color: '#b35c00' }
   return { bg: '#ffeaea', color: '#c0392b' }
 }
@@ -270,7 +270,7 @@ export default function FoodDetailClient({ food, reviews }: { food: CatFood; rev
               <div className="flex items-center gap-2 flex-wrap mb-1">
                 <h1 className="font-bold text-gray-900" style={{ fontSize: 20 }}>{food.name}</h1>
               </div>
-              <a href={`/brand/${encodeURIComponent(food.brand)}`} className="text-sm text-gray-400 underline inline-block">{food.brand}</a>
+              <a href={`/brand/${encodeURIComponent(food.brand)}`} className="text-sm font-medium underline underline-offset-2 inline-block" style={{ color: ACCENT }}>{food.brand}</a>
               <div className="flex items-center gap-2 mt-1.5 mb-1 flex-wrap">
                 {food.score_label && (
                   <span className="text-xs px-2 py-0.5 rounded-md font-semibold" style={{ background: badge.bg, color: badge.color }}>{food.score_label}</span>
@@ -311,7 +311,7 @@ export default function FoodDetailClient({ food, reviews }: { food: CatFood; rev
                 {!food.has_grain && <span className="text-xs px-2 py-0.5 rounded-md" style={{ background: '#e8f9ee', color: '#1a7f37' }}>無穀</span>}
                 {food.has_grain && <span className="text-xs px-2 py-0.5 rounded-md" style={{ background: '#ffeaea', color: '#c0392b' }}>含穀</span>}
                 {food.is_aafco_certified && (
-                  <span className="relative group inline-flex items-center text-xs px-2 py-0.5 rounded-md cursor-default" style={{ background: '#e6f0fb', color: '#1554a0' }}>
+                  <span className="relative group inline-flex items-center text-xs px-2 py-0.5 rounded-md cursor-default" style={{ background: '#e8f9ee', color: '#1a7f37' }}>
                     AAFCO
                     <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-1.5 z-50 hidden group-hover:flex
                       w-52 px-3 py-2 rounded-xl text-xs text-gray-700 leading-relaxed shadow-lg pointer-events-none"
@@ -324,7 +324,7 @@ export default function FoodDetailClient({ food, reviews }: { food: CatFood; rev
                   <span className="text-xs px-2 py-0.5 rounded-md" style={{ background: '#fff3e0', color: '#b35c00' }}>低碳水</span>
                 )}
                 {(food.protein_dm_pct ?? 0) >= 40 && (
-                  <span className="text-xs px-2 py-0.5 rounded-md" style={{ background: '#fce7f3', color: '#9d174d' }}>高肉含量</span>
+                  <span className="text-xs px-2 py-0.5 rounded-md" style={{ background: '#e8f9ee', color: '#1a7f37' }}>高肉含量</span>
                 )}
               </div>
             </div>

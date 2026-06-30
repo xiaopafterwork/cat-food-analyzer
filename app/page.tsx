@@ -11,7 +11,7 @@ const ACCENT = '#3D5A3E'
 function getScoreBadge(score: number | null): { bg: string; color: string } {
   if (!score) return { bg: '#f3f4f6', color: '#6b7280' }
   if (score >= 75) return { bg: '#e8f9ee', color: '#1a7f37' }
-  if (score >= 60) return { bg: '#e6f0fb', color: '#1554a0' }
+  if (score >= 60) return { bg: '#eef2f7', color: '#4b6280' }
   if (score >= 45) return { bg: '#fff3e0', color: '#b35c00' }
   return { bg: '#ffeaea', color: '#c0392b' }
 }
@@ -240,7 +240,8 @@ export default function HomePage() {
                     </Link>
                     <button
                       onClick={e => { e.stopPropagation(); router.push(`/brand/${encodeURIComponent(food.brand)}`) }}
-                      className="text-xs text-gray-400 mb-1.5 underline block text-left"
+                      className="text-xs mb-1.5 underline underline-offset-2 block text-left font-medium"
+                      style={{ color: ACCENT }}
                     >{food.brand}</button>
                     <div className="flex gap-1.5 flex-wrap">
                       {!food.has_grain && (
@@ -250,13 +251,13 @@ export default function HomePage() {
                         <span className="text-xs px-2 py-0.5 rounded-md" style={{ background: '#ffeaea', color: '#c0392b' }}>含穀</span>
                       )}
                       {food.is_aafco_certified && (
-                        <span className="text-xs px-2 py-0.5 rounded-md" style={{ background: '#e6f0fb', color: '#1554a0' }}>AAFCO</span>
+                        <span className="text-xs px-2 py-0.5 rounded-md" style={{ background: '#e8f9ee', color: '#1a7f37' }}>AAFCO</span>
                       )}
                       {(food.carb_dm_pct ?? 100) <= 10 && (
                         <span className="text-xs px-2 py-0.5 rounded-md" style={{ background: '#fff3e0', color: '#b35c00' }}>低碳水</span>
                       )}
                       {(food.protein_dm_pct ?? 0) >= 40 && (
-                        <span className="text-xs px-2 py-0.5 rounded-md" style={{ background: '#fce7f3', color: '#9d174d' }}>高肉含量</span>
+                        <span className="text-xs px-2 py-0.5 rounded-md" style={{ background: '#e8f9ee', color: '#1a7f37' }}>高肉含量</span>
                       )}
                       <span className="text-xs px-2 py-0.5 rounded-md" style={{ background: '#f3f4f6', color: '#6b7280' }}>
                         {LIFE_STAGE_LABEL[food.life_stage] ?? food.life_stage}
