@@ -10,7 +10,6 @@ const MENU_ITEMS = [
   { href: '/',               label: '首頁' },
   { href: '/brands',        label: '所有品牌' },
   { href: '/how-we-score',  label: '評分標準' },
-  { href: '/about',         label: '關於我們' },
   { href: '/request',       label: '新增飼料／主食罐需求' },
   { href: 'mailto:xiaopafterwork@gmail.com', label: '聯絡我們', external: true },
 ]
