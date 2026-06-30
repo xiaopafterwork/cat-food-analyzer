@@ -4,7 +4,7 @@ import Nav from '@/components/Nav'
 
 export const metadata: Metadata = {
   title: '評分標準 | 喵評鑑',
-  description: '喵評鑑採用科學化評分，從蛋白質含量（50分）、碳水化合物（30分）、AAFCO 國際認證（15分）、灰分透明度（5分）四大面向評比，滿分 100 分。符合 AAFCO/FEDIAF/NRC 國際標準，讓你一眼看出飼料好不好。',
+  description: '喵評鑑採用科學化評分，乾飼料與主食罐分別有專屬評分標準。從蛋白質含量、碳水化合物、品質認證三大面向評比，滿分 100 分，讓你一眼看出飼料好不好。',
 }
 
 const ACCENT = '#1B3A5C'
@@ -33,6 +33,25 @@ const CARB_TIERS = [
   { range: '31–40%',  pts: '18', color: '#c0702b' },
   { range: '41–50%',  pts: '15', color: '#d04020' },
   { range: '> 50%',   pts: '8',  color: '#c0392b' },
+]
+
+const WET_PROTEIN_TIERS = [
+  { range: '≥ 65%',   pts: '50', color: '#1a7f37' },
+  { range: '60–64%',  pts: '46', color: '#3a7d3c' },
+  { range: '55–59%',  pts: '41', color: '#6b9e6f' },
+  { range: '50–54%',  pts: '35', color: '#b35c00' },
+  { range: '45–49%',  pts: '28', color: '#c0702b' },
+  { range: '40–44%',  pts: '18', color: '#d04020' },
+  { range: '< 40%',   pts: '5',  color: '#c0392b' },
+]
+
+const WET_CARB_TIERS = [
+  { range: '≤ 5%',    pts: '30', color: '#1a7f37' },
+  { range: '6–10%',   pts: '26', color: '#6b9e6f' },
+  { range: '11–15%',  pts: '21', color: '#b35c00' },
+  { range: '16–20%',  pts: '18', color: '#c0702b' },
+  { range: '21–30%',  pts: '12', color: '#d04020' },
+  { range: '> 30%',   pts: '5',  color: '#c0392b' },
 ]
 
 export default function HowWeScorePage() {
@@ -133,6 +152,53 @@ export default function HowWeScorePage() {
                   <p className="text-sm font-medium text-gray-800">{item.label}</p>
                   <p className="text-xs text-gray-400 leading-relaxed">{item.desc}</p>
                 </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ── 主食罐專屬評分 ── */}
+        <div className="rounded-2xl px-5 py-4 mb-4 flex items-center gap-3" style={{ background: '#EEF3F8', border: '0.5px solid #C8D9E8' }}>
+          <span className="text-2xl">🥫</span>
+          <div>
+            <p className="text-sm font-semibold mb-0.5" style={{ color: ACCENT }}>主食罐有專屬評分標準</p>
+            <p className="text-xs" style={{ color: '#4a6a8a' }}>主食罐含水量高，乾物比蛋白質天生偏高，因此門檻也更嚴格，才有鑑別力。</p>
+          </div>
+        </div>
+
+        {/* 主食罐蛋白質 */}
+        <div className="rounded-2xl overflow-hidden mb-4" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
+          <div className="px-5 py-4" style={{ borderBottom: '0.5px solid #f3f4f6' }}>
+            <div className="flex items-center justify-between">
+              <p className="font-semibold text-gray-900">🥫 主食罐｜蛋白質含量</p>
+              <span className="text-sm font-bold" style={{ color: ACCENT }}>最高 50 分</span>
+            </div>
+            <p className="text-xs text-gray-400 mt-1">主食罐乾物比蛋白質通常較乾飼料高，門檻因此更嚴格。</p>
+          </div>
+          <div className="px-5 py-3">
+            {WET_PROTEIN_TIERS.map((t, i) => (
+              <div key={i} className="flex items-center gap-3 py-2" style={{ borderTop: i > 0 ? '0.5px solid #f9fafb' : 'none' }}>
+                <span className="text-sm font-bold shrink-0 w-10 text-right" style={{ color: t.color }}>{t.pts}</span>
+                <span className="text-sm text-gray-700">{t.range}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* 主食罐碳水 */}
+        <div className="rounded-2xl overflow-hidden mb-8" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
+          <div className="px-5 py-4" style={{ borderBottom: '0.5px solid #f3f4f6' }}>
+            <div className="flex items-center justify-between">
+              <p className="font-semibold text-gray-900">🥫 主食罐｜碳水化合物</p>
+              <span className="text-sm font-bold" style={{ color: ACCENT }}>最高 30 分</span>
+            </div>
+            <p className="text-xs text-gray-400 mt-1">主食罐天生碳水偏低，門檻稍嚴，低於 5% 才能拿滿分。</p>
+          </div>
+          <div className="px-5 py-3">
+            {WET_CARB_TIERS.map((t, i) => (
+              <div key={i} className="flex items-center gap-3 py-2" style={{ borderTop: i > 0 ? '0.5px solid #f9fafb' : 'none' }}>
+                <span className="text-sm font-bold shrink-0 w-10 text-right" style={{ color: t.color }}>{t.pts}</span>
+                <span className="text-sm text-gray-700">{t.range}</span>
               </div>
             ))}
           </div>

@@ -14,7 +14,7 @@ const ACCENT = '#1B3A5C'
 
 function getScoreColor(score: number) {
   if (score >= 75) return '#1a7f37'
-  if (score >= 60) return '#1554a0'
+  if (score >= 60) return '#4a7c59'
   if (score >= 45) return '#b35c00'
   return '#c0392b'
 }

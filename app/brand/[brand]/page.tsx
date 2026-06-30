@@ -145,7 +145,10 @@ export default async function BrandPage({ params }: { params: { brand: string } 
                     <p className="text-xs text-gray-500 mb-1.5 line-clamp-1">{summary}。</p>
                   )}
                   <div className="flex gap-1.5 flex-wrap">
-                    {!food.has_grain && (
+                    {food.food_type === 'wet' && (
+                      <span className="text-xs px-2 py-0.5 rounded-md font-semibold" style={{ background: '#EEF3F8', color: '#1B3A5C' }}>主食罐</span>
+                    )}
+                    {!food.has_grain && food.food_type !== 'wet' && (
                       <span className="text-xs px-2 py-0.5 rounded-md" style={{ background: '#e8f9ee', color: '#1a7f37' }}>無穀</span>
                     )}
                     {food.has_grain && (
