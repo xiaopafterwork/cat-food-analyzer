@@ -259,41 +259,25 @@ export default function FoodDetailClient({ food, reviews }: { food: CatFood; rev
         {/* Header card */}
         <div className="rounded-3xl p-6 mb-4 mt-4" style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}>
           <div className="flex items-start gap-4">
-            <div
-              className="w-20 h-20 rounded-full flex flex-col items-center justify-center shrink-0"
-              style={{ background: badge.bg }}
-            >
-              <span className="font-bold leading-none" style={{ fontSize: 30, color: badge.color }}>{food.score_total ?? '–'}</span>
-              <span className="text-xs mt-0.5" style={{ color: badge.color }}>/ 100</span>
+
+            {/* 左：分數 + 等級 */}
+            <div className="flex flex-col items-center gap-1.5 shrink-0">
+              <div
+                className="w-20 h-20 rounded-full flex flex-col items-center justify-center"
+                style={{ background: badge.bg }}
+              >
+                <span className="font-bold leading-none" style={{ fontSize: 30, color: badge.color }}>{food.score_total ?? '–'}</span>
+                <span className="text-xs mt-0.5" style={{ color: badge.color, opacity: 0.7 }}>/ 100</span>
+              </div>
+              {food.score_label && (
+                <span className="text-xs font-semibold px-2 py-0.5 rounded-md text-center" style={{ background: badge.bg, color: badge.color }}>{food.score_label}</span>
+              )}
             </div>
+
+            {/* 右：名稱、品牌、成分標籤 */}
             <div className="flex-1 min-w-0 pt-1">
-              <div className="flex items-center gap-2 flex-wrap mb-1">
-                <h1 className="font-bold text-gray-900" style={{ fontSize: 20 }}>{food.name}</h1>
-              </div>
-              <a href={`/brand/${encodeURIComponent(food.brand)}`} className="text-sm font-medium underline underline-offset-2 inline-block mb-2" style={{ color: ACCENT }}>{food.brand}</a>
-
-              {/* 第一行：評分等級 + 動作按鈕 */}
-              <div className="flex items-center gap-2 mb-2 flex-wrap">
-                {food.score_label && (
-                  <span className="text-xs px-2.5 py-1 rounded-md font-semibold" style={{ background: badge.bg, color: badge.color }}>{food.score_label}</span>
-                )}
-                <button
-                  onClick={toggleCompare}
-                  className="text-xs px-2.5 py-1 rounded-md font-medium"
-                  style={inCompare ? { background: '#1d1d1f', color: '#fff' } : { background: '#f3f4f6', color: '#374151' }}
-                >
-                  {inCompare ? '✓ 比較中' : '+ 比較'}
-                </button>
-                {inCompare && compareIds.length >= 2 && (
-                  <Link href={`/compare?ids=${compareIds.join(',')}`} className="text-xs underline" style={{ color: ACCENT }}>前往比較 →</Link>
-                )}
-                <button onClick={shareToThreads} className="text-xs px-2.5 py-1 rounded-md font-medium" style={{ background: '#1d1d1f', color: '#fff' }}>Threads</button>
-                <button onClick={copyLink} className="text-xs px-2.5 py-1 rounded-md font-medium" style={{ background: '#f3f4f6', color: '#374151' }}>
-                  {copied ? '✓ 已複製' : '複製連結'}
-                </button>
-              </div>
-
-              {/* 第二行：成分 / 認證標籤 */}
+              <h1 className="font-bold text-gray-900 mb-0.5" style={{ fontSize: 20 }}>{food.name}</h1>
+              <a href={`/brand/${encodeURIComponent(food.brand)}`} className="text-sm font-medium underline underline-offset-2 inline-block mb-3" style={{ color: ACCENT }}>{food.brand}</a>
               <div className="flex gap-1.5 flex-wrap">
                 <span className="text-xs px-2 py-0.5 rounded-md" style={{ background: '#f3f4f6', color: '#6b7280' }}>
                   {LIFE_STAGE_LABEL[food.life_stage] ?? food.life_stage}
@@ -303,8 +287,7 @@ export default function FoodDetailClient({ food, reviews }: { food: CatFood; rev
                 {food.is_aafco_certified && (
                   <span className="relative group inline-flex items-center text-xs px-2 py-0.5 rounded-md font-semibold cursor-default" style={{ background: '#1e3a5f', color: '#fff' }}>
                     AAFCO
-                    <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-1.5 z-50 hidden group-hover:flex
-                      w-52 px-3 py-2 rounded-xl text-xs text-gray-700 leading-relaxed shadow-lg pointer-events-none"
+                    <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-1.5 z-50 hidden group-hover:flex w-52 px-3 py-2 rounded-xl text-xs text-gray-700 leading-relaxed shadow-lg pointer-events-none"
                       style={{ background: 'rgba(255,255,255,0.97)', border: '0.5px solid #e5e7eb', backdropFilter: 'blur(8px)' }}>
                       通過美國飼料管理協會（AAFCO）認證，代表此配方符合貓咪完整營養需求的最低標準。
                     </span>
@@ -319,7 +302,26 @@ export default function FoodDetailClient({ food, reviews }: { food: CatFood; rev
               </div>
             </div>
           </div>
-          <div className="mt-4 w-full h-2 rounded-full overflow-hidden" style={{ background: '#f3f4f6' }}>
+
+          {/* 分隔線 + 動作按鈕列 */}
+          <div className="mt-4 pt-3 flex items-center gap-2 flex-wrap" style={{ borderTop: '0.5px solid #f3f4f6' }}>
+            <button
+              onClick={toggleCompare}
+              className="text-xs px-3 py-1.5 rounded-full font-medium"
+              style={inCompare ? { background: '#1d1d1f', color: '#fff' } : { background: '#f3f4f6', color: '#374151' }}
+            >
+              {inCompare ? '✓ 比較中' : '+ 加入比較'}
+            </button>
+            {inCompare && compareIds.length >= 2 && (
+              <Link href={`/compare?ids=${compareIds.join(',')}`} className="text-xs underline" style={{ color: ACCENT }}>前往比較 →</Link>
+            )}
+            <button onClick={shareToThreads} className="text-xs px-3 py-1.5 rounded-full font-medium" style={{ background: '#1d1d1f', color: '#fff' }}>分享到 Threads</button>
+            <button onClick={copyLink} className="text-xs px-3 py-1.5 rounded-full font-medium" style={{ background: '#f3f4f6', color: '#374151' }}>
+              {copied ? '✓ 已複製' : '複製連結'}
+            </button>
+          </div>
+
+          <div className="mt-3 w-full h-2 rounded-full overflow-hidden" style={{ background: '#f3f4f6' }}>
             <div className="h-full rounded-full" style={{ width: `${food.score_total ?? 0}%`, background: badge.color }} />
           </div>
         </div>
