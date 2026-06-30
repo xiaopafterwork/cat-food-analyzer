@@ -26,7 +26,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }))
 
   // 品牌頁（去重）
-  const brands = [...new Set((foods ?? []).map(f => f.brand).filter(Boolean))]
+  const brandSet: Record<string, boolean> = {}
+  for (const f of foods ?? []) { if (f.brand) brandSet[f.brand] = true }
+  const brands = Object.keys(brandSet)
   const brandUrls: MetadataRoute.Sitemap = brands.map(brand => ({
     url: `${BASE}/brand/${encodeURIComponent(brand)}`,
     lastModified: new Date(),
