@@ -1,90 +1,102 @@
-# 貓咪飼料分析網站 — 專案現況
+# 喵評鑑 — 專案現況
+
+**最後更新**：2026-06-30
 
 ## 基本資訊
-- 網址：https://cat-food-analyzer.vercel.app/
-- 技術：Next.js 14 + Tailwind + Supabase + Vercel
-- 目標：台灣最完整的貓飼料＋罐頭分析平台，以此為主業收入來源
-- 最後更新：2026-06-28
+- 網址：https://meowpj.com（主域名）/ https://cat-food-analyzer.vercel.app（Vercel）
+- GitHub：https://github.com/xiaopafterwork/cat-food-analyzer
+- 技術：Next.js 14 App Router + Tailwind + Supabase + Vercel
+- 目標：台灣最完整的貓飼料評鑑平台，以此為主業收入來源
 
 ## 現在做到哪
 
 ### ✅ 已完成
-- 網站上線（Vercel auto-deploy，push to master 即上線）
-- 首頁（搜尋框 + 篩選 + 飼料卡片 + 浮動比較條）
-- 飼料詳細頁（分數 + 三行結論 + 折疊分析 + hover tooltip）
-- 比較頁（最多 3 款飼料並排）
-- 評分標準頁（/how-we-score，80分以上標籤為「優質主食」，無 FAQ）
+- 網站上線（Vercel，自動部署）
+- 首頁（搜尋 + 篩選 + 飼料卡片 + 比較功能 RWD）
+- 飼料詳細頁（分數 + 成分亮點 + 乾物比 + 熱量比 + 留言區）
+- 品牌頁（/brands + /brand/[name]）
+- 比較頁（/compare，最多電腦5款/手機3款，toast提示）
+- 評分標準頁（/how-we-score）
+- 關於我們頁（/about，小P自介 + 動態數據連動 Supabase）
 - 新增飼料需求頁（/request）
-- 漢堡選單 Nav（全頁面共用，mobile 優先）
-- Supabase 資料庫 67 筆乾糧（品牌格式：中文 English）
-- 評分邏輯（成分 40 + 營養 30 + 透明度 30 = 100）
-- Python Pipeline：phase1_export.py → Excel 審核 → phase2_crawl.py → run_pipeline.py
-- 去重工具：scripts/dedup.py
-- 每款飼料 ai_pros / ai_cons / ai_summary（67 筆中 6 筆缺 ai_cons）
-- 乾物比 tooltip（DM → 乾物比，全資料庫已替換）
-- 包裝保證值 / 熱量來源比 tooltip（down 方向避免被遮）
-- 標籤：無穀 / 含穀 / AAFCO / 低碳水 / 高肉含量 / 優質主食
-- .claude/settings.json：git/npm/npx/python 免詢問權限
+- 留言評論系統（匿名 + 星等 + 手動核准）
+- 評分系統 v4.0：蛋白質(50) + 碳水(30) + AAFCO(15) + 灰分(5) = 100分
+- 分數等級：優質主食(75+) / 均衡日常(60-74) / 基礎配方(45-59) / 建議搭配(<45)
+- 資料庫：775 筆乾糧（Petpark + Purrmaster 爬蟲，約 20+ 個品牌）
+- 規則式 ai_summary（good/warning/bad JSON 格式）
+- GA4 安裝（G-4BJMH3MSCL，2026-06-28 啟動）
+- 搜尋詞記錄（search_logs，>=3字觸發）
+- SEO 全套：sitemap.xml（動態含所有飼料頁）、robots.txt、llms.txt、JSON-LD、meta titles 統一格式
+- Nav 漢堡選單（含關於我們）、頁尾導覽
+- Logo 品牌識別（喵評鑑綠 #3D5A3E）
+- 支持喵評鑑按鈕（咖啡圖示，Ko-fi 待接）
+- AI 團隊 8 個 Agent：CEO / 工程師 / 設計師 / 編輯 / 分析師 / 商業 / QA / 社群
+- 資料庫品質審核（has_grain 修復 122筆、移除凍乾3筆、品牌名稱統一）
 
-### ❌ 尚未實作
-- GA4 Measurement ID 填入 Vercel 環境變數（NEXT_PUBLIC_GA_ID）
-- 評論區（星等 + 文字，匿名，需老闆核准 → Supabase reviews table）
-- 關於我們頁（/about）
-- Donate 按鈕（Ko-fi，第一階段收益）
-- 聯盟行銷連結（PChome / momo，流量 1000 UV 後啟動）
-- 收藏功能（localStorage）
-- 鈣磷比（資料缺失，未來路線圖）
-- 罐頭資料與評分邏輯
+### ❌ 待完成
+- [ ] Ko-fi 帳號建立 + 支持按鈕接上連結（老闆自行，5分鐘）
+- [ ] 社群首發（Threads + IG 第一篇）→ 社群 Agent 執行
+- [ ] GA4 Measurement ID 填入 Vercel 環境變數（NEXT_PUBLIC_GA_ID = G-4BJMH3MSCL）
+- [ ] 定期爬蟲排程自動化（schedule plugin）→ 工程師規劃
+- [ ] 聯盟行銷連結（等月流量 500 UV+）
+- [ ] 電子報（等流量穩定後）
+- [ ] 廠商合作提案 PPT（pptx plugin）
+- [ ] 濕食/罐頭資料擴充（未來爬蟲）
+- [ ] meowpj.com 域名購買（老闆自行）
 
-## Git 工作流
-- 主分支：master
-- 推送：`git push origin HEAD:master`（新 session 在 worktree 分支時也適用）
-- 設定檔：`.claude/settings.json` 已設定免詢問權限
+## 數據追蹤（2026-06-30）
+- 資料庫：775 筆乾糧，約 20+ 個品牌
+- GA4：2026-06-28 啟動，數據累積中
+- 月流量：待追蹤
+- 月收入：NT$0
 
-## Python Pipeline 流程
-```
-phase1_export.py → 輸出 Excel（含自動找 URL）
-→ 人工審核 Excel（批准欄填 Y）
-→ phase2_crawl.py → 爬官網 + PChome → 輸出 JSON
-→ run_pipeline.py → 清洗 → 評分 → 文案 → 上傳 Supabase
-```
+## 評分系統 v4.0
+- 蛋白質（乾物比）：最高 50 分
+- 碳水化合物（乾物比）：最高 30 分
+- AAFCO 認證：15 分
+- 灰分數據透明度：5 分
+- 分數分布：約 37% 優質主食
 
-## 評論區規劃（待實作）
-- Supabase 新增 `reviews` table：food_id, rating(1-5), comment, status(pending/approved), created_at
-- RLS：anon 可 INSERT，SELECT 只看 approved
-- 飼料詳情頁底部顯示已核准評論 + 留言表單
-- 老闆在 Supabase Dashboard 手動改 status = approved
-
-## 數據追蹤
-- 資料庫筆數：67（乾糧）
-- 月收入：NT$0（尚未啟動收益化）
-- 月流量：待 GA4 設定後追蹤
+## 護城河
+1. 資料量飛輪：775筆 → SEO覆蓋面廣 → 流量 → 更有理由擴充
+2. 用戶評論 UGC：真實飼主心得，競品無法複製
+3. 品牌信任感：「喵評鑑說好才買」成為台灣貓奴習慣
+4. 搜尋詞數據：台灣貓奴搜什麼品牌/成分，是廠商付費想要的一手資料
 
 ## 產品路線圖
 
-### 第一階段：乾糧站穩（現在）
-- [x] 67 款乾糧上線
-- [ ] GA4 追蹤開啟
-- [ ] Donate 按鈕上線
-- [ ] 補齊 6 筆缺漏 ai_cons
+### Phase 1：曝光期（現在 → 2026-09）
+目標：第一批真實用戶進來，Donate 第一筆收入
 
-### 第二階段：流量變現（月流量 1,000 UV 後）
-- [ ] PChome 聯盟行銷連結
-- [ ] 評論區功能上線
-- [ ] SEO 優化
+| 任務 | 負責 | 狀態 |
+|------|------|------|
+| 社群首發（Threads + IG） | 社群 Agent | ❌ 待做 |
+| Ko-fi 捐款接通 | 老闆 + 工程師 | ❌ 待做 |
+| GA4 環境變數設定 | 老闆（Vercel） | ❌ 待做 |
+| 定期爬蟲排程（schedule plugin） | 工程師 | ❌ 待規劃 |
 
-### 第三階段：加入罐頭（1–2 個月後）
-- [ ] 新增濕食評分邏輯
-- [ ] 目標：20 款主流罐頭
+### Phase 2：黏著度（2026-09 → 2026-12）
+目標：用戶回來，月流量 1,000 UV
 
-### 第四階段：完整平台（3–6 個月）
-- [ ] 月收入目標 NT$30,000+
-- [ ] 廠商合作
+| 功能 | 目的 |
+|------|------|
+| 聯盟行銷連結上線 | 被動收入開始 |
+| 我的收藏清單 | 用戶回訪理由 |
+| 電子報（月更飼料新評） | 直聯用戶名單 |
 
-## 收益路線圖
-1. Donate（現在）→ 月收 NT$1,000–3,000
-2. 聯盟行銷 PChome（流量 1,000+ UV）→ NT$1,000–3,000/月
-3. 廠商合作（流量 5,000+ UV）→ NT$30,000+/月
+### Phase 3：變現（2027+）
+- 廠商洞察報告（搜尋詞 + 篩選行為數據）NT$10,000–30,000/份
+- 「喵評鑑推薦」標章授權
+- 付費訂閱功能
+- 月收入目標：NT$30,000+
 
-## 本週目標
-（每週由 CEO 更新）
+## 可用 Plugin 清單
+| Plugin | 用途 | 建議使用時機 |
+|--------|------|------------|
+| `xlsx` | 讀寫飼料 Excel | 資料同步時 |
+| `schedule` | 定時排程 | 爬蟲自動化 |
+| `pptx` | 產出 PPT | 廠商提案 |
+| `docx` | 產出 Word | 合約/說明文件 |
+| `pdf` | 讀取 PDF | 飼料官方文件 |
+| `skill-creator` | 建立新 Agent | 擴充團隊 |
+| `consolidate-memory` | 整理記憶 | 每月定期維護 |

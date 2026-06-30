@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   },
 }
 
-const ACCENT = '#3D5A3E'
+const ACCENT = '#1B3A5C'
 
 export default async function AboutPage() {
   const supabase = createClient(

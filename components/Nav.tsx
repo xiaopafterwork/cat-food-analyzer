@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
-const ACCENT = '#3D5A3E'
+const ACCENT = '#1B3A5C'
 
 const MENU_ITEMS = [
   { href: '/',               label: '首頁' },

@@ -10,7 +10,7 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 )
 
-const ACCENT = '#3D5A3E'
+const ACCENT = '#1B3A5C'
 
 function getScoreColor(score: number) {
   if (score >= 75) return '#1a7f37'

@@ -17,7 +17,7 @@ C:\Users\P\cat-food-analyzer
 繁體中文。回覆簡潔，結論優先。
 
 ## Agent 團隊
-叫「工程師」「設計師」「編輯」「分析師」「CEO」「商業」即可觸發。
+叫「工程師」「設計師」「編輯」「分析師」「CEO」「商業」「QA」「社群」即可觸發。
 詳細規範見 `.ai-team/` 資料夾與 memory/agents_team.md。
 
 ## Git Push

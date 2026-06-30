@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { supabase, CatFood } from '@/lib/supabase'
 import Nav from '@/components/Nav'
 
-const ACCENT = '#3D5A3E'
+const ACCENT = '#1B3A5C'
 
 function getScoreBadge(score: number | null): { bg: string; color: string } {
   if (!score) return { bg: '#f3f4f6', color: '#6b7280' }
@@ -253,7 +253,7 @@ export default function HomePage() {
                         <span className="text-xs px-2 py-0.5 rounded-md" style={{ background: '#ffeaea', color: '#c0392b' }}>含穀</span>
                       )}
                       {food.is_aafco_certified && (
-                        <span className="text-xs px-2 py-0.5 rounded-md font-semibold" style={{ background: '#1e3a5f', color: '#fff' }}>AAFCO</span>
+                        <span className="text-xs px-2 py-0.5 rounded-md font-semibold" style={{ background: '#EEF3F8', color: '#1B3A5C' }}>AAFCO</span>
                       )}
                       {(food.carb_dm_pct ?? 100) <= 10 && (
                         <span className="text-xs px-2 py-0.5 rounded-md" style={{ background: '#fef3e2', color: '#92520b' }}>低碳水</span>
@@ -306,7 +306,7 @@ export default function HomePage() {
           >
             查看所有品牌 →
           </Link>
-          <div className="text-center py-6 rounded-2xl" style={{ background: '#e8f9ee', border: '0.5px solid #b2e0bb' }}>
+          <div className="text-center py-6 rounded-2xl" style={{ background: '#EEF3F8', border: '0.5px solid #C8D9E8' }}>
             <p className="text-sm font-semibold text-gray-800 mb-1">這份分析對你有幫助嗎？</p>
             <p className="text-xs mb-4" style={{ color: '#555' }}>你的支持讓我們繼續分析更多飼料 ☕</p>
             <button className="px-5 py-2 rounded-full text-sm font-semibold text-white" style={{ background: ACCENT }}>

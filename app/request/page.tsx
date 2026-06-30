@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: '找不到你家貓咪吃的飼料？告訴我們，我們盡快加入評鑑！',
 }
 
-const ACCENT = '#3D5A3E'
+const ACCENT = '#1B3A5C'
 
 export default function RequestPage() {
   return (
@@ -81,7 +81,7 @@ export default function RequestPage() {
         {/* 已有 67 款 */}
         <div
           className="text-center px-6 py-6 rounded-2xl"
-          style={{ background: '#e8f9ee', border: '0.5px solid #b2e0bb' }}
+          style={{ background: '#EEF3F8', border: '0.5px solid #C8D9E8' }}
         >
           <p className="text-sm text-gray-700 mb-3">
             目前已有 <strong style={{ color: ACCENT }}>67 款</strong> 飼料完成評鑑

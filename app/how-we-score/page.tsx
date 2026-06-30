@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: '喵評鑑採用科學化評分，從蛋白質含量（50分）、碳水化合物（30分）、AAFCO 國際認證（15分）、灰分透明度（5分）四大面向評比，滿分 100 分。符合 AAFCO/FEDIAF/NRC 國際標準，讓你一眼看出飼料好不好。',
 }
 
-const ACCENT = '#3D5A3E'
+const ACCENT = '#1B3A5C'
 
 const SCORE_LEVELS = [
   { range: '75–100', label: '優質主食', bg: '#e8f9ee', color: '#1a7f37', desc: '蛋白質充足、品質認證完整，適合作為長期日常主食。' },
@@ -164,7 +164,7 @@ export default function HowWeScorePage() {
         </div>
 
         {/* 參考標準 */}
-        <div className="p-5 rounded-2xl mb-8" style={{ background: '#e8f9ee', border: '0.5px solid #b2e0bb' }}>
+        <div className="p-5 rounded-2xl mb-8" style={{ background: '#EEF3F8', border: '0.5px solid #C8D9E8' }}>
           <p className="text-sm font-semibold mb-3" style={{ color: ACCENT }}>參考國際標準</p>
           <div className="flex flex-col gap-3">
             {[

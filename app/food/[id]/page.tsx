@@ -56,7 +56,7 @@ export default async function FoodDetailPage({ params }: { params: { id: string 
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4 text-gray-400">
         <p className="text-base">找不到此飼料</p>
-        <a href="/" className="text-sm font-semibold px-5 py-2.5 rounded-full text-white" style={{ background: '#3D5A3E' }}>
+        <a href="/" className="text-sm font-semibold px-5 py-2.5 rounded-full text-white" style={{ background: '#1B3A5C' }}>
           返回首頁
         </a>
       </div>
