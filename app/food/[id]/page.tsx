@@ -27,15 +27,16 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
     ? food.ai_summary.split(/[。！？]/)[0]
     : ''
 
-  const description = `${food.name}成分分析。蛋白質（乾重）${food.protein_dm_pct?.toFixed(1) ?? '–'}%、碳水${food.carb_dm_pct?.toFixed(1) ?? '–'}%，喵評鑑綜合評分 ${food.score_total} 分（${food.score_label}）。${summary ? summary + '。' : ''}喵評鑑 — 成分透明、科學評分。`
+  const ogDesc = `${food.name}拿了 ${food.score_total} 分。蛋白質 ${food.protein_dm_pct?.toFixed(1) ?? '–'}%、碳水 ${food.carb_dm_pct?.toFixed(1) ?? '–'}%，評語在這裡。`
+  const seoDesc = `${food.name}成分分析。蛋白質（乾重）${food.protein_dm_pct?.toFixed(1) ?? '–'}%、碳水${food.carb_dm_pct?.toFixed(1) ?? '–'}%，喵評鑑綜合評分 ${food.score_total} 分（${food.score_label}）。${summary ? summary + '。' : ''}喵評鑑 — 成分透明、科學評分。`
 
   return {
     title: `${food.name} 評分 ${food.score_total} 分 | 喵評鑑`,
-    description: description.slice(0, 155),
+    description: seoDesc.slice(0, 155),
     alternates: { canonical: `https://meowpj.com/food/${params.id}` },
     openGraph: {
       title: `${food.name} 評分 ${food.score_total} 分 | 喵評鑑`,
-      description: description.slice(0, 100),
+      description: ogDesc.slice(0, 100),
       url: `https://meowpj.com/food/${params.id}`,
       siteName: '喵評鑑',
       images: [{ url: '/logo.png', width: 512, height: 512, alt: food.name }],

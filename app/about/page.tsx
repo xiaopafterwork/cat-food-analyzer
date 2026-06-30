@@ -8,7 +8,7 @@ export const revalidate = 0
 
 export const metadata: Metadata = {
   title: '關於喵評鑑 | 喵評鑑',
-  description: '喵評鑑由資深 PM 小P創立，因為一隻挑食的貓和一張看不懂的成分表，打造乾飼料和主食罐都有的科學評分平台。',
+  description: '因為一隻挑食的貓和一張看不懂的成分表，所以有了喵評鑑。',
   openGraph: {
     title: '關於喵評鑑 | 喵評鑑',
     description: '因為一隻挑食的貓，所以有了喵評鑑。',

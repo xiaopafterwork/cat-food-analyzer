@@ -18,7 +18,7 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL('https://meowpj.com'),
   title: "喵評鑑 MEOWPJ — 貓咪飼料與主食罐成分評分",
-  description: "乾飼料和主食罐都有，用分數告訴你這款值不值得買。成分透明、科學評分，已收錄 2,600+ 款。",
+  description: "你家貓在吃什麼？2,600+ 款飼料和主食罐，每一款都有分數。",
   alternates: { canonical: 'https://meowpj.com' },
   openGraph: {
     siteName: '喵評鑑',
