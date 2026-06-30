@@ -65,7 +65,7 @@ export default function HowWeScorePage() {
           <h1 className="text-3xl font-bold text-gray-900 mb-3" style={{ letterSpacing: '-0.5px' }}>我們怎麼幫飼料打分數？</h1>
           <p className="text-gray-500 text-sm leading-relaxed max-w-md mx-auto">
             蛋白質、碳水、品質認證三個面向，<strong>滿分 100 分</strong>。<br />
-            乾飼料與主食罐各有專屬門檻，才能公平比較。
+            乾飼料和主食罐分開計算，標準不同、分數才有意義。
           </p>
         </div>
 
