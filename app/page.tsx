@@ -196,7 +196,7 @@ export default function HomePage() {
           {/* 生命階段：乾飼料 全部/幼貓/成貓/熟齡貓，主食罐 全部/幼貓/成貓 */}
           {(foodTypeFilter === 'dry'
             ? [{ label: '全部', value: null }, { label: '幼貓', value: '幼貓' }, { label: '成貓', value: '成貓' }, { label: '熟齡貓', value: '熟齡貓' }]
-            : [{ label: '全部', value: null }, { label: '幼貓', value: '幼貓' }, { label: '成貓', value: '成貓' }]
+            : [{ label: '全部', value: null }, { label: '幼貓', value: '幼貓' }, { label: '成貓', value: '成貓' }, { label: '熟齡貓', value: '熟齡貓' }]
           ).map(item => {
             const active = item.value === null ? lifeStageFilter === null && !grainFilter && !aafcoFilter : lifeStageFilter === item.value
             return (
@@ -224,9 +224,8 @@ export default function HomePage() {
               無穀
             </button>
           )}
-          {/* AAFCO：主食罐專屬 */}
-          {foodTypeFilter === 'wet' && (
-            <button
+          {/* AAFCO：乾飼料與主食罐都有 */}
+          <button
               onClick={() => setAafcoFilter(v => !v)}
               className="px-4 py-1.5 rounded-full text-sm font-medium"
               style={aafcoFilter
@@ -234,8 +233,7 @@ export default function HomePage() {
                 : { background: '#fff', color: '#374151', border: '0.5px solid #d1d5db' }}
             >
               AAFCO 認證
-            </button>
-          )}
+          </button>
         </div>
 
         {/* ── Food list ── */}
