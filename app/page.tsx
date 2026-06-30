@@ -220,15 +220,15 @@ export default function HomePage() {
                   className="flex items-center gap-4 p-4 rounded-2xl"
                   style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}
                 >
-                  {/* Score circle — white bg + colored ring */}
+                  {/* Score circle — filled bg */}
                   <Link href={`/food/${food.id}`} className="shrink-0">
                     <div
-                      className="w-20 h-20 rounded-full flex flex-col items-center justify-center font-bold relative"
-                      style={{ background: '#fff', boxShadow: `0 0 0 3.5px ${badge.color}`, color: badge.color }}
+                      className="w-20 h-20 rounded-full flex flex-col items-center justify-center font-bold"
+                      style={{ background: badge.bg, color: badge.color }}
                     >
-                      <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.03em', opacity: 0.55, marginBottom: 1 }}>#{rank}</span>
-                      <span style={{ fontSize: 24, lineHeight: 1 }}>{food.score_total ?? '–'}</span>
-                      <span style={{ fontSize: 9, opacity: 0.55 }}>/ 100</span>
+                      <span style={{ fontSize: 10, fontWeight: 600, opacity: 0.6, marginBottom: 1 }}>#{rank}</span>
+                      <span style={{ fontSize: 26, lineHeight: 1.1 }}>{food.score_total ?? '–'}</span>
+                      <span style={{ fontSize: 10, opacity: 0.6 }}>/ 100</span>
                     </div>
                   </Link>
 

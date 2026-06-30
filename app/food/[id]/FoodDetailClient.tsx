@@ -270,40 +270,30 @@ export default function FoodDetailClient({ food, reviews }: { food: CatFood; rev
               <div className="flex items-center gap-2 flex-wrap mb-1">
                 <h1 className="font-bold text-gray-900" style={{ fontSize: 20 }}>{food.name}</h1>
               </div>
-              <a href={`/brand/${encodeURIComponent(food.brand)}`} className="text-sm font-medium underline underline-offset-2 inline-block" style={{ color: ACCENT }}>{food.brand}</a>
-              <div className="flex items-center gap-2 mt-1.5 mb-1 flex-wrap">
+              <a href={`/brand/${encodeURIComponent(food.brand)}`} className="text-sm font-medium underline underline-offset-2 inline-block mb-2" style={{ color: ACCENT }}>{food.brand}</a>
+
+              {/* 第一行：評分等級 + 動作按鈕 */}
+              <div className="flex items-center gap-2 mb-2 flex-wrap">
                 {food.score_label && (
-                  <span className="text-xs px-2 py-0.5 rounded-md font-semibold" style={{ background: badge.bg, color: badge.color }}>{food.score_label}</span>
+                  <span className="text-xs px-2.5 py-1 rounded-md font-semibold" style={{ background: badge.bg, color: badge.color }}>{food.score_label}</span>
                 )}
                 <button
                   onClick={toggleCompare}
-                  className="text-xs px-2.5 py-0.5 rounded-md font-medium"
-                  style={inCompare
-                    ? { background: '#1d1d1f', color: '#fff' }
-                    : { background: '#f3f4f6', color: '#374151' }}
+                  className="text-xs px-2.5 py-1 rounded-md font-medium"
+                  style={inCompare ? { background: '#1d1d1f', color: '#fff' } : { background: '#f3f4f6', color: '#374151' }}
                 >
-                  {inCompare ? '✓ 已加入比較' : '+ 加入比較'}
+                  {inCompare ? '✓ 比較中' : '+ 比較'}
                 </button>
                 {inCompare && compareIds.length >= 2 && (
-                  <Link href={`/compare?ids=${compareIds.join(',')}`} className="text-xs underline" style={{ color: ACCENT }}>
-                    前往比較 →
-                  </Link>
+                  <Link href={`/compare?ids=${compareIds.join(',')}`} className="text-xs underline" style={{ color: ACCENT }}>前往比較 →</Link>
                 )}
-                <button
-                  onClick={shareToThreads}
-                  className="text-xs px-2.5 py-0.5 rounded-md font-medium"
-                  style={{ background: '#1d1d1f', color: '#fff' }}
-                >
-                  分享到 Threads
-                </button>
-                <button
-                  onClick={copyLink}
-                  className="text-xs px-2.5 py-0.5 rounded-md font-medium"
-                  style={{ background: '#f3f4f6', color: '#374151' }}
-                >
+                <button onClick={shareToThreads} className="text-xs px-2.5 py-1 rounded-md font-medium" style={{ background: '#1d1d1f', color: '#fff' }}>Threads</button>
+                <button onClick={copyLink} className="text-xs px-2.5 py-1 rounded-md font-medium" style={{ background: '#f3f4f6', color: '#374151' }}>
                   {copied ? '✓ 已複製' : '複製連結'}
                 </button>
               </div>
+
+              {/* 第二行：成分 / 認證標籤 */}
               <div className="flex gap-1.5 flex-wrap">
                 <span className="text-xs px-2 py-0.5 rounded-md" style={{ background: '#f3f4f6', color: '#6b7280' }}>
                   {LIFE_STAGE_LABEL[food.life_stage] ?? food.life_stage}
