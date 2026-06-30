@@ -86,7 +86,7 @@ export default function AboutPage() {
         <div className="grid grid-cols-3 gap-3 mb-6">
           {[
             { num: '775', label: '收錄飼料款數' },
-            { num: '100', label: '科學評分滿分' },
+            { num: '100', label: '綜合評分滿分' },
             { num: '免費', label: '永遠對貓奴' },
           ].map(item => (
             <div
