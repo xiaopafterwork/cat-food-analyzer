@@ -61,18 +61,32 @@ export default function HomePage() {
   useEffect(() => {
     async function fetchFoods() {
       setLoading(true)
-      let q = supabase.from('cat_foods').select('*').order('score_total', { ascending: false }).limit(3000)
-      if (lifeStageFilter) q = q.eq('life_stage', lifeStageFilter)
-      if (grainFilter) q = q.eq('has_grain', false)
-      if (aafcoFilter) q = q.eq('is_aafco_certified', true)
-      q = q.eq('food_type', foodTypeFilter)
-      if (query.trim()) {
-        const words = query.trim().split(/\s+/).filter(Boolean)
-        const conditions = words.flatMap(w => [`name.ilike.%${w}%`, `brand.ilike.%${w}%`])
-        q = q.or(conditions.join(','))
+
+      function buildQuery(offset: number) {
+        let q = supabase.from('cat_foods').select('*')
+          .order('score_total', { ascending: false })
+          .range(offset, offset + 999)
+        if (lifeStageFilter) q = q.eq('life_stage', lifeStageFilter)
+        if (grainFilter) q = q.eq('has_grain', false)
+        if (aafcoFilter) q = q.eq('is_aafco_certified', true)
+        q = q.eq('food_type', foodTypeFilter)
+        if (query.trim()) {
+          const words = query.trim().split(/\s+/).filter(Boolean)
+          const conditions = words.flatMap(w => [`name.ilike.%${w}%`, `brand.ilike.%${w}%`])
+          q = q.or(conditions.join(','))
+        }
+        return q
       }
-      const { data } = await q
-      const results = (data as CatFood[]) ?? []
+
+      const { data: page1 } = await buildQuery(0)
+      let results = (page1 as CatFood[]) ?? []
+
+      // 如果第一頁滿 1000 筆，繼續抓第二頁
+      if (results.length === 1000) {
+        const { data: page2 } = await buildQuery(1000)
+        results = [...results, ...((page2 as CatFood[]) ?? [])]
+      }
+
       setFoods(results)
       setVisibleCount(20)
       setLoading(false)
