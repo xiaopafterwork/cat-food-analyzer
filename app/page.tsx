@@ -220,8 +220,8 @@ export default function HomePage() {
                   className="flex items-center gap-4 p-4 rounded-2xl"
                   style={{ background: '#fff', border: '0.5px solid #e5e7eb' }}
                 >
-                  {/* Score circle — filled bg */}
-                  <Link href={`/food/${food.id}`} className="shrink-0">
+                  {/* 左：圓圈 + 等級 */}
+                  <Link href={`/food/${food.id}`} className="shrink-0 flex flex-col items-center gap-1.5">
                     <div
                       className="w-20 h-20 rounded-full flex flex-col items-center justify-center font-bold"
                       style={{ background: badge.bg, color: badge.color }}
@@ -230,15 +230,15 @@ export default function HomePage() {
                       <span style={{ fontSize: 26, lineHeight: 1.1 }}>{food.score_total ?? '–'}</span>
                       <span style={{ fontSize: 10, opacity: 0.6 }}>/ 100</span>
                     </div>
+                    {food.score_label && (
+                      <span className="text-xs font-semibold px-2 py-0.5 rounded-md text-center" style={{ background: badge.bg, color: badge.color }}>{food.score_label}</span>
+                    )}
                   </Link>
 
-                  {/* Info — div 不是 Link，避免巢狀 <a> */}
+                  {/* 右：名稱、品牌、標籤 */}
                   <div className="flex-1 min-w-0">
                     <Link href={`/food/${food.id}`} className="block">
                       <p className="font-semibold text-gray-900 truncate mb-0.5" style={{ fontSize: 15 }}>{food.name}</p>
-                      {food.score_label && (
-                        <p className="text-xs mb-1" style={{ color: badge.color }}>{food.score_label}</p>
-                      )}
                     </Link>
                     <button
                       onClick={e => { e.stopPropagation(); router.push(`/brand/${encodeURIComponent(food.brand)}`) }}
