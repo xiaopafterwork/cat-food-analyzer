@@ -145,7 +145,7 @@ export default function BrandsPage() {
 
         <div className="mt-8 text-center">
           <Link href="/" className="text-sm underline underline-offset-2" style={{ color: ACCENT }}>
-            查看所有飼料評分 →
+            查看所有評分 →
           </Link>
         </div>
       </div>
