@@ -37,11 +37,10 @@
 - `scripts/agents/04_copywriter.py` — 規則式 ai_summary 生成
 - `scripts/upload_to_supabase.py` — 批次上傳
 
-## Supabase RLS 政策
-- SELECT：開放 anon（公開讀取飼料/主食罐資料）
-- INSERT：開放 anon（reviews 表要讓訪客送留言）
-- UPDATE：**已收回**（2026-07-01 資安修正，見 `scripts/fix_rls_policy.sql`）
-- 分數/資料更新一律用 Service Role Key 走後端腳本，不可重新開放 anon UPDATE
+## Supabase RLS 政策（2026-07-01 資安修正後）
+- cat_foods：SELECT + INSERT 開放，**UPDATE、DELETE 已收回**
+- reviews：SELECT（僅 approved）+ INSERT 開放，無 UPDATE/DELETE
+- 分數/資料更新、留言審核一律用 Service Role Key 走後端腳本或 Supabase Dashboard，不可重新對 anon 開放 UPDATE/DELETE
 
 ## ⚠️ 技術禁忌
 - TypeScript 禁用 `[...new Set()]`，改用 `Record<string, boolean>` + `Object.keys()`

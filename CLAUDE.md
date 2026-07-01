@@ -37,7 +37,7 @@ git push origin HEAD:master
 - 爬蟲不可自動排程寫入 Supabase，必須老闆批准後才上傳
 - 爬蟲只產出 JSON/Excel，確認後才執行上傳
 - TypeScript 禁用 `[...new Set()]`，改用 `Record<string, boolean>` + `Object.keys()`
-- **不可重新開放 Supabase anon 的 UPDATE 權限**（2026-07-01 資安修正已收回，anon key 曝露在前端，開放 UPDATE 會讓任何人竄改分數/留言審核狀態）
+- **不可重新開放 Supabase anon 的 UPDATE / DELETE 權限**（2026-07-01 資安修正已收回，anon key 曝露在前端，開放會讓任何人竄改或刪除資料）
 
 ## 核心資料結構
 - `food_type`：`'dry'`（乾飼料）| `'wet'`（主食罐）
