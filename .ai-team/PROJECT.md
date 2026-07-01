@@ -68,9 +68,11 @@
 ---
 
 ## 快取策略
-- 飼料詳情頁（/food/[id]）、品牌頁（/brand/[brand]）：永久快取（`revalidate = false`）
-- 資料更新後需手動 git push 觸發 Vercel 重新部署
-- 首頁動態，不快取
+- 飼料詳情頁（/food/[id]）、品牌頁（/brand/[brand]）：ISR（`revalidate = 86400`）
+- 第一次點擊建立快取，24 小時內瞬開；24 小時後自動更新
+- 想立刻反映新資料：git push 觸發 Vercel 重新部署即可
+- 不用 `generateStaticParams`（曾讓部署耗時 12 分鐘，已移除）
+- 首頁動態，不快取（有搜尋/篩選）
 
 ## 技術架構重點
 - **food_type** 欄位：`'dry'`（乾飼料）| `'wet'`（主食罐）
