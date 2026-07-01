@@ -253,7 +253,7 @@ export default function FoodDetailClient({ food, reviews }: { food: CatFood; rev
           {toast}
         </div>
       )}
-      <Nav backHref="/" />
+      <Nav backToHistory />
 
       <div className="max-w-2xl mx-auto px-4 pb-16">
         {/* Header card */}
