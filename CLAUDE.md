@@ -33,6 +33,11 @@ git push origin HEAD:master
 - **不可改回 `force-dynamic` 或 `revalidate = 0`**，會導致每次點擊都重新打 Supabase，速度很慢
 - **不可加回 `generateStaticParams`**，會讓部署時間暴增到 10 分鐘以上
 
+## ⚠️ 動手改權限/安全設定前必做
+- 收緊任何權限（RLS、API 金鑰、環境變數）之前，**必須先搜尋整個 `scripts/` 資料夾**，確認有沒有現有流程依賴這個權限
+- 2026-07-01 教訓：資安健檢時只看 `.ai-team/ENGINEER.md` 的文件說明就收回 RLS UPDATE/DELETE，沒查 `sync_excel_to_supabase.py` 等 5 支腳本正在用這權限運作，導致老闆的 Excel 審核流程差點壞掉
+- 規則：改權限前先 `grep` 找出所有用到該 key/權限的地方，逐一確認影響範圍，才能動手
+
 ## ⚠️ 絕對禁止
 - 爬蟲不可自動排程寫入 Supabase，必須老闆批准後才上傳
 - 爬蟲只產出 JSON/Excel，確認後才執行上傳
