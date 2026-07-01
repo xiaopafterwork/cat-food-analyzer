@@ -38,6 +38,7 @@ git push origin HEAD:master
 - 爬蟲只產出 JSON/Excel，確認後才執行上傳
 - TypeScript 禁用 `[...new Set()]`，改用 `Record<string, boolean>` + `Object.keys()`
 - **不可重新開放 Supabase anon 的 UPDATE / DELETE 權限**（2026-07-01 資安修正已收回，anon key 曝露在前端，開放會讓任何人竄改或刪除資料）
+- 本地腳本若需要 UPDATE/DELETE/UPSERT（如 `sync_excel_to_supabase.py`、`dedup.py`），一律讀取 `.env.local` 的 `SUPABASE_SERVICE_ROLE_KEY`，不可用 anon key
 
 ## 核心資料結構
 - `food_type`：`'dry'`（乾飼料）| `'wet'`（主食罐）

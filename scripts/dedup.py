@@ -21,12 +21,20 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 from supabase import create_client
 
 SUPABASE_URL = "https://hltnbcqcsmchmfwdcpoc.supabase.co"
-SUPABASE_KEY = (
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
-    ".eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhsd"
-    "G5iY3Fjc21jaG1md2RjcG9jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1NTAzOTgsImV4cCI6MjA5ODEyNjM5OH0"
-    ".fsWtKXvdg4dtUVlgvXAQ-IK8T5Eq1QtF06TCYMRhyN0"
-)
+
+def _load_service_role_key():
+    key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
+    if key:
+        return key
+    env_path = os.path.join(os.path.dirname(__file__), "..", ".env.local")
+    if os.path.exists(env_path):
+        with open(env_path, encoding="utf-8") as f:
+            for line in f:
+                if line.strip().startswith("SUPABASE_SERVICE_ROLE_KEY="):
+                    return line.strip().split("=", 1)[1].strip().strip('"').strip("'")
+    raise RuntimeError("找不到 SUPABASE_SERVICE_ROLE_KEY，請確認 .env.local 內有設定")
+
+SUPABASE_KEY = _load_service_role_key()
 
 SCRIPT_DIR = os.path.dirname(__file__)
 DATA_DIRS = {

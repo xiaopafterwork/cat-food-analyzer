@@ -4,13 +4,26 @@ score_and_sync_purrmaster.py
 v3.0 評分：蛋白質(40) + 碳水(25) + 品質(35) = 100
 同步 780 筆 Purrmaster 資料到 Supabase
 """
-import io, sys, json, re
+import io, os, sys, json, re
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 
 from supabase import create_client
 
 SUPABASE_URL = "https://hltnbcqcsmchmfwdcpoc.supabase.co"
-SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhsdG5iY3Fjc21jaG1md2RjcG9jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1NTAzOTgsImV4cCI6MjA5ODEyNjM5OH0.fsWtKXvdg4dtUVlgvXAQ-IK8T5Eq1QtF06TCYMRhyN0"
+
+def _load_service_role_key():
+    key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
+    if key:
+        return key
+    env_path = os.path.join(os.path.dirname(__file__), "..", ".env.local")
+    if os.path.exists(env_path):
+        with open(env_path, encoding="utf-8") as f:
+            for line in f:
+                if line.strip().startswith("SUPABASE_SERVICE_ROLE_KEY="):
+                    return line.strip().split("=", 1)[1].strip().strip('"').strip("'")
+    raise RuntimeError("找不到 SUPABASE_SERVICE_ROLE_KEY，請確認 .env.local 內有設定")
+
+SUPABASE_KEY = _load_service_role_key()
 JSON_PATH = "data/raw/purrmaster_20260629_1518.json"
 
 # ── 認證品牌（同 update_certified.py）──
