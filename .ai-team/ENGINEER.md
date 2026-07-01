@@ -38,9 +38,10 @@
 - `scripts/upload_to_supabase.py` — 批次上傳
 
 ## Supabase RLS 政策
-- SELECT：已開放 anon
-- INSERT：已開放 anon
-- UPDATE：已開放 anon
+- SELECT：開放 anon（公開讀取飼料/主食罐資料）
+- INSERT：開放 anon（reviews 表要讓訪客送留言）
+- UPDATE：**已收回**（2026-07-01 資安修正，見 `scripts/fix_rls_policy.sql`）
+- 分數/資料更新一律用 Service Role Key 走後端腳本，不可重新開放 anon UPDATE
 
 ## ⚠️ 技術禁忌
 - TypeScript 禁用 `[...new Set()]`，改用 `Record<string, boolean>` + `Object.keys()`
@@ -58,10 +59,12 @@
 - GA4（G-4BJMH3MSCL）、搜尋詞記錄（search_logs）
 
 ## 快取策略（重要）
-- 飼料詳情頁、品牌頁：`export const revalidate = false`（永久快取）
+- 飼料詳情頁、品牌頁：`export const revalidate = 86400`（ISR，24 小時）
+- 第一次點擊建立快取，之後瞬開；24 小時後自動重新抓取
 - 首頁保持動態（有搜尋、篩選，需即時）
-- 資料更新流程：Supabase 上傳 → git push → Vercel 重新部署
-- **禁止**改回 `force-dynamic`，會讓每次點擊都重新打 DB，速度很慢
+- 資料更新流程：Supabase 上傳 → git push → Vercel 重新部署（立即生效）
+- **禁止**改回 `force-dynamic` 或 `revalidate = 0`，會讓每次點擊都重新打 DB，速度很慢
+- **禁止**加回 `generateStaticParams`，會讓部署時間暴增到 10 分鐘以上
 
 ## 待辦
 - Ko-fi 支持按鈕連結串接（老闆提供帳號）

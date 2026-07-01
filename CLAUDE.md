@@ -26,15 +26,18 @@ git push origin HEAD:master
 ```
 
 ## 快取策略
-- 飼料詳情頁（/food/[id]）、品牌頁（/brand/[brand]）使用**永久快取**（`revalidate = false`）
-- 資料不會自動更新，需要手動重新部署才會反映新資料
-- 流程：上傳資料到 Supabase → git push → Vercel 重新部署 → 快取更新
+- 飼料詳情頁（/food/[id]）、品牌頁（/brand/[brand]）使用 **ISR**（`revalidate = 86400`）
+- 第一個人點擊時建立快取，24 小時內都是瞬開；24 小時後自動重新抓取最新資料
+- 不使用 `generateStaticParams`（曾導致部署要 12 分鐘去預建全部 2,645 頁，已移除）
+- 資料更新想立刻反映：git push 觸發重新部署即可
 - **不可改回 `force-dynamic` 或 `revalidate = 0`**，會導致每次點擊都重新打 Supabase，速度很慢
+- **不可加回 `generateStaticParams`**，會讓部署時間暴增到 10 分鐘以上
 
 ## ⚠️ 絕對禁止
 - 爬蟲不可自動排程寫入 Supabase，必須老闆批准後才上傳
 - 爬蟲只產出 JSON/Excel，確認後才執行上傳
 - TypeScript 禁用 `[...new Set()]`，改用 `Record<string, boolean>` + `Object.keys()`
+- **不可重新開放 Supabase anon 的 UPDATE 權限**（2026-07-01 資安修正已收回，anon key 曝露在前端，開放 UPDATE 會讓任何人竄改分數/留言審核狀態）
 
 ## 核心資料結構
 - `food_type`：`'dry'`（乾飼料）| `'wet'`（主食罐）

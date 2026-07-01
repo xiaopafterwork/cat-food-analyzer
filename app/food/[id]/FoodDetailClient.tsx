@@ -76,6 +76,7 @@ function ReviewForm({ foodId }: { foodId: string }) {
         value={body}
         onChange={e => setBody(e.target.value)}
         rows={3}
+        maxLength={500}
         className="w-full px-4 py-2.5 rounded-xl text-sm outline-none resize-none"
         style={{ border: '0.5px solid #d1d5db', background: '#fafafa' }}
       />
