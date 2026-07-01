@@ -3,20 +3,12 @@ import { createClient } from '@supabase/supabase-js'
 import Nav from '@/components/Nav'
 import BrandDetailClient from './BrandDetailClient'
 
-export const revalidate = false // 永久快取，上傳資料後手動重新部署
+export const revalidate = 86400 // ISR：第一次點擊時建立快取，24小時後自動更新
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 )
-
-export async function generateStaticParams() {
-  const { data } = await supabase.from('cat_foods').select('brand')
-  if (!data) return []
-  const brands: Record<string, boolean> = {}
-  data.forEach(f => { if (f.brand) brands[f.brand] = true })
-  return Object.keys(brands).map(brand => ({ brand: encodeURIComponent(brand) }))
-}
 
 export async function generateMetadata({ params }: { params: { brand: string } }): Promise<Metadata> {
   const brandName = decodeURIComponent(params.brand)

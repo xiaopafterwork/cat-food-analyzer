@@ -2,25 +2,13 @@ import { Metadata } from 'next'
 import { createClient } from '@supabase/supabase-js'
 import FoodDetailClient from './FoodDetailClient'
 
-export const revalidate = false // 永久快取，上傳資料後手動重新部署
+export const revalidate = 86400 // ISR：第一次點擊時建立快取，24小時後自動更新
 
 function getSupabase() {
   return createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
   )
-}
-
-export async function generateStaticParams() {
-  const supabase = getSupabase()
-  const allIds: { id: string }[] = []
-  for (let offset = 0; offset < 4000; offset += 1000) {
-    const { data } = await supabase.from('cat_foods').select('id').range(offset, offset + 999)
-    if (!data || data.length === 0) break
-    allIds.push(...data.map(f => ({ id: String(f.id) })))
-    if (data.length < 1000) break
-  }
-  return allIds
 }
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
