@@ -128,7 +128,7 @@ function CompareContent() {
 
   return (
     /* 外層容器控制橫向捲動 */
-    <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+    <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch', display: 'flex', justifyContent: 'center' }}>
       <table style={{
         borderCollapse: 'collapse',
         tableLayout: 'fixed',
