@@ -1,24 +1,32 @@
 import { MetadataRoute } from 'next'
 import { createClient } from '@supabase/supabase-js'
 
-export const dynamic = 'force-dynamic'
-export const revalidate = 0
+// 每日重新產生一次（快取），避免每次抓取都打 DB 導致回應過慢
+export const revalidate = 86400
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const BASE = 'https://meowpj.com'
 
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    { global: { fetch: (url, opts) => fetch(url, { ...opts, cache: 'no-store' }) } }
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
   )
 
-  const { data: foods } = await supabase
-    .from('cat_foods')
-    .select('id, brand, updated_at')
-    .order('score_total', { ascending: false })
+  // Supabase 單次上限 1000 筆，需分頁抓取全部
+  type FoodRow = { id: string; brand: string | null; updated_at: string | null }
+  const foods: FoodRow[] = []
+  for (let offset = 0; offset < 10000; offset += 1000) {
+    const { data } = await supabase
+      .from('cat_foods')
+      .select('id, brand, updated_at')
+      .order('score_total', { ascending: false })
+      .range(offset, offset + 999)
+    if (!data || data.length === 0) break
+    foods.push(...(data as FoodRow[]))
+    if (data.length < 1000) break
+  }
 
-  const foodUrls: MetadataRoute.Sitemap = (foods ?? []).map(f => ({
+  const foodUrls: MetadataRoute.Sitemap = foods.map(f => ({
     url: `${BASE}/food/${f.id}`,
     lastModified: f.updated_at ? new Date(f.updated_at) : new Date(),
     changeFrequency: 'monthly',
@@ -27,7 +35,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // 品牌頁（去重）
   const brandSet: Record<string, boolean> = {}
-  for (const f of foods ?? []) { if (f.brand) brandSet[f.brand] = true }
+  for (const f of foods) { if (f.brand) brandSet[f.brand] = true }
   const brands = Object.keys(brandSet)
   const brandUrls: MetadataRoute.Sitemap = brands.map(brand => ({
     url: `${BASE}/brand/${encodeURIComponent(brand)}`,
