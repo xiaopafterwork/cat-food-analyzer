@@ -29,6 +29,25 @@ function NutrBar({ value, max, color }: { value: number | null; max: number; col
   )
 }
 
+function Tooltip({ text }: { text: string }) {
+  return (
+    <span className="relative group inline-flex items-center ml-1 cursor-default align-middle">
+      <svg width="13" height="13" viewBox="0 0 15 15" fill="none" className="shrink-0 text-gray-400">
+        <circle cx="7.5" cy="7.5" r="6.5" stroke="currentColor" strokeWidth="1"/>
+        <circle cx="7.5" cy="5" r="0.8" fill="currentColor"/>
+        <line x1="7.5" y1="7" x2="7.5" y2="11" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+      </svg>
+      <span className="absolute left-0 bottom-full mb-2 z-[9999] hidden group-hover:flex
+        w-48 px-3 py-2.5 rounded-xl text-xs text-gray-700 leading-relaxed shadow-xl pointer-events-none normal-case font-normal"
+        style={{ background: '#fff', border: '0.5px solid #e5e7eb', boxShadow: '0 8px 24px rgba(0,0,0,0.12)', whiteSpace: 'normal' }}>
+        {text}
+      </span>
+    </span>
+  )
+}
+
+const DM_TOOLTIP = '乾物比（DM）：把食物的水分去除後重新計算的營養比例，這樣才能公平比較乾飼料與主食罐的真實含量。'
+
 function CompareContent() {
   const searchParams = useSearchParams()
   const ids = (searchParams.get('ids') ?? '').split(',').filter(Boolean).slice(0, 5)
@@ -53,7 +72,7 @@ function CompareContent() {
     </div>
   )
 
-  const rows: { label: string; render: (f: CatFood) => React.ReactNode }[] = [
+  const rows: { label: React.ReactNode; render: (f: CatFood) => React.ReactNode }[] = [
     {
       label: '綜合評分',
       render: f => {
@@ -87,7 +106,7 @@ function CompareContent() {
         : <span className="text-xs px-2 py-0.5 rounded-md" style={{ background: '#e8f9ee', color: '#1a7f37' }}>無穀</span>
     },
     {
-      label: '蛋白質 DM%',
+      label: <>蛋白質 DM%<Tooltip text={DM_TOOLTIP} /></>,
       render: f => (
         <div className="w-full">
           <span className="text-sm font-semibold text-gray-800">{f.protein_dm_pct?.toFixed(1) ?? '–'}%</span>
@@ -96,7 +115,7 @@ function CompareContent() {
       )
     },
     {
-      label: '脂肪 DM%',
+      label: <>脂肪 DM%<Tooltip text={DM_TOOLTIP} /></>,
       render: f => (
         <div className="w-full">
           <span className="text-sm font-semibold text-gray-800">{f.fat_dm_pct?.toFixed(1) ?? '–'}%</span>
@@ -105,7 +124,7 @@ function CompareContent() {
       )
     },
     {
-      label: '碳水 DM%',
+      label: <>碳水 DM%<Tooltip text={DM_TOOLTIP} /></>,
       render: f => (
         <div className="w-full">
           <span className="text-sm font-semibold text-gray-800">{f.carb_dm_pct?.toFixed(1) ?? '–'}%</span>
