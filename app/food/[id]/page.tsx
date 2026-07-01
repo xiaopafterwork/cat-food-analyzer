@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
       description: ogDesc.slice(0, 100),
       url: `https://meowpj.com/food/${params.id}`,
       siteName: '喵評鑑',
-      images: [{ url: '/logo.png', width: 512, height: 512, alt: food.name }],
+      images: [{ url: '/og-image.png', width: 1200, height: 630, alt: food.name }],
     },
   }
 }

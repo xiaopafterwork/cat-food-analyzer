@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: { params: { brand: string } }
       description: `${brandName} 旗下 ${count} 款飼料與主食罐，平均 ${avgScore} 分，最高 ${topScore} 分。成分拆給你看。`,
       url: `https://meowpj.com/brand/${params.brand}`,
       siteName: '喵評鑑',
-      images: [{ url: '/logo.png', width: 512, height: 512, alt: `${brandName} | 喵評鑑` }],
+      images: [{ url: '/og-image.png', width: 1200, height: 630, alt: `${brandName} | 喵評鑑` }],
     },
   }
 }

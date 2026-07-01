@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     siteName: '喵評鑑',
     locale: 'zh_TW',
-    images: [{ url: '/logo.png', width: 512, height: 512, alt: '喵評鑑' }],
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: '喵評鑑' }],
   },
 };
 
