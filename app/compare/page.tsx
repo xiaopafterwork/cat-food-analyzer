@@ -70,7 +70,11 @@ function CompareContent() {
     },
     {
       label: '品牌',
-      render: f => <span className="text-xs text-gray-500 text-center block">{f.brand}</span>
+      render: f => (
+        <Link href={`/brand/${encodeURIComponent(f.brand)}`} className="text-xs text-center block underline underline-offset-2" style={{ color: ACCENT }}>
+          {f.brand}
+        </Link>
+      )
     },
     {
       label: '適用階段',
@@ -165,7 +169,9 @@ function CompareContent() {
                 }}>
                   {f.name}
                 </Link>
-                <p style={{ fontSize: 10, color: '#9ca3af', marginTop: 2 }}>{f.brand}</p>
+                <Link href={`/brand/${encodeURIComponent(f.brand)}`} style={{ fontSize: 10, color: '#9ca3af', marginTop: 2, display: 'block', textDecoration: 'underline', textUnderlineOffset: 2 }}>
+                  {f.brand}
+                </Link>
               </th>
             ))}
           </tr>
