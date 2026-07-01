@@ -1,8 +1,10 @@
 import { MetadataRoute } from 'next'
 import { createClient } from '@supabase/supabase-js'
 
-// 每日重新產生一次（快取），避免每次抓取都打 DB 導致回應過慢
-export const revalidate = 86400
+// 只在「部署時」產生一次並永久靜態化，之後每次抓取都是秒回，
+// 絕不在請求當下打 DB（避免 Google 抓 sitemap 時因 10 秒延遲而擷取失敗）。
+// 資料更新後重新部署即會重建 sitemap。
+export const dynamic = 'force-static'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const BASE = 'https://meowpj.com'
