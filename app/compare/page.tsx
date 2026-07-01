@@ -31,7 +31,7 @@ function NutrBar({ value, max, color }: { value: number | null; max: number; col
 
 function Tooltip({ text }: { text: string }) {
   return (
-    <span className="relative group inline-flex items-center ml-1 cursor-default align-middle">
+    <span className="relative group inline-flex items-center ml-1 cursor-default">
       <svg width="13" height="13" viewBox="0 0 15 15" fill="none" className="shrink-0 text-gray-400">
         <circle cx="7.5" cy="7.5" r="6.5" stroke="currentColor" strokeWidth="1"/>
         <circle cx="7.5" cy="5" r="0.8" fill="currentColor"/>
@@ -209,7 +209,7 @@ function CompareContent() {
                   fontSize: 12, color: '#6b7280', fontWeight: 500,
                   whiteSpace: 'nowrap', verticalAlign: 'middle',
                 }}>
-                  {row.label}
+                  <span style={{ display: 'inline-flex', alignItems: 'center' }}>{row.label}</span>
                 </td>
                 {foods.map(f => (
                   <td key={f.id} style={{
