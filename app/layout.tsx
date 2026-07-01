@@ -58,6 +58,7 @@ export default function RootLayout({
               <Link href="/" className="text-gray-500 hover:text-gray-800">首頁</Link>
               <Link href="/how-we-score" className="text-gray-500 hover:text-gray-800">評分標準</Link>
               <Link href="/request" className="text-gray-500 hover:text-gray-800">新增飼料／主食罐需求</Link>
+              <Link href="/privacy" className="text-gray-500 hover:text-gray-800">隱私權政策</Link>
               <a href="mailto:xiaopafterwork@gmail.com" className="text-gray-500 hover:text-gray-800">聯絡我們</a>
             </div>
             {/* 免責聲明 */}
