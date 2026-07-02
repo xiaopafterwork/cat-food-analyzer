@@ -36,9 +36,11 @@
 
 ### SEO / Meta
 - [ ] 首頁 title 含「飼料與主食罐」
-- [ ] OG description 為對話式文案
+- [ ] OG description 為對話式文案；OG 圖用 /og-image.png（1200×630）
 - [ ] canonical URL 指向 meowpj.com
-- [ ] /sitemap.xml 可正常存取，含飼料頁與品牌頁
+- [ ] /sitemap.xml 可正常存取，URL 總數約 2,961（少於 2,900 = 分頁抓取壞了）
+- [ ] /privacy 隱私權政策頁正常
+- [ ] /llms.txt 資料量與現況一致
 
 ### RWD
 - [ ] 375px（iPhone SE）：卡片不爆版

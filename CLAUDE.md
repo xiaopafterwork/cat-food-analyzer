@@ -8,7 +8,8 @@ C:\Users\P\cat-food-analyzer
 
 ## 專案資訊
 - 品牌名：喵評鑑 MEOWPJ
-- 網址：https://meowpj.com（域名即將購買）/ https://cat-food-analyzer.vercel.app（現行）
+- 網址：https://meowpj.com（✅ 已上線）/ cat-food-analyzer.vercel.app（備用）
+- 社群：IG + Threads `meowpj.official`
 - GitHub：https://github.com/xiaopafterwork/cat-food-analyzer
 - 部署：`git push origin HEAD:master` → Vercel 自動上線
 - 資料庫：Supabase（乾飼料 775 筆 + 主食罐 1,870 筆，合計 2,645 筆）
@@ -52,7 +53,8 @@ git push origin HEAD:master
 
 ## 文案規範
 - 任何頁面提到「飼料」，必須確認主食罐是否也需要提及
-- 禁用詞：推薦、最好、最安全、醫療宣稱、台灣最完整、台灣貓奴最信賴
+- 禁用詞：最好、最安全、醫療宣稱、台灣最完整、台灣貓奴最信賴
+- 可以寫「推薦」；**不可寫「不業配／不推銷」**（老闆未來可能接業配）
 - 資料來源說明：「成分資料來自網路公開資訊彙整」（不說「官方包裝」）
 - 品牌名：英文雙空格中文（如 `Nutro  美士`）
 
@@ -72,7 +74,10 @@ git push origin HEAD:master
 - 其他：`英文  中文`（雙空格）
 
 ## 待辦（老闆自行）
-- [ ] meowpj.com 域名購買
-- [ ] Ko-fi 帳號 + 支持按鈕串上連結
+- [x] meowpj.com 域名購買 ✅（2026-07-01，Cloudflare + Vercel 已綁定）
+- [x] GSC + Bing Webmaster 接好，sitemap 提交成功 ✅（2026-07-01）
 - [x] Vercel 環境變數：NEXT_PUBLIC_GA_ID = G-4BJMH3MSCL ✅
-- [ ] 社群首發（草稿已備好）
+- [ ] 綠界審核中（約 3 天），通過後接金流
+- [ ] Ko-fi 帳號 + 支持按鈕串上連結
+- [ ] 社群首發（Threads + IG 草稿已定稿，帳號 meowpj.official 已開）
+- [ ] Canva 三模板製作（規格：.ai-team/CANVA_TEMPLATES.md）

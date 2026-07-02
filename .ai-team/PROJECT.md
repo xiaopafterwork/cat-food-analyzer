@@ -1,10 +1,11 @@
 # 喵評鑑 — 專案現況
 
-**最後更新**：2026-06-30
+**最後更新**：2026-07-02
 
 ## 基本資訊
 - 品牌名：喵評鑑 MEOWPJ
-- 網址：https://meowpj.com（域名即將購買）/ https://cat-food-analyzer.vercel.app（Vercel 現行）
+- 網址：https://meowpj.com（✅ 2026-07-01 上線）/ cat-food-analyzer.vercel.app（備用）
+- 社群：IG + Threads `meowpj.official`
 - GitHub：https://github.com/xiaopafterwork/cat-food-analyzer
 - 技術：Next.js 14 App Router + Tailwind + Supabase + Vercel
 - 目標：台灣最好用的貓咪飼料與主食罐評鑑平台，以此為主業收入來源
@@ -44,11 +45,22 @@
 - AI 團隊 8 個 Agent：CEO / 工程師 / 設計師 / 編輯 / 分析師 / 商業 / QA / 社群
 - 資料庫品質審核：has_grain 修復 122 筆、移除凍乾 3 筆、品牌名稱統一、AAFCO 主食罐同步
 
+### ✅ 2026-07-01 完成的大事
+- **meowpj.com 域名購買+上線**（Cloudflare 註冊、Vercel 綁定、SSL 正常）
+- **GSC + Bing Webmaster 接好**：sitemap 提交成功（2,961 URL）
+- **sitemap 修復**：原本只收 1,000 筆漏 1,645 頁 → 分頁抓全 + force-static 秒回
+- **隱私權政策頁**（/privacy）上線（綠界申請用）
+- **OG 專用圖**（1200×630）+ favicon 貓咪 icon
+- **RLS 資安修正**：收回 anon 的 UPDATE/DELETE；5 支寫入腳本改用 Service Role Key
+- **社群帳號開通**：IG + Threads `meowpj.official`，自介定稿
+- **每日社群排程**：12:10 自動產草稿（熱點 + Threads + IG 含生圖 prompt）
+- **Canva 模板規格**定稿（.ai-team/CANVA_TEMPLATES.md，內容配比 40/30/30）
+
 ### ❌ 待完成
-- [ ] **meowpj.com 域名購買**（老闆自行，即將進行）
-- [ ] **Ko-fi 接通**：帳號建立 + 支持按鈕串上連結（老闆自行，5 分鐘）
-- [x] **GA4 環境變數**：Vercel NEXT_PUBLIC_GA_ID = G-4BJMH3MSCL ✅（2026-06-30）
-- [ ] **社群首發**：Threads + IG 第一篇（社群 Agent 已準備好草稿，老闆發布）
+- [ ] **綠界審核**（申請中，約 3 天）→ 通過後接金流
+- [ ] **Ko-fi 接通**：帳號建立 + 支持按鈕串上連結（老闆自行）
+- [ ] **社群首發**：Threads + IG 第一篇（草稿已定稿，老闆發布）
+- [ ] **Canva 三模板製作**（老闆自行，規格已備好）
 - [ ] 聯盟行銷連結（等月流量 500 UV+）
 - [ ] 電子報（等流量穩定後）
 - [ ] 廠商合作提案 PPT
@@ -97,10 +109,11 @@
 
 | 任務 | 負責 | 狀態 |
 |------|------|------|
-| meowpj.com 域名購買 | 老闆 | 🔜 即將 |
+| meowpj.com 域名購買 | 老闆 | ✅ 2026-07-01 |
+| GSC + Bing 接好 | 完成 | ✅ 2026-07-01 |
+| 綠界金流 | 審核中 | ⏳ 約 3 天 |
 | Ko-fi 捐款接通 | 老闆 | ❌ 待做 |
-| GA4 環境變數 | 老闆 | ❌ 待做 |
-| 社群首發 Threads + IG | 老闆發布 | ❌ 待做 |
+| 社群首發 Threads + IG | 老闆發布 | ❌ 待做（草稿已定稿）|
 
 ### Phase 2：黏著度（2026-09 → 2026-12）
 目標：月流量 1,000 UV，用戶開始回訪

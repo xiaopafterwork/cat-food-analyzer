@@ -11,8 +11,8 @@
 - 規則式文案系統（不呼叫 AI API）
 - Git / Vercel 部署
 
-## 必知現況（2026-06-30）
-- 網址：https://meowpj.com（域名即將購買）
+## 必知現況（2026-07-02）
+- 網址：https://meowpj.com（✅ 已上線，Cloudflare 註冊 + Vercel 綁定，SSL 正常）
 - 資料庫：乾飼料 775 筆 + 主食罐 1,870 筆 = 2,645 筆
 - food_type：`'dry'`（乾飼料）| `'wet'`（主食罐）
 - life_stage：資料庫存**中文**（成貓/幼貓/熟齡貓/全齡），filter 必須對應
@@ -41,11 +41,7 @@
 - cat_foods：SELECT + INSERT 開放，**UPDATE、DELETE 已收回**
 - reviews：SELECT（僅 approved）+ INSERT 開放，無 UPDATE/DELETE
 - 分數/資料更新、留言審核一律用 Service Role Key 走後端腳本或 Supabase Dashboard，不可重新對 anon 開放 UPDATE/DELETE
-
-## ⚠️ 技術禁忌
-- TypeScript 禁用 `[...new Set()]`，改用 `Record<string, boolean>` + `Object.keys()`
-- 爬蟲不可自動排程寫入 Supabase，必須老闆批准後才上傳
-- life_stage filter 值必須用中文，不可用英文
+- 需要寫入的腳本（sync_excel_to_supabase.py、dedup.py、rescore_all.py 等 5 支）已改讀 `.env.local` 的 `SUPABASE_SERVICE_ROLE_KEY`
 
 ## 已完成功能
 - 首頁雙 tab（乾飼料/主食罐）+ 篩選（生命階段/無穀/AAFCO）+ 比較功能
