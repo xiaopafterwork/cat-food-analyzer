@@ -66,13 +66,16 @@ export default function Nav({ backHref, backLabel = '返回', backToHistory, tit
           <div className="flex items-center gap-2">
             {rightSlot}
             {/* 支持按鈕 */}
-            <button
+            <a
+              href="https://ko-fi.com/meowpj"
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full text-white"
               style={{ background: ACCENT }}
             >
               <Image src="/coffee.png" alt="" width={16} height={16} style={{ objectFit: 'contain' }} />
               支持
-            </button>
+            </a>
             {/* 漢堡 / 關閉按鈕 */}
             <button
               onClick={() => setOpen(v => !v)}

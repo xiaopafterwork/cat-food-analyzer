@@ -365,9 +365,9 @@ export default function HomePage() {
           <div className="text-center py-6 rounded-2xl" style={{ background: '#EEF3F8', border: '0.5px solid #C8D9E8' }}>
             <p className="text-sm font-semibold text-gray-800 mb-1">這份分析對你有幫助嗎？</p>
             <p className="text-xs mb-4" style={{ color: '#555' }}>你的支持讓我們繼續分析更多飼料 ☕</p>
-            <button className="px-5 py-2 rounded-full text-sm font-semibold text-white" style={{ background: ACCENT }}>
+            <a href="https://ko-fi.com/meowpj" target="_blank" rel="noopener noreferrer" className="inline-block px-5 py-2 rounded-full text-sm font-semibold text-white" style={{ background: ACCENT }}>
               ☕ 支持喵評鑑
-            </button>
+            </a>
           </div>
         </div>
       </div>
