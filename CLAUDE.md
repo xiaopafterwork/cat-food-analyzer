@@ -77,7 +77,7 @@ git push origin HEAD:master
 - [x] meowpj.com 域名購買 ✅（2026-07-01，Cloudflare + Vercel 已綁定）
 - [x] GSC + Bing Webmaster 接好，sitemap 提交成功 ✅（2026-07-01）
 - [x] Vercel 環境變數：NEXT_PUBLIC_GA_ID = G-4BJMH3MSCL ✅
-- [ ] 綠界審核中（約 3 天），通過後接金流
-- [ ] Ko-fi 帳號 + 支持按鈕串上連結
+- [x] Ko-fi 接通 ✅（2026-07-02，ko-fi.com/meowpj，三顆支持按鈕已串）
+- [ ] 綠界審核中（約 3 天），通過後做 /support 子頁並列兩種付款
 - [ ] 社群首發（Threads + IG 草稿已定稿，帳號 meowpj.official 已開）
 - [ ] Canva 三模板製作（規格：.ai-team/CANVA_TEMPLATES.md）
