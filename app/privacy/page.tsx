@@ -58,9 +58,8 @@ const SECTIONS: { title: string; body: React.ReactNode }[] = [
       <>
         為了提供服務，我們使用以下第三方，你的部分資料可能會經過它們處理：
         <ul className="list-disc pl-5 mt-2 space-y-1.5">
-          <li><strong>Google Analytics</strong>：網站流量與行為分析。</li>
-          <li><strong>Supabase</strong>：資料庫與留言、搜尋記錄的儲存。</li>
-          <li><strong>Vercel</strong>：網站主機與部署。</li>
+          <li><strong>網站流量分析（Google Analytics）</strong></li>
+          <li><strong>資料庫服務</strong>：儲存留言與搜尋紀錄。</li>
           <li><strong>金流服務商（綠界 ECPay / Ko-fi 等）</strong>：處理捐款交易。</li>
         </ul>
         這些服務各有自己的隱私權政策，建議你一併參閱。
